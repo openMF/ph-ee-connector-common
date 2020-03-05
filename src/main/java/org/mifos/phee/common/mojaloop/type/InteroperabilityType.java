@@ -7,10 +7,8 @@
  */
 package org.mifos.phee.common.mojaloop.type;
 
-public enum TransActionHeaders {
+public enum InteroperabilityType {
 
-    FSPIOP_SOURCE("fspiop-source"),
-    FSPIOP_DESTINATION("fspiop-destination"),
     PARTIES_CONTENT_TYPE("application/vnd.interoperability.parties+json;version=1.0"),
     PARTIES_ACCEPT_TYPE("application/vnd.interoperability.parties+json;version=1.0"),
     QUOTES_CONTENT_TYPE("application/vnd.interoperability.quotes+json;version=1.0"),
@@ -20,7 +18,7 @@ public enum TransActionHeaders {
 
     private String headerValue;
 
-    TransActionHeaders(String headerValue) {
+    InteroperabilityType(String headerValue) {
         this.headerValue = headerValue;
     }
 
