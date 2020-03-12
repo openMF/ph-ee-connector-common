@@ -64,4 +64,15 @@
 		</pluginManagement>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>ph-ee-release</id>
+			<url>http://jenkins.mifos.io:8081/repository/ph-ee-release/</url>
+		</repository>
+		<snapshotRepository>
+			<id>ph-ee-snapshot</id>
+			<url>http://jenkins.mifos.io:8081/repository/ph-ee-snapshot/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 </project>
