@@ -4,8 +4,14 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn --version'
-                sh 'mvn -U clean deploy'
+                sh 'mvn -U clean package'
             }
         }
+        stage('deploy') {
+            steps {
+                sh 'mvn deploy'
+            }
+        }
+
     }
 }
