@@ -4,7 +4,7 @@ pipeline {
         stage('build') {
             steps {
                 sh 'mvn --version'
-                sh 'mvn clean deploy'
+                sh 'mvn -U clean deploy'
             }
         }
     }
