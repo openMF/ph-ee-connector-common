@@ -12,6 +12,10 @@ pipeline {
                 sh 'mvn deploy'
             }
         }
-
+        stage('trigger others') {
+            build job: "../ph-ee-connector-ams-mifos", wait: false
+            build job: "../ph-ee-connector-channel", wait: false
+            build job: "../ph-ee-connector-mojaloop-java", wait: false
+        }
     }
 }
