@@ -22,7 +22,7 @@ import java.util.List;
 public class TransactionChannelRequestDTO {
 
     private String clientRefId;
-    private Party payer;
+    private ChannelParty payer;
     private Party payee;
     private AmountType amountType;
     private MoneyData amount;
@@ -40,11 +40,11 @@ public class TransactionChannelRequestDTO {
         this.clientRefId = clientRefId;
     }
 
-    public Party getPayer() {
+    public ChannelParty getPayer() {
         return payer;
     }
 
-    public void setPayer(Party payer) {
+    public void setPayer(ChannelParty payer) {
         this.payer = payer;
     }
 
