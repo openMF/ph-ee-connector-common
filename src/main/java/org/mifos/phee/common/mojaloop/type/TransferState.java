@@ -13,24 +13,4 @@ public enum TransferState {
     RESERVED,
     COMMITTED,
     ABORTED;
-
-    public static TransferState forAction(TransactionAction action) {
-        switch (action) {
-            case REQUEST:
-            case QUOTE:
-                return RECEIVED;
-            case PREPARE:
-                return RESERVED;
-            case COMMIT:
-                return COMMITTED;
-            case REQUEST_FAILED:
-            case QUOTE_FAILED:
-            case PREPARE_FAILED:
-            case COMMIT_FAILED:
-            case ABORT:
-                return ABORTED;
-            default:
-                return null; // TODO fail
-        }
-    }
 }

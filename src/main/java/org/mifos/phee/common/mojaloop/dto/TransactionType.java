@@ -9,13 +9,12 @@ package org.mifos.phee.common.mojaloop.dto;
 
 import org.mifos.phee.common.mojaloop.type.InitiatorType;
 import org.mifos.phee.common.mojaloop.type.Scenario;
-import org.mifos.phee.common.mojaloop.type.SubScenario;
 import org.mifos.phee.common.mojaloop.type.TransactionRole;
 
 public class TransactionType {
 
     private Scenario scenario;
-    private SubScenario subScenario;
+    private String subScenario;
     private TransactionRole initiator;
     private InitiatorType initiatorType;
     private Refund refundInfo;
@@ -29,11 +28,11 @@ public class TransactionType {
         this.scenario = scenario;
     }
 
-    public SubScenario getSubScenario() {
+    public String getSubScenario() {
         return subScenario;
     }
 
-    public void setSubScenario(SubScenario subScenario) {
+    public void setSubScenario(String subScenario) {
         this.subScenario = subScenario;
     }
 
