@@ -16,6 +16,8 @@ public class ErrorInformation {
     private String errorDescription; //mandatory
     private List<Extension> extensionList;
 
+    public ErrorInformation() {}
+
     public ErrorInformation(short errorCode, String errorDescription) {
         this.errorCode = errorCode;
         this.errorDescription = errorDescription;
