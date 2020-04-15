@@ -91,7 +91,7 @@ public enum ErrorCode {
         return errorMessage;
     }
 
-    public ErrorCode fromCode(int code) {
+    public static ErrorCode fromCode(int code) {
         return Arrays.stream(values())
                 .filter(ec -> ec.getCode() == code)
                 .findFirst()
