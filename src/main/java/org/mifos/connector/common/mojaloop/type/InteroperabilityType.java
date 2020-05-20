@@ -14,7 +14,9 @@ public enum InteroperabilityType {
     QUOTES_CONTENT_TYPE("application/vnd.interoperability.quotes+json;version=1.0"),
     QUOTES_ACCEPT_TYPE("application/vnd.interoperability.quotes+json;version=1.0"),
     TRANSFERS_CONTENT_TYPE("application/vnd.interoperability.transfers+json;version=1.0"),
-    TRANSFERS_ACCEPT_TYPE("application/vnd.interoperability.transfers+json;version=1.0");
+    TRANSFERS_ACCEPT_TYPE("application/vnd.interoperability.transfers+json;version=1.0"),
+    TRANSACTIONS_CONTENT_TYPE("application/vnd.interoperability.transactionRequests+json;version=1.0"),
+    TRANSACTIONS_ACCEPT_TYPE("application/vnd.interoperability.transactionRequests+json;version=1.0");
 
     private String headerValue;
 
