@@ -19,11 +19,11 @@ import java.util.List;
 
 public class TransactionRequestSwitchRequestDTO {
 
-    private String transactionRequestId; // mandatory
-    private Party payee; // mandatory
-    private PartyIdInfo payer; // mandatory
-    private MoneyData amount; // mandatory
-    private TransactionType transactionType; // mandatory
+    private String transactionRequestId;
+    private Party payee;
+    private PartyIdInfo payer;
+    private MoneyData amount;
+    private TransactionType transactionType;
     private String note;
     private GeoCode geoCode;
     private AuthenticationType authenticationType;
@@ -31,7 +31,6 @@ public class TransactionRequestSwitchRequestDTO {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime expiration;
     private List<Extension> extensionList;
-
 
     public String getTransactionRequestId() {
         return transactionRequestId;
@@ -107,21 +106,6 @@ public class TransactionRequestSwitchRequestDTO {
 
     public List<Extension> getExtensionList() {
         return extensionList;
-    }
-
-    public Extension getExtension(String key) {
-        if (extensionList == null)
-            return null;
-        for (Extension extension : extensionList) {
-            if (extension.getKey().equals(key))
-                return extension;
-        }
-        return null;
-    }
-
-    public String getExtensionValue(String key) {
-        Extension extension = getExtension(key);
-        return extension == null ? null : extension.getValue();
     }
 
     public void setExtensionList(List<Extension> extensionList) {
