@@ -9,10 +9,16 @@ package org.mifos.connector.common.channel.dto;
 
 import org.mifos.connector.common.mojaloop.type.IdentifierType;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class RegisterAliasRequestDTO {
 
+    @NotEmpty
     private String accountId;
+    @NotNull
     private IdentifierType idType;
+    @NotEmpty
     private String idValue;
 
     public String getAccountId() {

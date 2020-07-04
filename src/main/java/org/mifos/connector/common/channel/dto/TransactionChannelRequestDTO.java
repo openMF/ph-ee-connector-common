@@ -15,6 +15,7 @@ import org.mifos.connector.common.mojaloop.dto.MoneyData;
 import org.mifos.connector.common.mojaloop.dto.TransactionType;
 import org.mifos.connector.common.util.ContextUtil;
 
+import javax.validation.constraints.NotNull;
 import java.beans.Transient;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,8 +23,10 @@ import java.util.List;
 public class TransactionChannelRequestDTO {
 
     private String clientRefId;
+    @NotNull
     private Party payer, payee;
     private AmountType amountType;
+    @NotNull
     private MoneyData amount;
     private TransactionType transactionType;
     private GeoCode geoCode;

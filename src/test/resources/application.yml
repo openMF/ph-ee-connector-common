@@ -5,13 +5,17 @@ oracle:
   host: "http://account-oracle.mifos.io:4100"
   endpoint: "/oracle/participants/{partyIdType}/{partyIdentifier}"
 
+local:
+  central-ledger-host: http://localhost:3001
+
 mojaloop:
+  local: true
   currency: "TZS"
   contact-email: "contact@email.com"
   host: "http://40.114.81.46"
   account-lookup-service: "account-lookup-service-admin.local"
   central-ledger-service: "central-ledger.local"
-  do-hub-onboard: true
+  do-hub-onboard: false
   participants:
     endpoint: "/participants"
     position-and-limit-endpoint: "${mojaloop.participants.endpoint}/{dfspid}/initialPositionAndLimits"
@@ -21,7 +25,7 @@ mojaloop:
       endpoint: "/Hub"
       accounts: "${mojaloop.participants.endpoint}${mojaloop.participants.hub.endpoint}/accounts"
       endpoints: "${mojaloop.participants.endpoint}${mojaloop.participants.hub.endpoint}/endpoints"
-  do-oracle-onboard: true
+  do-oracle-onboard: false
   oracles:
     type: "MSISDN"
     endpoint: /oracles
@@ -61,36 +65,42 @@ mojaloop:
       value: "{dfspDomain}"
   dfsps:
     - enabled: true
+      addToExternalOracle: false
       id: "in01tn01"
       partyIdType: "MSISDN"
       partyIdentifier: "27710101999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://in01tn01.mifos.io/switch"
+      domain: "http://localhost:10000/switch"
     - enabled: true
+      addToExternalOracle: false
       id: "in01tn02"
       partyIdType: "MSISDN"
       partyIdentifier: "27710102999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://in01tn02.mifos.io/switch"
-    - enabled: true
+      domain: "http://localhost:10001/switch"
+    - enabled: false
+      addToExternalOracle: true
       id: "in02tn03"
       partyIdType: "MSISDN"
       partyIdentifier: "27710203999"
       fundsInPrepareAmount: "1000000"
       domain: "http://in02tn03.mifos.io/switch"
-    - enabled: true
+    - enabled: false
+      addToExternalOracle: true
       id: "in02tn04"
       partyIdType: "MSISDN"
       partyIdentifier: "27710204999"
       fundsInPrepareAmount: "1000000"
       domain: "http://in02tn04.mifos.io/switch"
-    - enabled: true
+    - enabled: false
+      addToExternalOracle: true
       id: "in03tn05"
       partyIdType: "MSISDN"
       partyIdentifier: "27710305999"
       fundsInPrepareAmount: "1000000"
       domain: "http://in03tn05.mifos.io/switch"
-    - enabled: true
+    - enabled: false
+      addToExternalOracle: true
       id: "in03tn06"
       partyIdType: "MSISDN"
       partyIdentifier: "27710306999"

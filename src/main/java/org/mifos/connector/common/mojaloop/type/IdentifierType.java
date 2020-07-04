@@ -17,4 +17,6 @@ public enum IdentifierType {
     ACCOUNT_ID,
     IBAN,
     ALIAS;
+
+    public static final String[] REGEX_VALUES = {"a"};
 }

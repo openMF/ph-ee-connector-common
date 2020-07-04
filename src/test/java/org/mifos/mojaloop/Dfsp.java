@@ -2,7 +2,7 @@ package org.mifos.mojaloop;
 
 public class Dfsp {
 
-    private boolean enabled;
+    private boolean enabled, addToExternalOracle;
     private String id, partyIdType, partyIdentifier, fundsInPrepareAmount, domain;
 
     public Dfsp() {
@@ -54,5 +54,13 @@ public class Dfsp {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public boolean isAddToExternalOracle() {
+        return addToExternalOracle;
+    }
+
+    public void setAddToExternalOracle(boolean addToExternalOracle) {
+        this.addToExternalOracle = addToExternalOracle;
     }
 }

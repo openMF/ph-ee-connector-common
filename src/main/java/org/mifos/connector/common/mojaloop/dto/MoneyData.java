@@ -8,14 +8,20 @@
 package org.mifos.connector.common.mojaloop.dto;
 
 import com.ilp.conditions.models.pdp.Money;
+import org.hibernate.validator.constraints.Length;
 import org.mifos.connector.common.util.ContextUtil;
 
+import javax.validation.constraints.NotEmpty;
 import java.beans.Transient;
 import java.math.BigDecimal;
 
 public class MoneyData {
 
+    @NotEmpty
     private String amount;
+
+    @NotEmpty
+    @Length(min = 3, max = 3)
     private String currency;
 
     public MoneyData() {

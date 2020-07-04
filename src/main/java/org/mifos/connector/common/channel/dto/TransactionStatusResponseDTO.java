@@ -14,26 +14,15 @@ import java.beans.Transient;
 import java.time.LocalDateTime;
 
 
-public class TransactionChannelAsyncResponseDTO {
+public class TransactionStatusResponseDTO {
 
     private String clientRefId;
     private String transactionId;
-    private String completedTimestamp;
+    private LocalDateTime completedTimestamp;
     private String transferId;
     private TransferState transferState;
-    private TransactionChannelRequestDTO originalRequestData;
 
-    TransactionChannelAsyncResponseDTO() {
-    }
-
-    public TransactionChannelAsyncResponseDTO(String clientRefId, String transactionId, LocalDateTime completedTimestamp, String transferId, TransferState transferState,
-                                              TransactionChannelRequestDTO originalRequestData) {
-        this.clientRefId = clientRefId;
-        this.transactionId = transactionId;
-        this.completedTimestamp = ContextUtil.formatDate(completedTimestamp);
-        this.transferId = transferId;
-        this.transferState = transferState;
-        this.originalRequestData = originalRequestData;
+    public TransactionStatusResponseDTO() {
     }
 
     public String getClientRefId() {
@@ -52,21 +41,12 @@ public class TransactionChannelAsyncResponseDTO {
         this.transactionId = transactionId;
     }
 
-    public String getCompletedTimestamp() {
+    public LocalDateTime getCompletedTimestampDate() {
         return completedTimestamp;
     }
 
-    public void setCompletedTimestamp(String completedTimestamp) {
-        this.completedTimestamp = completedTimestamp;
-    }
-
-    @Transient
-    public LocalDateTime getCompletedTimestampDate() {
-        return ContextUtil.parseDate(completedTimestamp);
-    }
-
     public void setCompletedTimestamp(LocalDateTime completedTimestamp) {
-        this.completedTimestamp = ContextUtil.formatDate(completedTimestamp);
+        this.completedTimestamp = completedTimestamp;
     }
 
     public String getTransferId() {
@@ -83,13 +63,5 @@ public class TransactionChannelAsyncResponseDTO {
 
     public void setTransferState(TransferState transferState) {
         this.transferState = transferState;
-    }
-
-    public TransactionChannelRequestDTO getOriginalRequestData() {
-        return originalRequestData;
-    }
-
-    public void setOriginalRequestData(TransactionChannelRequestDTO originalRequestData) {
-        this.originalRequestData = originalRequestData;
     }
 }

@@ -9,9 +9,14 @@ package org.mifos.connector.common.mojaloop.dto;
 
 import org.mifos.connector.common.mojaloop.type.IdentifierType;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 public class PartyIdInfo {
 
+    @NotNull
     private IdentifierType partyIdType; // mandatory, immutable
+    @NotEmpty
     private String partyIdentifier; // mandatory, immutable
     private String partySubIdOrType; // optional, immutable
     private String fspId; // optional

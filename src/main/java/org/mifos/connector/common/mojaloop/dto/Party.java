@@ -10,6 +10,7 @@ package org.mifos.connector.common.mojaloop.dto;
 import com.ilp.conditions.models.pdp.PartyComplexName;
 import com.ilp.conditions.models.pdp.PartyPersonalInfo;
 
+import javax.validation.constraints.NotNull;
 import java.beans.Transient;
 
 /**
@@ -19,6 +20,7 @@ import java.beans.Transient;
  */
 public class Party {
 
+    @NotNull
     private PartyIdInfo partyIdInfo; // mandatory
     private String merchantClassificationCode ; // optional
     private String name; // optional
