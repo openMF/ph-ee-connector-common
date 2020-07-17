@@ -11,9 +11,7 @@ package org.mifos.connector.common.mojaloop.dto;
 import org.mifos.connector.common.mojaloop.type.TransferState;
 import org.mifos.connector.common.util.ContextUtil;
 
-import java.beans.Transient;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 public class TransferSwitchResponseDTO {
@@ -21,12 +19,12 @@ public class TransferSwitchResponseDTO {
     private String fulfilment;
     private String completedTimestamp;
     private TransferState transferState; // mandatory
-    private List<Extension> extensionList;
+    private ExtensionList extensionList;
 
-    TransferSwitchResponseDTO() {
+    public TransferSwitchResponseDTO() {
     }
 
-    public TransferSwitchResponseDTO(String fulfilment, LocalDateTime completedTimestamp, TransferState transferState, List<Extension> extensionList) {
+    public TransferSwitchResponseDTO(String fulfilment, LocalDateTime completedTimestamp, TransferState transferState, ExtensionList extensionList) {
         this.fulfilment = fulfilment;
         this.completedTimestamp = ContextUtil.formatDate(completedTimestamp);
         this.transferState = transferState;
@@ -53,15 +51,6 @@ public class TransferSwitchResponseDTO {
         this.completedTimestamp = completedTimestamp;
     }
 
-    @Transient
-    public LocalDateTime getCompletedTimestampDate() {
-        return ContextUtil.parseDate(completedTimestamp);
-    }
-
-    public void setCompletedTimestamp(LocalDateTime completedTimestamp) {
-        this.completedTimestamp = ContextUtil.formatDate(completedTimestamp);
-    }
-
     public TransferState getTransferState() {
         return transferState;
     }
@@ -70,11 +59,11 @@ public class TransferSwitchResponseDTO {
         this.transferState = transferState;
     }
 
-    public List<Extension> getExtensionList() {
+    public ExtensionList getExtensionList() {
         return extensionList;
     }
 
-    public void setExtensionList(List<Extension> extensionList) {
+    public void setExtensionList(ExtensionList extensionList) {
         this.extensionList = extensionList;
     }
 }

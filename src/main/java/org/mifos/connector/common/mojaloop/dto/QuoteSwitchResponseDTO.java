@@ -9,9 +9,7 @@ package org.mifos.connector.common.mojaloop.dto;
 
 import org.mifos.connector.common.util.ContextUtil;
 
-import java.beans.Transient;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 public class QuoteSwitchResponseDTO {
@@ -24,13 +22,13 @@ public class QuoteSwitchResponseDTO {
     private GeoCode geoCode;
     private String ilpPacket; // mandatory
     private String condition; // mandatory
-    private List<Extension> extensionList;
+    private ExtensionList extensionList;
 
-    QuoteSwitchResponseDTO() {
+    public QuoteSwitchResponseDTO() {
     }
 
     public QuoteSwitchResponseDTO(MoneyData transferAmount, MoneyData payeeReceiveAmount, MoneyData payeeFspFee, MoneyData payeeFspCommission,
-                                  LocalDateTime expiration, GeoCode geoCode, String ilpPacket, String condition, List<Extension> extensionList) {
+                                  LocalDateTime expiration, GeoCode geoCode, String ilpPacket, String condition, ExtensionList extensionList) {
         this.transferAmount = transferAmount;
         this.payeeReceiveAmount = payeeReceiveAmount;
         this.payeeFspFee = payeeFspFee;
@@ -40,10 +38,6 @@ public class QuoteSwitchResponseDTO {
         this.ilpPacket = ilpPacket;
         this.condition = condition;
         this.extensionList = extensionList;
-    }
-
-    public QuoteSwitchResponseDTO(MoneyData transferAmount, LocalDateTime expiration, String ilpPacket, String condition) {
-        this(transferAmount, null, null, null, expiration, null, ilpPacket, condition, null);
     }
 
     public MoneyData getTransferAmount() {
@@ -86,13 +80,8 @@ public class QuoteSwitchResponseDTO {
         this.expiration = expiration;
     }
 
-    @Transient
-    public LocalDateTime getExpirationDate() {
-        return ContextUtil.parseDate(expiration);
-    }
-
-    public void setExpiration(LocalDateTime expiration) {
-        this.expiration = ContextUtil.formatDate(expiration);
+    public void setExtensionList(ExtensionList extensionList) {
+        this.extensionList = extensionList;
     }
 
     public GeoCode getGeoCode() {
@@ -117,13 +106,5 @@ public class QuoteSwitchResponseDTO {
 
     public void setCondition(String condition) {
         this.condition = condition;
-    }
-
-    public List<Extension> getExtensionList() {
-        return extensionList;
-    }
-
-    public void setExtensionList(List<Extension> extensionList) {
-        this.extensionList = extensionList;
     }
 }

@@ -9,9 +9,7 @@ package org.mifos.connector.common.mojaloop.dto;
 
 import org.mifos.connector.common.util.ContextUtil;
 
-import java.beans.Transient;
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 public class TransferSwitchRequestDTO {
@@ -23,13 +21,13 @@ public class TransferSwitchRequestDTO {
     private String ilpPacket;
     private String condition;
     private String expiration;
-    private List<Extension> extensionList;
+    private ExtensionList extensionList;
 
-    TransferSwitchRequestDTO() {
+    public TransferSwitchRequestDTO() {
     }
 
     public TransferSwitchRequestDTO(String transferId, String payerFsp, String payeeFsp, MoneyData amount, String ilpPacket,
-                                    String condition, LocalDateTime expiration, List<Extension> extensionList) {
+                                    String condition, LocalDateTime expiration, ExtensionList extensionList) {
         this.transferId = transferId;
         this.payerFsp = payerFsp;
         this.payeeFsp = payeeFsp;
@@ -38,11 +36,6 @@ public class TransferSwitchRequestDTO {
         this.condition = condition;
         this.expiration = ContextUtil.formatDate(expiration);
         this.extensionList = extensionList;
-    }
-
-    public TransferSwitchRequestDTO(String transferId, String payerFsp, String payeeFsp, MoneyData amount, String ilpPacket,
-                                    String condition, LocalDateTime expiration) {
-        this(transferId, payerFsp, payeeFsp, amount, ilpPacket, condition, expiration, null);
     }
 
     public String getTransferId() {
@@ -101,35 +94,11 @@ public class TransferSwitchRequestDTO {
         this.expiration = expiration;
     }
 
-    @Transient
-    public LocalDateTime getExpirationDate() {
-        return ContextUtil.parseDate(expiration);
-    }
-
-    public void setExpiration(LocalDateTime expiration) {
-        this.expiration = ContextUtil.formatDate(expiration);
-    }
-
-    public List<Extension> getExtensionList() {
+    public ExtensionList getExtensionList() {
         return extensionList;
     }
 
-    public void setExtensionList(List<Extension> extensionList) {
+    public void setExtensionList(ExtensionList extensionList) {
         this.extensionList = extensionList;
-    }
-
-    public Extension getExtension(String key) {
-        if (extensionList == null)
-            return null;
-        for (Extension extension : extensionList) {
-            if (extension.getKey().equals(key))
-                return extension;
-        }
-        return null;
-    }
-
-    public String getExtensionValue(String key) {
-        Extension extension = getExtension(key);
-        return extension == null ? null : extension.getValue();
     }
 }

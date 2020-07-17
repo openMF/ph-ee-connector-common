@@ -10,14 +10,12 @@ package org.mifos.connector.common.mojaloop.dto;
 
 import org.mifos.connector.common.mojaloop.type.TransactionRequestState;
 
-import java.util.List;
-
 
 public class TransactionRequestSwitchResponseDTO {
 
     private String transactionId;
     private TransactionRequestState transactionRequestState;
-    private List<Extension> extensionList;
+    private ExtensionList extensionList;
 
     public String getTransactionId() {
         return transactionId;
@@ -35,11 +33,11 @@ public class TransactionRequestSwitchResponseDTO {
         this.transactionRequestState = transactionRequestState;
     }
 
-    public List<Extension> getExtensionList() {
+    public ExtensionList getExtensionList() {
         return extensionList;
     }
 
-    public void setExtensionList(List<Extension> extensionList) {
+    public void setExtensionList(ExtensionList extensionList) {
         this.extensionList = extensionList;
     }
 }

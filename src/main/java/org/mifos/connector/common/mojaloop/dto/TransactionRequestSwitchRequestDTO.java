@@ -14,7 +14,6 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.mifos.connector.common.mojaloop.type.AuthenticationType;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 
 public class TransactionRequestSwitchRequestDTO {
@@ -30,7 +29,7 @@ public class TransactionRequestSwitchRequestDTO {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime expiration;
-    private List<Extension> extensionList;
+    private ExtensionList extensionList;
 
     public String getTransactionRequestId() {
         return transactionRequestId;
@@ -104,11 +103,11 @@ public class TransactionRequestSwitchRequestDTO {
         this.expiration = expiration;
     }
 
-    public List<Extension> getExtensionList() {
+    public ExtensionList getExtensionList() {
         return extensionList;
     }
 
-    public void setExtensionList(List<Extension> extensionList) {
+    public void setExtensionList(ExtensionList extensionList) {
         this.extensionList = extensionList;
     }
 }
