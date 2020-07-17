@@ -7,6 +7,7 @@
  */
 package org.mifos.connector.common.channel.dto;
 
+import org.mifos.connector.common.mojaloop.dto.ExtensionList;
 import org.mifos.connector.common.mojaloop.dto.Party;
 import org.mifos.connector.common.mojaloop.type.AmountType;
 import org.mifos.connector.common.mojaloop.dto.Extension;
@@ -32,7 +33,7 @@ public class TransactionChannelRequestDTO {
     private GeoCode geoCode;
     private String note;
     private String expiration;
-    private List<Extension> extensionList;
+    private ExtensionList extensionList;
 
     public String getClientRefId() {
         return clientRefId;
@@ -106,20 +107,11 @@ public class TransactionChannelRequestDTO {
         this.expiration = expiration;
     }
 
-    @Transient
-    public LocalDateTime getExpirationDate() {
-        return ContextUtil.parseDate(expiration);
-    }
-
-    public void setExpiration(LocalDateTime expiration) {
-        this.expiration = ContextUtil.formatDate(expiration);
-    }
-
-    public List<Extension> getExtensionList() {
+    public ExtensionList getExtensionList() {
         return extensionList;
     }
 
-    public void setExtensionList(List<Extension> extensionList) {
+    public void setExtensionList(ExtensionList extensionList) {
         this.extensionList = extensionList;
     }
 
