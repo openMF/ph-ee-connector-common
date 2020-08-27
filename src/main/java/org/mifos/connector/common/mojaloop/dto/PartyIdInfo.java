@@ -35,6 +35,10 @@ public class PartyIdInfo {
         this(partyIdType, partyIdentifier, partySubIdOrType, null);
     }
 
+    public PartyIdInfo(IdentifierType partyIdType, String partyIdentifier) {
+        this(partyIdType, partyIdentifier, null, null);
+    }
+
     public IdentifierType getPartyIdType() {
         return partyIdType;
     }
