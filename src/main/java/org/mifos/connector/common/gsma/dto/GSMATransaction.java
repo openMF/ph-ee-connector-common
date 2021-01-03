@@ -46,6 +46,7 @@ public class GSMATransaction {
     String modificationDate;
     String transactionReference;
     String transactionReceipt;
+    String convLockKey;
 
     InternationalTransferInformation internationalTransferInformation;
 
@@ -250,6 +251,14 @@ public class GSMATransaction {
         this.fees = fees;
     }
 
+    public String getConvLockKey() {
+        return convLockKey;
+    }
+
+    public void setConvLockKey(String convLockKey) {
+        this.convLockKey = convLockKey;
+    }
+
     @Override
     public String toString() {
         return "GSMATransaction{" +
@@ -277,6 +286,7 @@ public class GSMATransaction {
                 ", transactionReference='" + transactionReference + '\'' +
                 ", transactionReceipt='" + transactionReceipt + '\'' +
                 ", internationalTransferInformation=" + internationalTransferInformation +
+                ", convLockKey=" + convLockKey +
                 '}';
     }
 }

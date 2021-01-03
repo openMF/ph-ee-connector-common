@@ -25,6 +25,8 @@ package org.mifos.connector.common.gsma.dto;
 }
 */
 
+import java.math.BigDecimal;
+
 public class InternationalTransferInformation {
 
   String originCountry;
@@ -36,7 +38,11 @@ public class InternationalTransferInformation {
   String deliveryMethod;
   String senderBlockingReason;
   String recipientBlockingReason;
-
+  String receivingCurrency;
+  String senderCurrency;
+  String currencyPair;
+  String currencyPairRate;
+  String receivingAmount;
 
   public String getOriginCountry() {
       return originCountry;
@@ -109,4 +115,44 @@ public class InternationalTransferInformation {
   public void setRecipientBlockingReason(String recipientBlockingReason) {
       this.recipientBlockingReason = recipientBlockingReason;
   }
+
+    public String getReceivingCurrency() {
+        return receivingCurrency;
+    }
+
+    public void setReceivingCurrency(String receivingCurrency) {
+        this.receivingCurrency = receivingCurrency;
+    }
+
+    public String getSenderCurrency() {
+        return senderCurrency;
+    }
+
+    public void setSenderCurrency(String senderCurrency) {
+        this.senderCurrency = senderCurrency;
+    }
+
+    public String getCurrencyPair() {
+        return currencyPair;
+    }
+
+    public void setCurrencyPair(String currencyPair) {
+        this.currencyPair = currencyPair;
+    }
+
+    public String getCurrencyPairRate() {
+        return currencyPairRate;
+    }
+
+    public void setCurrencyPairRate(String currencyPairRate) {
+        this.currencyPairRate = currencyPairRate;
+    }
+
+    public String getReceivingAmount() {
+        return receivingAmount;
+    }
+
+    public void setReceivingAmount(String receivingAmount) {
+        this.receivingAmount = receivingAmount;
+    }
 }
