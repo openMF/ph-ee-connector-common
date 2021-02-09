@@ -110,6 +110,9 @@ public class OnboardDfsps {
 
     @Test
     public void onboard() {
+        /**
+         * Check also if you want to execute against a local installment or remote with peroperty: {mojaloop.local}
+         */
         if(!onboardingEnabled) {
             logger.info("Onboarding turned off");
             return;
@@ -135,29 +138,41 @@ public class OnboardDfsps {
         }
 
         /*
-         * every dfsp can be added separately, turn off selected manually
+         * every dfsp can be added separately, turn off selected ones from property
          */
         if (doDfspOnboard) {
             for (Dfsp dfsp : dfspProperties.getDfsps()) {
                 logger.info("Dfsp {} enabled: {}", dfsp.getId(), dfsp.isEnabled());
                 if (dfsp.isEnabled()) {
                     logger.info("Onboarding dfsp: {}", dfsp.getId());
+                    if(dfsp.isRegisterOnlyCallbackUrls()) {
+                        logger.info("Updating only dfsp callback urls: {}", dfsp.getId());
+                        updateCallbackUrls(dfsp);
+                        continue;
+                    }
                     String response = addDfsp(dfsp);
                     int settlementAccountId = ((JSONObject) stream(spliteratorUnknownSize(new JSONObject(response).getJSONArray("accounts").iterator(), Spliterator.ORDERED), false)
                             .filter(a -> "SETTLEMENT".equals(((JSONObject) a).getString("ledgerAccountType")))
                             .findFirst()
                             .orElseThrow(() -> new RuntimeException("No SETTLEMENT account found!"))).getInt("id");
                     addInitialPositionAndLimit(dfsp);
-                    for (CallbackMapping mapping : callbackMappingProperties.getCallbackMappings()) {
-                        addCallbackUrl(dfsp, mapping);
-                    }
+                    updateCallbackUrls(dfsp);
                     recordFundsInDfsp(dfsp, settlementAccountId);
-                    // if participants were already added to the external oracle before -> this part should be skipped
+                    /**
+                     * if participants were already added to the external oracle before -> this part should be skipped
+                     * this part is not dependant to mojaloop installment
+                     */
                     if(dfsp.isAddToExternalOracle()) {
                         addParticipantToDfsp(dfsp); // TODO multiple participants in single dfsp
                     }
                 }
             }
+        }
+    }
+
+    private void updateCallbackUrls(Dfsp dfsp) {
+        for (CallbackMapping mapping : callbackMappingProperties.getCallbackMappings()) {
+            addCallbackUrl(dfsp, mapping);
         }
     }
 

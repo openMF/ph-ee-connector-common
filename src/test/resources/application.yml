@@ -1,5 +1,5 @@
 onboarding:
-  enabled: false
+  enabled: true
 
 oracle:
   host: "http://account-oracle.mifos.io:4100"
@@ -9,7 +9,7 @@ local:
   central-ledger-host: http://localhost:3001
 
 mojaloop:
-  local: true
+  local: false
   currency: "TZS"
   contact-email: "contact@email.com"
   host: "http://40.114.81.46"
@@ -66,43 +66,49 @@ mojaloop:
   dfsps:
     - enabled: true
       addToExternalOracle: false
+      registerOnlyCallbackUrls: true
       id: "in01tn01"
       partyIdType: "MSISDN"
       partyIdentifier: "27710101999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://localhost:10000/switch"
+      domain: "http://${mojaloop.dfsps[0].id}.mifos.io/switch"
     - enabled: true
       addToExternalOracle: false
+      registerOnlyCallbackUrls: true
       id: "in01tn02"
       partyIdType: "MSISDN"
       partyIdentifier: "27710102999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://localhost:10001/switch"
+      domain: "http://${mojaloop.dfsps[1].id}.mifos.io/switch"
     - enabled: false
-      addToExternalOracle: true
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
       id: "in02tn03"
       partyIdType: "MSISDN"
       partyIdentifier: "27710203999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://in02tn03.mifos.io/switch"
+      domain: "http://${mojaloop.dfsps[2].id}.mifos.io/switch"
     - enabled: false
-      addToExternalOracle: true
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
       id: "in02tn04"
       partyIdType: "MSISDN"
       partyIdentifier: "27710204999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://in02tn04.mifos.io/switch"
+      domain: "http://${mojaloop.dfsps[3].id}.mifos.io/switch"
     - enabled: false
-      addToExternalOracle: true
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
       id: "in03tn05"
       partyIdType: "MSISDN"
       partyIdentifier: "27710305999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://in03tn05.mifos.io/switch"
+      domain: "http://${mojaloop.dfsps[4].id}.mifos.io/switch"
     - enabled: false
-      addToExternalOracle: true
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
       id: "in03tn06"
       partyIdType: "MSISDN"
       partyIdentifier: "27710306999"
       fundsInPrepareAmount: "1000000"
-      domain: "http://in03tn06.mifos.io/switch"
+      domain: "http://${mojaloop.dfsps[5].id}.mifos.io/switch"
