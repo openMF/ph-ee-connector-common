@@ -9,9 +9,9 @@ package org.mifos.connector.common.mojaloop.dto;
 
 public class ComplexName extends PartyIdInfo {
 
-    private String firstName = "";
-    private String middleName = "";
-    private String lastName = "";
+    private String firstName;
+    private String middleName;
+    private String lastName;
 
     public String getFirstName() {
         return firstName;
@@ -35,22 +35,5 @@ public class ComplexName extends PartyIdInfo {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    void update(ComplexName oName) {
-        if (oName == null)
-            return;
-
-        String oFn = oName.firstName;
-        if (oFn != null)
-            firstName = oFn;
-
-        String oMn = oName.middleName;
-        if (oFn != null)
-            middleName = oMn;
-
-        String oLn = oName.lastName;
-        if (oLn != null)
-            lastName = oLn;
     }
 }

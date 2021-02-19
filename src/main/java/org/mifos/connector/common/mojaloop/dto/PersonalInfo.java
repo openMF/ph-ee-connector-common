@@ -27,19 +27,4 @@ public class PersonalInfo {
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
-
-    void update(PersonalInfo oInfo) {
-        if (oInfo == null)
-            return;
-
-        ComplexName oName = oInfo.complexName;
-        if (complexName == null)
-            complexName = oName;
-        else
-            complexName.update(oName);
-
-        String oDate = oInfo.dateOfBirth;
-        if (oDate != null)
-            dateOfBirth = oDate;
-    }
 }

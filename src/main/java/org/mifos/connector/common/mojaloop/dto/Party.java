@@ -13,11 +13,6 @@ import com.ilp.conditions.models.pdp.PartyPersonalInfo;
 import javax.validation.constraints.NotNull;
 import java.beans.Transient;
 
-/**
- * {
- * 	accountId: ""
- * }
- */
 public class Party {
 
     @NotNull
@@ -70,36 +65,6 @@ public class Party {
 
     public void setPersonalInfo(PersonalInfo personalInfo) {
         this.personalInfo = personalInfo;
-    }
-
-    public void update(Party oParty) {
-        if (oParty == null)
-            return;
-
-        update(oParty.partyIdInfo);
-
-        String oMerchantCode = oParty.merchantClassificationCode;
-        if (oMerchantCode != null) {
-            merchantClassificationCode = oMerchantCode;
-        }
-
-        String oName = oParty.name;
-        if (oName == null) {
-            name = oName;
-        }
-
-        PersonalInfo oInfo = oParty.personalInfo;
-        if (personalInfo == null)
-            personalInfo = oInfo;
-        else
-            personalInfo.update(oInfo);
-    }
-
-    public void update(PartyIdInfo oPartyIdInfo) {
-        if (oPartyIdInfo == null)
-            return;
-
-        partyIdInfo.update(oPartyIdInfo);
     }
 
     @Transient

@@ -24,7 +24,7 @@ import static java.util.stream.StreamSupport.stream;
 
 /**
  * !!!READ COMMENTS!!!
- * Supports Mojaloop version: 10.1.0
+ * Compatible with Mojaloop version: 11.0.0
  */
 @SpringBootApplication
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -178,47 +178,57 @@ public class OnboardDfsps {
 
     private void addHubAccountReconciliation() {
         JSONObject body = new JSONObject();
-        body.put("type", "HUB_RECONCILIATION");
+        String hub = "HUB_RECONCILIATION";
+        body.put("type", hub);
         body.put("currency", mojaCurrency);
 
         rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubAccountsPath, mojaCentralLedgerService, body.toString(), h -> {
         });
+        logger.info("Hub '{}' added", hub);
     }
 
     private void addHubAccountMultilateralSettlement() {
         JSONObject body = new JSONObject();
-        body.put("type", "HUB_MULTILATERAL_SETTLEMENT");
+        String hub = "HUB_MULTILATERAL_SETTLEMENT";
+        body.put("type", hub);
         body.put("currency", mojaCurrency);
 
         rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubAccountsPath, mojaCentralLedgerService, body.toString(), h -> {
         });
+        logger.info("Hub '{}' added", hub);
     }
 
     private void setHubEndpointSettlementTransferPositionChangeEmail() {
         JSONObject body = new JSONObject();
-        body.put("type", "SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL");
+        String email = "SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL";
+        body.put("type", email);
         body.put("value", mojaConectacEmail);
 
         rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(), h -> {
         });
+        logger.info("Email '{}' added", email);
     }
 
     private void setHubEndpointNetDebitCapAdjustmentEmail() {
         JSONObject body = new JSONObject();
-        body.put("type", "NET_DEBIT_CAP_ADJUSTMENT_EMAIL");
+        String email = "NET_DEBIT_CAP_ADJUSTMENT_EMAIL";
+        body.put("type", email);
         body.put("value", mojaConectacEmail);
 
         rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(), h -> {
         });
+        logger.info("Email '{}' added", email);
     }
 
     private void setHubEndpointNetDebitCapThresholdBreachEmail() {
         JSONObject body = new JSONObject();
-        body.put("type", "NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL");
+        String email = "NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL";
+        body.put("type", email);
         body.put("value", mojaConectacEmail);
 
         rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(), h -> {
         });
+        logger.info("Email '{}' added", email);
     }
 
     private void createOracle() {
@@ -232,6 +242,7 @@ public class OnboardDfsps {
         body.put("endpoint", endpoint);
 
         rest(mojaHost + oraclesPath, mojaAccountLookupService, body.toString(), h -> h.add("Date", "2019-09-20 08:52:19"));
+        logger.info("Oracle type '{}' with currency '{}' added", oraclesType, mojaCurrency);
     }
 
     private String addDfsp(Dfsp dfsp) {
