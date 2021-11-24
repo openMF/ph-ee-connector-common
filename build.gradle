@@ -4,8 +4,11 @@
 
 plugins {
     id 'java'
+    id 'maven'
     id 'maven-publish'
 }
+
+
 
 repositories {
     mavenLocal()
@@ -46,4 +49,23 @@ publishing {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+artifactory {
+    contextUrl = 'https://fynarfin.jfrog.io' // base artifactory url
+    publish {
+        repository {
+            repoKey = 'fyn-libs-release'   // Artifactory repository key to publish to
+            username = 'avik@fynarfin.io'      // publisher user name
+            password = '*****'       // publisher password
+            maven = true
+        }
+    }
+    defaults {
+        publications ('maven')
+    }
+}
+
+artifactoryPublish { 
+    dependsOn jar
 }
