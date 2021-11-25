@@ -7,15 +7,10 @@
  */
 package org.mifos.connector.common.mojaloop.ilp;
 
-
-import org.interledger.codecs.InterledgerPacketCodec;
-import org.interledger.codecs.packettypes.InterledgerPacketType;
-import org.interledger.codecs.packettypes.PaymentPacketType;
-
-public interface InterledgerPaymentCodec extends InterledgerPacketCodec<InterledgerPayment> {
-    InterledgerPacketType TYPE = new PaymentPacketType();
-
-    default InterledgerPacketType getTypeId() {
-        return TYPE;
-    }
-}
+//public interface InterledgerPaymentCodec extends InterledgerPacketCodec<InterledgerPayment> {
+//    InterledgerPacketType TYPE = new PaymentPacketType();
+//
+//    default InterledgerPacketType getTypeId() {
+//        return TYPE;
+//    }
+//}
