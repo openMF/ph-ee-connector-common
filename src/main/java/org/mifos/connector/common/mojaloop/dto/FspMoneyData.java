@@ -7,9 +7,6 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import com.ilp.conditions.models.pdp.Money;
-import org.mifos.connector.common.util.ContextUtil;
-
 import java.beans.Transient;
 import java.math.BigDecimal;
 
@@ -42,13 +39,13 @@ public class FspMoneyData {
         this.currency = currency;
     }
 
-    @Transient
-    public Money toIlpMoney() {
-        Money money = new Money();
-        money.setAmount(ContextUtil.formatAmount(amount));
-        money.setCurrency(currency);
-        return money;
-    }
+//    @Transient
+//    public Money toIlpMoney() {
+//        Money money = new Money();
+//        money.setAmount(ContextUtil.formatAmount(amount));
+//        money.setCurrency(currency);
+//        return money;
+//    }
 
     @Transient
     public static MoneyData toMoneyData(FspMoneyData moneyData) {

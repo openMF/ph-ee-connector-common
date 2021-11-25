@@ -1,0 +1,114 @@
+onboarding:
+  enabled: true
+
+oracle:
+  host: "http://account-oracle.mifos.io:4100"
+  endpoint: "/oracle/participants/{partyIdType}/{partyIdentifier}"
+
+local:
+  central-ledger-host: http://localhost:3001
+
+mojaloop:
+  local: false
+  currency: "TZS"
+  contact-email: "contact@email.com"
+  host: "http://40.114.81.46"
+  account-lookup-service: "account-lookup-service-admin.local"
+  central-ledger-service: "central-ledger.local"
+  do-hub-onboard: false
+  participants:
+    endpoint: "/participants"
+    position-and-limit-endpoint: "${mojaloop.participants.endpoint}/{dfspid}/initialPositionAndLimits"
+    registration-endpoint: "${mojaloop.participants.endpoint}/{dfspid}/endpoints"
+    accounts-endpoint: "${mojaloop.participants.endpoint}/{dfspid}/accounts/{settlementAccountId}"
+    hub:
+      endpoint: "/Hub"
+      accounts: "${mojaloop.participants.endpoint}${mojaloop.participants.hub.endpoint}/accounts"
+      endpoints: "${mojaloop.participants.endpoint}${mojaloop.participants.hub.endpoint}/endpoints"
+  do-oracle-onboard: false
+  oracles:
+    type: "MSISDN"
+    endpoint: /oracles
+  do-dfsp-onboard: true
+  callbackMappings:
+    - type: "FSPIOP_CALLBACK_URL_PARTICIPANT_PUT"
+      value: "{dfspDomain}/participants/{{partyIdType}}/{{partyIdentifier}}"
+    - type: "FSPIOP_CALLBACK_URL_PARTICIPANT_PUT_ERROR"
+      value: "{dfspDomain}/participants/{{partyIdType}}/{{partyIdentifier}}/error"
+    - type: "FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT"
+      value: "{dfspDomain}/participants/{{requestId}}"
+    - type: "FSPIOP_CALLBACK_URL_PARTICIPANT_BATCH_PUT_ERROR"
+      value: "{dfspDomain}/participants/{{requestId}}/error"
+    - type: "FSPIOP_CALLBACK_URL_PARTIES_GET"
+      value: "{dfspDomain}/parties/{{partyIdType}}/{{partyIdentifier}}"
+    - type: "FSPIOP_CALLBACK_URL_PARTIES_PUT"
+      value: "{dfspDomain}/parties/{{partyIdType}}/{{partyIdentifier}}"
+    - type: "FSPIOP_CALLBACK_URL_PARTIES_PUT_ERROR"
+      value: "{dfspDomain}/parties/{{partyIdType}}/{{partyIdentifier}}/error"
+    - type: "FSPIOP_CALLBACK_URL_QUOTES"
+      value: "{dfspDomain}"
+    - type: "FSPIOP_CALLBACK_URL_TRANSFER_POST"
+      value: "{dfspDomain}/transfers"
+    - type: "FSPIOP_CALLBACK_URL_TRANSFER_PUT"
+      value: "{dfspDomain}/transfers/{{transferId}}"
+    - type: "FSPIOP_CALLBACK_URL_TRANSFER_ERROR"
+      value: "{dfspDomain}/transfers/{{transferId}}/error"
+    - type: "FSPIOP_CALLBACK_URL_TRX_REQ_SERVICE"
+      value: "{dfspDomain}"
+    - type: "FSPIOP_CALLBACK_URL_AUTHORIZATIONS"
+      value: "{dfspDomain}"
+    - type: "NET_DEBIT_CAP_ADJUSTMENT_EMAIL"
+      value: "{dfspDomain}"
+    - type: "SETTLEMENT_TRANSFER_POSITION_CHANGE_EMAIL"
+      value: "{dfspDomain}"
+    - type: "NET_DEBIT_CAP_THRESHOLD_BREACH_EMAIL"
+      value: "{dfspDomain}"
+  dfsps:
+    - enabled: true
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: true
+      id: "in01tn01"
+      partyIdType: "MSISDN"
+      partyIdentifier: "27710101999"
+      fundsInPrepareAmount: "1000000"
+      domain: "http://${mojaloop.dfsps[0].id}.mifos.io/switch"
+    - enabled: true
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: true
+      id: "in01tn02"
+      partyIdType: "MSISDN"
+      partyIdentifier: "27710102999"
+      fundsInPrepareAmount: "1000000"
+      domain: "http://${mojaloop.dfsps[1].id}.mifos.io/switch"
+    - enabled: false
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
+      id: "in02tn03"
+      partyIdType: "MSISDN"
+      partyIdentifier: "27710203999"
+      fundsInPrepareAmount: "1000000"
+      domain: "http://${mojaloop.dfsps[2].id}.mifos.io/switch"
+    - enabled: false
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
+      id: "in02tn04"
+      partyIdType: "MSISDN"
+      partyIdentifier: "27710204999"
+      fundsInPrepareAmount: "1000000"
+      domain: "http://${mojaloop.dfsps[3].id}.mifos.io/switch"
+    - enabled: false
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
+      id: "in03tn05"
+      partyIdType: "MSISDN"
+      partyIdentifier: "27710305999"
+      fundsInPrepareAmount: "1000000"
+      domain: "http://${mojaloop.dfsps[4].id}.mifos.io/switch"
+    - enabled: false
+      addToExternalOracle: false
+      registerOnlyCallbackUrls: false
+      id: "in03tn06"
+      partyIdType: "MSISDN"
+      partyIdentifier: "27710306999"
+      fundsInPrepareAmount: "1000000"
+      domain: "http://${mojaloop.dfsps[5].id}.mifos.io/switch"
