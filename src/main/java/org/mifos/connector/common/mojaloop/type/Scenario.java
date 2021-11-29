@@ -13,5 +13,6 @@ public enum Scenario {
     WITHDRAWAL,
     TRANSFER,
     PAYMENT,
-    REFUND;
+    REFUND,
+    MPESA;
 }
