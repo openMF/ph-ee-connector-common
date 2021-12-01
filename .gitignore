@@ -2,6 +2,7 @@ target/
 
 .gradle
 .gradle/
+!gradle/wrapper/gradle-wrapper.jar
 
 ### STS ###
 .apt_generated
