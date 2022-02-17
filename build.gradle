@@ -12,7 +12,7 @@ plugins {
 
 
 repositories {
-    mavenLocal()
+    // mavenLocal()
     maven {
         url = uri('https://repo.maven.apache.org/maven2')
     }
@@ -20,6 +20,9 @@ repositories {
     // maven {
     //     url = uri('https://modusbox.jfrog.io/modusbox/libs-release')
     // }
+    maven {
+        url = uri('https://fynarfin.jfrog.io/artifactory/fyn-libs-snapshot-local/')
+    }
 }
 
 dependencies {
