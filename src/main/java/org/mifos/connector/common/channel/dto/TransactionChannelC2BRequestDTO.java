@@ -1,17 +1,18 @@
 package org.mifos.connector.common.channel.dto;
 
 import org.mifos.connector.common.gsma.dto.GsmaParty;
+import org.mifos.connector.common.mojaloop.dto.MoneyData;
 import org.mifos.connector.common.mojaloop.dto.TransactionType;
 
 import java.util.Arrays;
 
-public class TransactionChannelCollectionRequestDTO {
+public class TransactionChannelC2BRequestDTO {
 
     private GsmaParty[] payer;
-    private String amount;
+    private MoneyData amount;
     private TransactionType transactionType;
 
-    public TransactionChannelCollectionRequestDTO() {
+    public TransactionChannelC2BRequestDTO() {
     }
 
     public GsmaParty[] getPayer() {
@@ -22,11 +23,11 @@ public class TransactionChannelCollectionRequestDTO {
         this.payer = payer;
     }
 
-    public String getAmount() {
+    public MoneyData getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(MoneyData amount) {
         this.amount = amount;
     }
 
