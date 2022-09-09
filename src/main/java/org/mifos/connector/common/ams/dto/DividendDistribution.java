@@ -20,7 +20,7 @@ package org.mifos.connector.common.ams.dto;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 public class DividendDistribution {
 

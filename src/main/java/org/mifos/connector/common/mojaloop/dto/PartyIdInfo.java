@@ -9,8 +9,8 @@ package org.mifos.connector.common.mojaloop.dto;
 
 import org.mifos.connector.common.mojaloop.type.IdentifierType;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class PartyIdInfo {
 

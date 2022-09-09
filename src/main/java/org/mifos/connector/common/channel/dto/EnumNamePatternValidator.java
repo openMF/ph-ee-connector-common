@@ -1,7 +1,7 @@
 package org.mifos.connector.common.channel.dto;
 
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 import java.util.stream.Stream;
 
 public class EnumNamePatternValidator implements ConstraintValidator<EnumNamePattern, Enum<?>> {
