@@ -53,7 +53,7 @@ public class PaymentHubException extends Exception {
             return this;
         }
 
-        public PhExceptionBuilder withErrorInformation(PaymentHubErrors errorInformation) {
+        public PhExceptionBuilder withErrorInformation(PaymentHubError errorInformation) {
             this.errorCode = errorInformation.getErrorCode();
             this.errorDescription = errorInformation.getErrorDescription();
             return this;
@@ -75,7 +75,7 @@ public class PaymentHubException extends Exception {
                 throw new IllegalArgumentException("Error code is required");
             }
             if (errorDescription == null) {
-                PaymentHubErrors paymentHubErrors = PaymentHubErrors.fromCode(this.errorCode);
+                PaymentHubError paymentHubErrors = PaymentHubError.fromCode(this.errorCode);
                 this.errorCode = paymentHubErrors.getErrorCode();
                 this.errorDescription = paymentHubErrors.getErrorDescription();
             }

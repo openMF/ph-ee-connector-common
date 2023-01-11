@@ -1,6 +1,6 @@
 package org.mifos.connector.common.exception.mapper;
 
-import org.mifos.connector.common.exception.PaymentHubErrors;
+import org.mifos.connector.common.exception.PaymentHubError;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,31 +12,31 @@ import java.util.Map;
  */
 public abstract class ErrorMapper implements Mapper {
 
-    private Map<String, PaymentHubErrors> errorMap = new HashMap<>();
+    private Map<String, PaymentHubError> errorMap = new HashMap<>();
 
     public ErrorMapper() {
         configure();
     }
 
     @Override
-    public void add(String externalErrorCode, PaymentHubErrors internalError) {
+    public void add(String externalErrorCode, PaymentHubError internalError) {
         errorMap.put(externalErrorCode, internalError);
     }
 
     @Override
     public void add(String externalErrorCode, String internalError) {
-        errorMap.put(externalErrorCode, PaymentHubErrors.fromCode(internalError));
+        errorMap.put(externalErrorCode, PaymentHubError.fromCode(internalError));
     }
 
     @Override
-    public PaymentHubErrors getInternalError(String externalErrorCode) {
+    public PaymentHubError getInternalError(String externalErrorCode) {
         return errorMap.get(externalErrorCode);
     }
 
     @Override
     public String getExternalError(String internalErrorCode) {
-        PaymentHubErrors paymentHubErrors = PaymentHubErrors.fromCode(internalErrorCode);
-        PaymentHubErrors filterResult = errorMap.values()
+        PaymentHubError paymentHubErrors = PaymentHubError.fromCode(internalErrorCode);
+        PaymentHubError filterResult = errorMap.values()
                 .stream()
                 .filter(paymentHubErrors::equals)
                 .findFirst().orElseThrow(() ->
@@ -46,8 +46,8 @@ public abstract class ErrorMapper implements Mapper {
     }
 
     @Override
-    public String getExternalError(PaymentHubErrors internalErrorCode) {
-        PaymentHubErrors filterResult = errorMap.values()
+    public String getExternalError(PaymentHubError internalErrorCode) {
+        PaymentHubError filterResult = errorMap.values()
                 .stream()
                 .filter(internalErrorCode::equals)
                 .findFirst().orElseThrow(() ->
