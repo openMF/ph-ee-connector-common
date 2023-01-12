@@ -5,6 +5,8 @@ import lombok.ToString;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubException;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -18,6 +20,7 @@ public class PhErrorDTO {
     private String errorDescription;
     private String developerMessage;
     private String defaultUserMessage;
+    private List<ErrorParameter> errorParameters;
 
     private PhErrorDTO(PhErrorDTOBuilder builder) {
         this.errorCategory = builder.errorCategory;
@@ -25,6 +28,7 @@ public class PhErrorDTO {
         this.errorDescription = builder.errorDescription;
         this.developerMessage = builder.developerMessage;
         this.defaultUserMessage = builder.defaultUserMessage;
+        this.errorParameters = builder.errorParameters;
     }
 
     /**
@@ -34,6 +38,9 @@ public class PhErrorDTO {
      * new PhErrorDTOBuilder(PaymentHubError.IdNotFound).build()
      *
      * new PhErrorDTOBuilder("idnotfound).build()
+     *
+     * new PhErrorDTOBuilder(PaymentHubError.IdNotFound)
+     *     .addErrorParameter("accountId", "1231231").build()
      */
     public static class PhErrorDTOBuilder {
 
@@ -42,6 +49,7 @@ public class PhErrorDTO {
         private String errorDescription;
         private String developerMessage;
         private String defaultUserMessage;
+        private List<ErrorParameter> errorParameters;
 
         // sets not null fields using [PaymentHubError] object
         public PhErrorDTOBuilder(PaymentHubError error) {
@@ -89,6 +97,14 @@ public class PhErrorDTO {
         // sets the default user message
         public PhErrorDTOBuilder defaultUserMessage(String defaultUserMessage) {
             this.defaultUserMessage = defaultUserMessage;
+            return this;
+        }
+
+        public PhErrorDTOBuilder addErrorParameter(String key, String value) {
+            if (this.errorParameters == null) {
+                this.errorParameters = new ArrayList<>();
+            }
+            this.errorParameters.add(new ErrorParameter(key, value));
             return this;
         }
 
