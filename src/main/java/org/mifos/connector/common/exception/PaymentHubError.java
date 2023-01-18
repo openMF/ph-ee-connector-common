@@ -10,6 +10,20 @@ import java.util.stream.Collectors;
 public enum PaymentHubError {
 
     // Interoperability Errors;
+    CommunicationError(PaymentHubErrorCategory.Interop, "CommunicationError", "Communication error"),
+    DestinationCommunicationError(PaymentHubErrorCategory.Interop, "DestinationCommunicationError", "Destination communication error"),
+    ExtGenericServerError(PaymentHubErrorCategory.Interop, "ExtGenericServerError", "Generic server error"),
+    ExtInternalServerError(PaymentHubErrorCategory.Interop, "ExtInternalServerError", "Internal server error"),
+    NotImplemented(PaymentHubErrorCategory.Interop, "NotImplemented", "Not implemented"),
+    ServiceDenied(PaymentHubErrorCategory.Interop, "ServiceDenied", "Service currently unavailable"),
+    TimeOut(PaymentHubErrorCategory.Interop, "TimeOut", "Server timed-out"),
+    ConnectionReset(PaymentHubErrorCategory.Interop, "ConnectionReset", "Connection reset by server/ request cancelled"),
+    GenericClientError(PaymentHubErrorCategory.Interop, "GenericClientError", "Generic client error"),
+    UnknownURL(PaymentHubErrorCategory.Interop, "UnknownURL", "Unknown URI"),
+    AddPartyError(PaymentHubErrorCategory.Interop, "AddPartyError", "Add Party information error"),
+    ExtValidationError(PaymentHubErrorCategory.Interop, "ExtValidationError", "Generic validation error"),
+    SyntaxError(PaymentHubErrorCategory.Interop, "SyntaxError", "Malformed syntax"),
+    RequiredElement(PaymentHubErrorCategory.Interop, "RequiredElement", "Missing mandatory element"),
     IdNotFound(PaymentHubErrorCategory.Interop, "IdNotFound", "Generic ID not found"),
     PayerFSPIdNotFound(PaymentHubErrorCategory.Interop, "PayerFSPIdNotFound", "Payer FSP ID not found"),
     PayeeFSPIdNotFound(PaymentHubErrorCategory.Interop, "PayeeFSPIdNotFound", "Payee FSP ID not found"),
@@ -19,9 +33,14 @@ public enum PaymentHubError {
     TransactionIdNotFound(PaymentHubErrorCategory.Interop, "TransactionIdNotFound", "Transaction ID not found"),
     TransferIdNotFound(PaymentHubErrorCategory.Interop, "TransferIdNotFound", "Transfer ID not found"),
     InactiveAccountStatus(PaymentHubErrorCategory.Interop, "InactiveAccountStatus", "Inactive account status"),
+    TransferExpired(PaymentHubErrorCategory.Interop, "TransferExpired", "Transfer expired"),
     PayerCurrencyInvalid(PaymentHubErrorCategory.Interop, "PayerCurrencyInvalid", "Payer currency invalid"),
+    GenericPayerError(PaymentHubErrorCategory.Interop, "GenericPayerError", "Generic Payer error"),
+    PayerFSPTransactionTypeInvalid(PaymentHubErrorCategory.Interop, "PayerFSPTransactionTypeInvalid", "Payer FSP Unsupported Transaction type"),
+    PayerInsufficientBalance(PaymentHubErrorCategory.Interop, "PayerInsufficientBalance", "Payer Party Insufficient Balance"),
     PayeeCurrencyInvalid(PaymentHubErrorCategory.Interop, "PayeeCurrencyInvalid", "Payee currency invalid"),
-    PayeeFSPTransactionTypeInvalid(PaymentHubErrorCategory.Interop, "PayeeFSPTransactionTypeInvalid", "PayeeFSPTransactionTypeInvalid");
+    PayeeUnauthorized(PaymentHubErrorCategory.Interop, "PayeeUnauthorized", "Payee permission error"),
+    PayeeFSPTransactionTypeInvalid(PaymentHubErrorCategory.Interop, "PayeeFSPTransactionTypeInvalid", "Payee FSP unsupported transaction type");
 
     private PaymentHubErrorCategory errorCategory;
     private String errorCode;
