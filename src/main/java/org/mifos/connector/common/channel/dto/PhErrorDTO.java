@@ -1,6 +1,8 @@
 package org.mifos.connector.common.channel.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubException;
@@ -9,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
+@NoArgsConstructor
 public class PhErrorDTO {
 
     @NotNull

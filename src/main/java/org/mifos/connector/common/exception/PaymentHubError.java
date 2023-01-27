@@ -40,7 +40,14 @@ public enum PaymentHubError {
     PayerInsufficientBalance(PaymentHubErrorCategory.Interop, "PayerInsufficientBalance", "Payer Party Insufficient Balance"),
     PayeeCurrencyInvalid(PaymentHubErrorCategory.Interop, "PayeeCurrencyInvalid", "Payee currency invalid"),
     PayeeUnauthorized(PaymentHubErrorCategory.Interop, "PayeeUnauthorized", "Payee permission error"),
-    PayeeFSPTransactionTypeInvalid(PaymentHubErrorCategory.Interop, "PayeeFSPTransactionTypeInvalid", "Payee FSP unsupported transaction type");
+    PayeeFSPTransactionTypeInvalid(PaymentHubErrorCategory.Interop, "PayeeFSPTransactionTypeInvalid", "Payee FSP unsupported transaction type"),
+    PayerFspNotConfigured(PaymentHubErrorCategory.Interop, "PayerFspNotConfigured", "Payer FSP not configured"),
+    PayeeFspNotConfigured(PaymentHubErrorCategory.Interop, "PayeeFspNotConfigured", "Payee FSP not configured"),
+    // validation errors
+    FormatError(PaymentHubErrorCategory.Validation, "FormatError", "The specified property contents do not conform to the format required for this Property."),
+    NegativeValue(PaymentHubErrorCategory.Validation, "NegativeValue", "The amount supplied is negative and this is not allowed for the given service."),
+    MandatoryValueNotSupplied(PaymentHubErrorCategory.Validation, "MandatoryValueNotSupplied", "A mandatory value has not been provided in the header and/or JSON body."),
+    SamePartiesError(PaymentHubErrorCategory.BusinessRule, "SamePartiesError", "The debit and credit parties are the same.");
 
     private PaymentHubErrorCategory errorCategory;
     private String errorCode;
