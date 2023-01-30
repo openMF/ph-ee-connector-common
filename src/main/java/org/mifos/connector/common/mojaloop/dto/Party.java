@@ -7,8 +7,15 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
+import lombok.*;
+
 import javax.validation.constraints.NotNull;
 
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 public class Party {
 
     @NotNull
@@ -17,50 +24,8 @@ public class Party {
     private String name; // optional
     private PersonalInfo personalInfo; // optional
 
-    Party() {
-    }
-
-    public Party(PartyIdInfo partyIdInfo, String merchantClassificationCode, String name, PersonalInfo personalInfo) {
-        this.partyIdInfo = partyIdInfo;
-        this.merchantClassificationCode = merchantClassificationCode;
-        this.name = name;
-        this.personalInfo = personalInfo;
-    }
-
     public Party(PartyIdInfo partyIdInfo) {
         this(partyIdInfo, null, null, null);
-    }
-
-    public PartyIdInfo getPartyIdInfo() {
-        return partyIdInfo;
-    }
-
-    public void setPartyIdInfo(PartyIdInfo partyIdInfo) {
-        this.partyIdInfo = partyIdInfo;
-    }
-
-    public String getMerchantClassificationCode() {
-        return merchantClassificationCode;
-    }
-
-    public void setMerchantClassificationCode(String merchantClassificationCode) {
-        this.merchantClassificationCode = merchantClassificationCode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public PersonalInfo getPersonalInfo() {
-        return personalInfo;
-    }
-
-    public void setPersonalInfo(PersonalInfo personalInfo) {
-        this.personalInfo = personalInfo;
     }
 
 //    @Transient
