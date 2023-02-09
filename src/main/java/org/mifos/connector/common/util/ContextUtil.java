@@ -60,4 +60,5 @@ public class ContextUtil {
     public static String formatAmount(BigDecimal amount) {
         return amount == null ? null : AMOUNT_FORMAT.format(amount);
     }
+
 }

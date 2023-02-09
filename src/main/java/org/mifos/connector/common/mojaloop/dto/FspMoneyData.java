@@ -26,6 +26,14 @@ public class FspMoneyData {
         this.currency = currency;
     }
 
+    @Override
+    public String toString() {
+        return "FspMoneyData{" +
+                "amount=" + amount +
+                ", currency='" + currency + '\'' +
+                '}';
+    }
+
     public BigDecimal getAmount() {
         return amount;
     }
