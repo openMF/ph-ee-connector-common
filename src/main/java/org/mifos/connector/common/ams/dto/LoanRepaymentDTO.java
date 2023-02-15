@@ -1,5 +1,6 @@
 package org.mifos.connector.common.ams.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
@@ -8,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoanRepaymentDTO {
     @JsonProperty("transactionDate")
     public String transactionDate;
