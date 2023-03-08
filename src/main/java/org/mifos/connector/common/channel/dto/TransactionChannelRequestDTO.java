@@ -134,10 +134,8 @@ public class TransactionChannelRequestDTO {
                 ", amountType=" + amountType +
                 ", amount=" + amount +
                 ", transactionType=" + transactionType +
-                ", geoCode=" + geoCode +
                 ", note='" + note + '\'' +
                 ", expiration='" + expiration + '\'' +
-                ", extensionList=" + extensionList +
                 ", customData=" + customData +
                 '}';
     }
