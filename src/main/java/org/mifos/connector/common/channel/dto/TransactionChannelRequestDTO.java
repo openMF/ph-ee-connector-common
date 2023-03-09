@@ -7,6 +7,7 @@
  */
 package org.mifos.connector.common.channel.dto;
 
+import org.mifos.connector.common.gsma.dto.CustomData;
 import org.mifos.connector.common.mojaloop.dto.ExtensionList;
 import org.mifos.connector.common.mojaloop.dto.Party;
 import org.mifos.connector.common.mojaloop.type.AmountType;
@@ -34,6 +35,15 @@ public class TransactionChannelRequestDTO {
     private String note;
     private String expiration;
     private ExtensionList extensionList;
+    private CustomData customData;
+
+    public CustomData getCustomData() {
+        return customData;
+    }
+
+    public void setCustomData(CustomData customData) {
+        this.customData = customData;
+    }
 
     public String getClientRefId() {
         return clientRefId;
@@ -125,7 +135,8 @@ public class TransactionChannelRequestDTO {
                 ", amount=" + amount +
                 ", transactionType=" + transactionType +
                 ", note='" + note + '\'' +
-                ", expiration=" + expiration +
+                ", expiration='" + expiration + '\'' +
+                ", customData=" + customData +
                 '}';
     }
 }
