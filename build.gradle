@@ -23,6 +23,7 @@ dependencies {
     implementation 'com.auth0:java-jwt:3.10.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'
     implementation 'org.json:json:20190722'
+    implementation 'io.camunda:zeebe-client-java:1.3.1'
     implementation 'org.apache.camel:camel-core:3.4.0'
     //Open Source repositories should not link to private repositories
     //implementation 'com.interop.ilp.conditions:interop-ilp-conditions:1.3'
