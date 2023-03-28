@@ -11,5 +11,5 @@ import lombok.ToString;
 @NoArgsConstructor
 public class CustomData {
     public String key;
-    public String value;
+    public Object value;
 }
