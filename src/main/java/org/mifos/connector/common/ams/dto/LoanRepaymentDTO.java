@@ -12,7 +12,8 @@ public class LoanRepaymentDTO {
     public String transactionAmount;
     @JsonProperty("locale")
     public String locale;
-
+    @JsonProperty("dateFormat")
+    public String dateFormat;
     @Override
     public String toString() {
         return "LoanRepaymentDTO{" +
@@ -23,9 +24,6 @@ public class LoanRepaymentDTO {
                 ", dateFormat='" + dateFormat + '\'' +
                 '}';
     }
-
-    @JsonProperty("dateFormat")
-    public String dateFormat;
 
     public String getTransactionDate() {
         return transactionDate;
