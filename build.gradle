@@ -22,8 +22,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework:spring-webmvc'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'javax.servlet:javax.servlet-api:3.1.0'
     implementation 'com.auth0:java-jwt:3.10.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'

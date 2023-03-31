@@ -47,7 +47,8 @@ public enum PaymentHubError {
     FormatError(PaymentHubErrorCategory.Validation, "FormatError", "The specified property contents do not conform to the format required for this Property."),
     NegativeValue(PaymentHubErrorCategory.Validation, "NegativeValue", "The amount supplied is negative and this is not allowed for the given service."),
     MandatoryValueNotSupplied(PaymentHubErrorCategory.Validation, "MandatoryValueNotSupplied", "A mandatory value has not been provided in the header and/or JSON body."),
-    SamePartiesError(PaymentHubErrorCategory.BusinessRule, "SamePartiesError", "The debit and credit parties are the same.");
+    SamePartiesError(PaymentHubErrorCategory.BusinessRule, "SamePartiesError", "The debit and credit parties are the same."),
+    InvalidJsonWebSignature(PaymentHubErrorCategory.Validation, "InvalidJsonWebSignature", "The JWS passed is not valid");
 
     private PaymentHubErrorCategory errorCategory;
     private String errorCode;
