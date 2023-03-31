@@ -11,3 +11,7 @@ zeebe:
 timer: "PT45S"
 
 transaction-id-length: -1
+
+jws:
+  key:
+    public: "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtPuP1m/jpt5O71c+5oNjfaZCCFuiz63936hoL2SfGvJtbRZjKZf5XHF8terfBzXb0W8HQ6o/204HOg/mm/fVGjdM29kiIB26u12hWNlJybqNvcUWDww0i54OkXPtvVoDG2DyTz6sCy5Y3sTxyVB5+hWs+lLeSyJ8cHzBH67HLfgsuZ+e3QNJkKtps/3Hkn7GE6gG4VApepdLNALvJY8v2l70Xkc4R2RRPhfBl5pWF+pFAUcXHRarybr+irjFLpM86ph/K1g/EuZ/LPiYGcizSR/U5jZhYDABzacPwEfqKILiLuzjCip3DpahfN0vZ/5Nel8+3y5zRVDDlamTqjjbiwIDAQAB"
