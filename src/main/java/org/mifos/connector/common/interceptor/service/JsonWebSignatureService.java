@@ -39,11 +39,8 @@ public class JsonWebSignatureService implements JsonWebSignatureVerifier {
     public boolean verify(String data, String signature, String publicKey) throws
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
             BadPaddingException, InvalidKeySpecException, InvalidKeyException {
-        System.out.println("I am in verify");
         String hashedBody = SecurityUtil.hash(data);
-        System.out.println("Hashed body: " + hashedBody);
         String decodedHash = SecurityUtil.decrypt(signature, publicKeyString);
-        System.out.println("Decoded hash: " + decodedHash);
         return hashedBody.equals(decodedHash);
     }
 

@@ -48,7 +48,9 @@ public enum PaymentHubError {
     NegativeValue(PaymentHubErrorCategory.Validation, "NegativeValue", "The amount supplied is negative and this is not allowed for the given service."),
     MandatoryValueNotSupplied(PaymentHubErrorCategory.Validation, "MandatoryValueNotSupplied", "A mandatory value has not been provided in the header and/or JSON body."),
     SamePartiesError(PaymentHubErrorCategory.BusinessRule, "SamePartiesError", "The debit and credit parties are the same."),
-    InvalidJsonWebSignature(PaymentHubErrorCategory.Validation, "InvalidJsonWebSignature", "The JWS passed is not valid");
+    InvalidJsonWebSignature(PaymentHubErrorCategory.Validation, "InvalidJsonWebSignature", "The JWS passed is not valid"),
+    InvalidPublicKeyConfigured(PaymentHubErrorCategory.Validation, "InvalidPublicKeyConfigured", "The public key configured is invalid"),
+    JWSVerificationServerError(PaymentHubErrorCategory.System, "JWSVerificationServerError", "Internal server error while verifying JWS");
 
     private PaymentHubErrorCategory errorCategory;
     private String errorCode;
