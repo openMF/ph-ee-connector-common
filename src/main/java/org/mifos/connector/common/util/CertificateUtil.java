@@ -1,9 +1,11 @@
 package org.mifos.connector.common.util;
 
 import org.apache.commons.codec.binary.Base64;
-import sun.security.x509.X509CertImpl;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.security.PublicKey;
 import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 
 public class CertificateUtil {
@@ -16,7 +18,9 @@ public class CertificateUtil {
      */
     public static X509Certificate parseX509Certificate(String encodedCertificate) throws CertificateException {
         byte[] certificateBytes = Base64.decodeBase64(encodedCertificate);
-        return new X509CertImpl(certificateBytes);
+        InputStream in = new ByteArrayInputStream(certificateBytes);
+        CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
+        return (X509Certificate) certificateFactory.generateCertificate(in);
     }
 
     /**

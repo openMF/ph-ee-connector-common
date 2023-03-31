@@ -60,6 +60,10 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+jar {
+    enabled = true
+}
+
 artifactory {
     contextUrl = 'https://fynarfin.jfrog.io/artifactory' // base artifactory url
     publish {
