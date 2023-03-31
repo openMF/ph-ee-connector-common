@@ -38,4 +38,18 @@ public class HelloController {
         return SecurityUtil.hash(dataToBeHashed);
     }
 
+    @GetMapping ("signature")
+    public String signatureGet(@RequestParam("privateKey") String privateKey, HttpServletRequest request) throws ServletException, IOException {
+        WebSignatureInterceptor interceptor = new WebSignatureInterceptor();
+
+        String data = interceptor.jwsDataForVerification(request);
+        String tenantId = request.getHeader(Constant.HEADER_PLATFORM_TENANT_ID);
+        String correlationId = request.getHeader(Constant.HEADER_CORRELATION_ID);
+
+        String dataToBeHashed = interceptor.getDataToBeHashed(correlationId, tenantId, data);
+
+
+        return SecurityUtil.hash(dataToBeHashed);
+    }
+
 }
