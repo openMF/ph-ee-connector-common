@@ -2,7 +2,6 @@ package org.mifos.connector.common.util;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
-
 import javax.crypto.*;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -10,7 +9,6 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.spec.*;
-import java.util.Arrays;
 
 public class SecurityUtil {
 
@@ -35,7 +33,7 @@ public class SecurityUtil {
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
             BadPaddingException, InvalidKeySpecException, InvalidKeyException {
 
-        return encrypt(content, key);
+        return encryptUsingPublicKey(content, key);
     }
 
     /**
@@ -144,10 +142,17 @@ public class SecurityUtil {
      * @param encKey secret key to be used for encryption
      * @return [String] encoded data as plain text
      */
-    public static String encrypt(String input, String encKey) throws
+    public static String encryptUsingPublicKey(String input, String encKey) throws
             NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
             IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
         PublicKey publicKey = getPublicKeyFromString(encKey);
+        return encrypt(input, publicKey);
+    }
+
+    public static String encryptUsingPrivateKey(String input, String encKey) throws
+            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
+            IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+        PrivateKey publicKey = getPrivateKeyFromString(encKey);
         return encrypt(input, publicKey);
     }
 
@@ -163,10 +168,18 @@ public class SecurityUtil {
         return applyCipher(input, privateKey, Cipher.ENCRYPT_MODE);
     }
 
-    public static String decrypt(String input, String decKey) throws
+    public static String decryptUsingPrivateKey(String input, String decKey) throws
             NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
             IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
         PrivateKey privateKey = getPrivateKeyFromString(decKey);
+        return decrypt(input, privateKey);
+    }
+
+
+    public static String decryptUsingPublicKey(String input, String decKey) throws
+            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
+            IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+        PublicKey privateKey = getPublicKeyFromString(decKey);
         return decrypt(input, privateKey);
     }
 
@@ -181,5 +194,4 @@ public class SecurityUtil {
             IllegalBlockSizeException, BadPaddingException {
         return applyCipher(input, privateKey, Cipher.DECRYPT_MODE);
     }
-
 }

@@ -40,7 +40,7 @@ public class JsonWebSignatureService implements JsonWebSignatureVerifier {
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
             BadPaddingException, InvalidKeySpecException, InvalidKeyException {
         String hashedBody = SecurityUtil.hash(data);
-        String decodedHash = SecurityUtil.decrypt(signature, publicKeyString);
+        String decodedHash = SecurityUtil.decryptUsingPublicKey(signature, publicKeyString);
         return hashedBody.equals(decodedHash);
     }
 

@@ -14,6 +14,10 @@ import org.mifos.connector.common.interceptor.service.JsonWebSignatureService;
 import org.mifos.connector.common.util.Constant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +25,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 
+@Component
 public class WebSignatureInterceptor implements HandlerInterceptor {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private JsonWebSignatureService jsonWebSignatureService = new JsonWebSignatureService();
+    @Autowired
+    private JsonWebSignatureService jsonWebSignatureService;
+
+    @Value("#{'${jws.header.order}'.split(',')}")
+    private List<String> headers;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -45,10 +55,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             return false;
         }
 
-        String tenantId = request.getHeader(Constant.HEADER_PLATFORM_TENANT_ID);
-        String correlationId = request.getHeader(Constant.HEADER_CORRELATION_ID);
-
-        String dataToBeHashed = getDataToBeHashed(correlationId, tenantId, data);
+        String dataToBeHashed = getDataToBeHashed(request, data);
 
 
         logger.debug("Data to be hashed: {}", jsonWebSignatureService);
@@ -77,19 +84,27 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
 
     /**
      * Takes necessary information and formats it in a specific order, this is the format which is to be used while
-     * verifying the JWS. Make sure while sending the request JWS is generated using this particular order.
+     * verifying the JWS. The order of header is added as a configuration, refer to jws.header.order in application.yaml.
      *
-     * [X-CorrelationID]:[tenant-id]:[bodyform-data]
-     *
-     * @param correlationId unique ID for making sure the idempotency of the API
-     * @param tenantId tenant name/ID
+     * @param request request object passed to the controller
      * @param payload can be raw/json body or the form data
      * @return data which is to be verified in particular format
      */
-    public String getDataToBeHashed(String correlationId, String tenantId, String payload) {
-        return correlationId + Constant.REST_REQUEST_DATA_SEPARATOR +
-                tenantId + Constant.REST_REQUEST_DATA_SEPARATOR +
-                payload + Constant.REST_REQUEST_DATA_SEPARATOR;
+    public String getDataToBeHashed(HttpServletRequest request, String payload) {
+        StringBuilder dataBuilder = new StringBuilder();
+        for (String headerKey: headers) {
+            String headerValue = request.getHeader(headerKey);
+            if (headerValue != null) {
+                dataBuilder.append(headerValue).append(Constant.REST_REQUEST_DATA_SEPARATOR);
+            }
+        }
+        if (payload != null && !payload.isEmpty()) {
+            dataBuilder.append(payload);
+        } else {
+            // remove the last added [Constant.REST_REQUEST_DATA_SEPARATOR]
+            dataBuilder.deleteCharAt(dataBuilder.length()-1);
+        }
+        return dataBuilder.toString();
     }
 
     /**
@@ -119,14 +134,14 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
      * @throws ServletException inherited from functional chain
      */
     public String jwsDataForVerification(HttpServletRequest request) throws IOException, ServletException {
-        String data;
+        String data = null;
         String body = IOUtils.toString(request.getInputStream(), Charset.defaultCharset());
-        if (body.isEmpty()) {
+        if (body.isEmpty() && !request.getMethod().equals(HttpMethod.GET.name())) {
+            // parse form data only if body is empty and REQUEST TYPE is not GET
             data = parseFormData(request);
         } else {
             data = body;
         }
-
         return data;
     }
 
