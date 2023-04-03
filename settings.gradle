@@ -7,6 +7,6 @@
 // version = '1.0.0-SNAPSHOT'
 
 gradle.ext{
-    app_username = '<username>'
-    app_password = '<password>'
+    app_username = 'avik@fynarfin.io'
+    app_password = 'Langlock010!'
 }

@@ -6,19 +6,19 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.mifos.connector.common.channel.dto.PhErrorDTO;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubErrorCategory;
 import org.mifos.connector.common.interceptor.service.JsonWebSignatureService;
 import org.mifos.connector.common.util.Constant;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,9 +28,8 @@ import java.nio.charset.Charset;
 import java.util.List;
 
 @Component
+@Slf4j
 public class WebSignatureInterceptor implements HandlerInterceptor {
-
-    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private JsonWebSignatureService jsonWebSignatureService;
@@ -41,7 +40,12 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // return true means forward this request and false means don;t forward this to controller
-        logger.info("Request at interceptor");
+        log.info("Request at interceptor");
+        if (headers.size() == 0) {
+            throw new RuntimeException("Header is null");
+        }
+        headers.forEach(e -> log.info("Header: {}", e));
+        log.info("JWS PK: {}", jsonWebSignatureService.getPublicKeyString());
         PhErrorDTO errorDTO = null;
 
         String signature = request.getHeader(Constant.HEADER_JWS);
@@ -58,27 +62,29 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         String dataToBeHashed = getDataToBeHashed(request, data);
 
 
-        logger.debug("Data to be hashed: {}", jsonWebSignatureService);
+        log.debug("Data to be hashed: {}", jsonWebSignatureService);
 
         Boolean isValidSignature = null;
         try {
             isValidSignature = jsonWebSignatureService.verify(dataToBeHashed, signature);
         } catch (Exception e) {
-            errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidPublicKeyConfigured).build();
+            errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidPublicKeyConfigured)
+                    .developerMessage("Public key" + jsonWebSignatureService.getPublicKeyString()).build();
             writeErrorResponse(response, errorDTO);
             return false;
         }
 
         if (isValidSignature) {
-            logger.debug("Signature is valid");
+            log.info("Signature is valid");
         } else {
-            logger.error("JWS Signature verification failed: {}", signature);
+            log.error("JWS Signature verification failed: {}", signature);
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidJsonWebSignature)
                     .addErrorParameter(Constant.HEADER_JWS, signature)
                     .developerMessage("Pass the valid header value for " + Constant.HEADER_JWS)
                     .build();
             writeErrorResponse(response, errorDTO);
         }
+        response.setContentType("application/json");
         return isValidSignature;
     }
 

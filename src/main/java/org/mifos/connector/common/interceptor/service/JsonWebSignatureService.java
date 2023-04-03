@@ -1,5 +1,6 @@
 package org.mifos.connector.common.interceptor.service;
 
+import lombok.Getter;
 import org.mifos.connector.common.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -11,9 +12,10 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
 @Component
+@Getter
 public class JsonWebSignatureService implements JsonWebSignatureVerifier {
 
-    @Value("${jws.key.public}")
+    @Value("${jws.public.key}")
     private String publicKeyString;
 
     /**
