@@ -51,7 +51,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         String signature = request.getHeader(Constant.HEADER_JWS);
         String data = null;
         try {
-            data = jwsDataForVerification(request);
+            data = parseBodyPayload(request);
         } catch (Exception e) {
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.JWSVerificationServerError)
                     .developerMessage("Make sure to pass valid payload and header along with signature").build();
@@ -84,8 +84,18 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
                     .build();
             writeErrorResponse(response, errorDTO);
         }
-        response.setContentType("application/json");
+        response.setHeader(Constant.HEADER_JWS, signature);
         return isValidSignature;
+    }
+
+    @Override
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+        String bodyPayload = parseBodyPayload(request);
+        String dataToBeHashed = getDataToBeHashed(request, bodyPayload);
+        String signature = jsonWebSignatureService.sign(dataToBeHashed);
+        response.addHeader(Constant.HEADER_JWS, signature);
+        log.info("Out signature: {}", signature);
+        //HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
     /**
@@ -139,7 +149,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
      * @throws IOException throws as part of input stream
      * @throws ServletException inherited from functional chain
      */
-    public String jwsDataForVerification(HttpServletRequest request) throws IOException, ServletException {
+    public String parseBodyPayload(HttpServletRequest request) throws IOException, ServletException {
         String data = null;
         String body = IOUtils.toString(request.getInputStream(), Charset.defaultCharset());
         if (body.isEmpty() && !request.getMethod().equals(HttpMethod.GET.name())) {
