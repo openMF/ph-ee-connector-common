@@ -11,4 +11,3 @@ zeebe:
 timer: "PT45S"
 
 transaction-id-length: -1
-
