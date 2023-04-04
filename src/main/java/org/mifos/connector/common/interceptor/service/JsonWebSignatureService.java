@@ -1,8 +1,9 @@
 package org.mifos.connector.common.interceptor.service;
 
 import lombok.Getter;
+import org.mifos.connector.common.interceptor.properties.TenantKeysProperties;
 import org.mifos.connector.common.util.SecurityUtil;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -15,17 +16,16 @@ import java.security.spec.InvalidKeySpecException;
 @Getter
 public class JsonWebSignatureService implements JsonWebSignature {
 
-    @Value("${jws.key.public}")
-    private String publicKeyString;
-
-    @Value("${jws.key.private}")
-    private String privateKeyString;
+    @Autowired
+    private TenantKeysProperties tenantKeysProperties;
 
     /**
-     * Takes data and signature. And verifies if signature is valid or not
+     * Takes data,signature and tenantName. And verifies if signature is valid or not.
+     * TenantName is used to fetch respective keys
      *
      * @param data data for which signature to be verified as a string
      * @param signature signature in string format
+     * @param tenantName name of the tenant
      * @return [boolean] true if signature is verified false otherwise
      * @throws NoSuchPaddingException thrown while parsing public key
      * @throws IllegalBlockSizeException thrown while parsing public key
@@ -34,16 +34,19 @@ public class JsonWebSignatureService implements JsonWebSignature {
      * @throws InvalidKeySpecException thrown while parsing public key
      * @throws InvalidKeyException thrown while parsing public key
      */
-    public boolean verify(String data, String signature) throws
+    public boolean verifyForTenant(String data, String signature, String tenantName) throws
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
             BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+        String publicKeyString = tenantKeysProperties.getPublicKey(tenantName);
         return verify(data, signature, publicKeyString);
     }
 
     /**
-     * Takes data and create the corresponding signature
+     * Takes data and create the corresponding signature.
+     * TenantName is used to fetch respective keys
      *
      * @param data the data which is to be signed
+     * @param tenantName name of the tenant
      * @return signature for the data passed in form of String
      * @throws NoSuchPaddingException thrown while parsing public key
      * @throws IllegalBlockSizeException thrown while parsing public key
@@ -52,10 +55,11 @@ public class JsonWebSignatureService implements JsonWebSignature {
      * @throws InvalidKeySpecException thrown while parsing public key
      * @throws InvalidKeyException thrown while parsing public key
      */
-    public String sign(String data) throws
+    public String signForTenant(String data, String tenantName) throws
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
             BadPaddingException, InvalidKeySpecException, InvalidKeyException {
-        return create(data, privateKeyString);
+        String privateKey = tenantKeysProperties.getPrivateKey(tenantName);
+        return create(data, privateKey);
     }
 
 
@@ -64,7 +68,7 @@ public class JsonWebSignatureService implements JsonWebSignature {
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
             BadPaddingException, InvalidKeySpecException, InvalidKeyException {
         String hashedBody = SecurityUtil.hash(data);
-        String decodedHash = SecurityUtil.decryptUsingPublicKey(signature, publicKeyString);
+        String decodedHash = SecurityUtil.decryptUsingPublicKey(signature, publicKey);
         return hashedBody.equals(decodedHash);
     }
 

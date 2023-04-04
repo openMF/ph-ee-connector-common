@@ -15,6 +15,7 @@ import org.mifos.connector.common.interceptor.service.JsonWebSignatureService;
 import org.mifos.connector.common.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.List;
 
 @Component
@@ -37,15 +39,15 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     @Value("#{'${jws.header.order}'.split(',')}")
     private List<String> headers;
 
+    private final HashMap<String, String> tenantLocalStore = new HashMap<>();
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // return true means forward this request and false means don;t forward this to controller
-        log.info("Request at interceptor");
+        log.debug("Request at interceptor");
         if (headers.size() == 0) {
             throw new RuntimeException("Header is null");
         }
-        headers.forEach(e -> log.info("Header: {}", e));
-        log.info("JWS PK: {}", jsonWebSignatureService.getPublicKeyString());
         PhErrorDTO errorDTO = null;
 
         String signature = request.getHeader(Constant.HEADER_JWS);
@@ -60,22 +62,24 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         }
 
         String dataToBeHashed = getDataToBeHashed(request, data);
-
-
         log.debug("Data to be hashed: {}", jsonWebSignatureService);
+
+        String tenant = request.getHeader(Constant.HEADER_PLATFORM_TENANT_ID);
+        tenantLocalStore.put(signature, tenant);
 
         Boolean isValidSignature = null;
         try {
-            isValidSignature = jsonWebSignatureService.verify(dataToBeHashed, signature);
+            isValidSignature = jsonWebSignatureService.verifyForTenant(dataToBeHashed, signature, tenant);
         } catch (Exception e) {
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidPublicKeyConfigured)
-                    .developerMessage("Public key" + jsonWebSignatureService.getPublicKeyString()).build();
+                    .developerMessage("Public key" +
+                            jsonWebSignatureService.getTenantKeysProperties().getPublicKey(tenant)).build();
             writeErrorResponse(response, errorDTO);
             return false;
         }
 
         if (isValidSignature) {
-            log.info("Signature is valid");
+            log.debug("Signature is valid");
         } else {
             log.error("JWS Signature verification failed: {}", signature);
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidJsonWebSignature)
@@ -92,9 +96,10 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         String bodyPayload = parseBodyPayload(request);
         String dataToBeHashed = getDataToBeHashed(request, bodyPayload);
-        String signature = jsonWebSignatureService.sign(dataToBeHashed);
+        String tenantName = tenantLocalStore.get(response.getHeader(Constant.HEADER_JWS));
+        String signature = jsonWebSignatureService.signForTenant(dataToBeHashed, tenantName);
         response.addHeader(Constant.HEADER_JWS, signature);
-        log.info("Out signature: {}", signature);
+        log.debug("Out signature: {}", signature);
         //HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
@@ -136,6 +141,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         try {
+            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
             response.getWriter().write(getObjectMapper().writeValueAsString(errorDTO));
         } catch (IOException e) {
             throw new RuntimeException(e);
