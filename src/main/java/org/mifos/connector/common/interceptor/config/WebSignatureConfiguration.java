@@ -7,5 +7,5 @@ import org.springframework.context.annotation.PropertySource;
 
 @ComponentScan(basePackageClasses = WebSignatureInterceptor.class)
 @Configuration
-@PropertySource(value = "classpath:application.yaml", factory = YamlPropertySourceFactory.class)
+@PropertySource(value = "classpath:jws.yaml", factory = YamlPropertySourceFactory.class)
 public class WebSignatureConfiguration {}
