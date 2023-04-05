@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Component
-@ConditionalOnExpression("${jws.enable}")
+@ConditionalOnExpression("${security.jws.enable}")
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Autowired
