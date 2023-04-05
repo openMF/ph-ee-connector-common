@@ -2,6 +2,7 @@ package org.mifos.connector.common.interceptor.service;
 
 import lombok.Getter;
 import org.mifos.connector.common.interceptor.properties.TenantKeysProperties;
+import org.mifos.connector.common.util.CertificateUtil;
 import org.mifos.connector.common.util.SecurityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,8 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.cert.CertificateException;
 import java.security.spec.InvalidKeySpecException;
 
 @Component
@@ -36,8 +39,9 @@ public class JsonWebSignatureService implements JsonWebSignature {
      */
     public boolean verifyForTenant(String data, String signature, String tenantName) throws
             NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
-            BadPaddingException, InvalidKeySpecException, InvalidKeyException {
-        String publicKeyString = tenantKeysProperties.getPublicKey(tenantName);
+            BadPaddingException, InvalidKeySpecException, InvalidKeyException, CertificateException {
+        String certificate = tenantKeysProperties.getCertificate(tenantName);
+        String publicKeyString = CertificateUtil.getPublicKey(certificate);
         return verify(data, signature, publicKeyString);
     }
 

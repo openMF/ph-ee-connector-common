@@ -1,5 +1,6 @@
 package org.mifos.connector.common.interceptor.config;
 
+import org.mifos.connector.common.interceptor.WebMvcConfig;
 import org.mifos.connector.common.interceptor.WebSignatureInterceptor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
