@@ -15,6 +15,7 @@ import org.mifos.connector.common.interceptor.service.JsonWebSignatureService;
 import org.mifos.connector.common.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
@@ -72,8 +73,8 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             isValidSignature = jsonWebSignatureService.verifyForTenant(dataToBeHashed, signature, tenant);
         } catch (Exception e) {
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidPublicKeyConfigured)
-                    .developerMessage("Public key" +
-                            jsonWebSignatureService.getTenantKeysProperties().getPublicKey(tenant)).build();
+                    .developerMessage("Certificate" +
+                            jsonWebSignatureService.getTenantKeysProperties().getCertificate(tenant)).build();
             writeErrorResponse(response, errorDTO);
             return false;
         }
