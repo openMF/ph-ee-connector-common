@@ -50,7 +50,8 @@ public enum PaymentHubError {
     SamePartiesError(PaymentHubErrorCategory.BusinessRule, "SamePartiesError", "The debit and credit parties are the same."),
     InvalidJsonWebSignature(PaymentHubErrorCategory.Validation, "InvalidJsonWebSignature", "The JWS passed is not valid"),
     InvalidPublicKeyConfigured(PaymentHubErrorCategory.Validation, "InvalidPublicKeyConfigured", "The public key configured is invalid"),
-    JWSVerificationServerError(PaymentHubErrorCategory.System, "JWSVerificationServerError", "Internal server error while verifying JWS");
+    JWSVerificationServerError(PaymentHubErrorCategory.System, "JWSVerificationServerError", "Internal server error while verifying JWS"),
+    TransactionExistsError(PaymentHubErrorCategory.Validation, "TransactionExists", "Transaction already exists");
 
     private PaymentHubErrorCategory errorCategory;
     private String errorCode;
