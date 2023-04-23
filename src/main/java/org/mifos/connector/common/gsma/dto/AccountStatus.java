@@ -19,33 +19,15 @@ package org.mifos.connector.common.gsma.dto;
 }
  */
 //Refactor to use interoperability APIs instead.
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class AccountStatus {
 
     String status;
     String subStatus;
     String lei;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getSubStatus() {
-        return subStatus;
-    }
-
-    public void setSubStatus(String subStatus) {
-        this.subStatus = subStatus;
-    }
-
-    public String getLei() {
-        return lei;
-    }
-
-    public void setLei(String lei) {
-        this.lei = lei;
-    }
 }
