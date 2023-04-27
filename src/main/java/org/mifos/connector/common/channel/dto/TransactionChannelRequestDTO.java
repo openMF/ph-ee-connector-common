@@ -35,13 +35,13 @@ public class TransactionChannelRequestDTO {
     private String note;
     private String expiration;
     private ExtensionList extensionList;
-    private CustomData customData;
+    private List<CustomData> customData;
 
-    public CustomData getCustomData() {
+    public List<CustomData> getCustomData() {
         return customData;
     }
 
-    public void setCustomData(CustomData customData) {
+    public void setCustomData(List<CustomData> customData) {
         this.customData = customData;
     }
 
