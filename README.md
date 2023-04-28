@@ -6,6 +6,7 @@ Step1: Add `@EnableJsonWebSignature` annotation to the main application class of
 Step2: Use below mention configuration in application.yaml to disable or enable the JsonWebSignatureInterceptor.
 
 ```yaml
-jws:
-  enable: true
+security:
+  jws:
+    enable: true
 ```
