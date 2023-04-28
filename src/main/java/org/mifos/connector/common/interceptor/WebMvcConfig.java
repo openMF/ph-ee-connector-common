@@ -6,8 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-@Component
-@ConditionalOnExpression("${security.jws.enable}")
+@Component("JWSMvcConfig")
+@ConditionalOnExpression("${security.jws.enable:false}")
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Autowired
