@@ -31,8 +31,8 @@ public class TenantKeysProperties {
         return getTenantKeys(tenantName).getPrivateKey();
     }
 
-    public String getPublicKey(String tenantName) {
-        return getTenantKeys(tenantName).getPublicKey();
+    public String getCertificate(String tenantName) {
+        return getTenantKeys(tenantName).getCertificate();
     }
 
 }
