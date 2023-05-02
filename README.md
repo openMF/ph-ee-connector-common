@@ -9,4 +9,6 @@ Step2: Use below mention configuration in application.yaml to disable or enable 
 security:
   jws:
     enable: true
+    response:
+      enable: true
 ```

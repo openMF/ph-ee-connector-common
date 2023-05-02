@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.mifos.connector.common.channel.dto.PhErrorDTO;
@@ -15,12 +16,10 @@ import org.mifos.connector.common.interceptor.service.JsonWebSignatureService;
 import org.mifos.connector.common.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,6 +31,7 @@ import java.util.List;
 
 @Component
 @Slf4j
+@Getter
 public class WebSignatureInterceptor implements HandlerInterceptor {
 
     @Autowired
@@ -63,10 +63,10 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         }
 
         String dataToBeHashed = getDataToBeHashed(request, data);
-        log.debug("Data to be hashed: {}", jsonWebSignatureService);
+        log.debug("Data to be hashed: {}", dataToBeHashed);
 
         String tenant = request.getHeader(Constant.HEADER_PLATFORM_TENANT_ID);
-        tenantLocalStore.put(signature, tenant);
+        tenantLocalStore.put(request.getHeader(Constant.HEADER_CORRELATION_ID), tenant);
 
         Boolean isValidSignature = null;
         try {
@@ -89,24 +89,15 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
                     .build();
             writeErrorResponse(response, errorDTO);
         }
-        response.setHeader(Constant.HEADER_JWS, signature);
+        response.setHeader(Constant.HEADER_CORRELATION_ID, request.getHeader(Constant.HEADER_CORRELATION_ID));
+        log.debug("Request ended at interceptor");
         return isValidSignature;
-    }
-
-    @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        String bodyPayload = parseBodyPayload(request);
-        String dataToBeHashed = getDataToBeHashed(request, bodyPayload);
-        String tenantName = tenantLocalStore.get(response.getHeader(Constant.HEADER_JWS));
-        String signature = jsonWebSignatureService.signForTenant(dataToBeHashed, tenantName);
-        response.addHeader(Constant.HEADER_JWS, signature);
-        log.debug("Out signature: {}", signature);
-        //HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
     /**
      * Takes necessary information and formats it in a specific order, this is the format which is to be used while
-     * verifying the JWS. The order of header is added as a configuration, refer to jws.header.order in application.yaml.
+     * verifying the JWS. The order of header is added as a configuration, refer to jws.header.order in
+     * application-jws.yaml.
      *
      * @param request request object passed to the controller
      * @param payload can be raw/json body or the form data
@@ -116,6 +107,34 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         StringBuilder dataBuilder = new StringBuilder();
         for (String headerKey: headers) {
             String headerValue = request.getHeader(headerKey);
+            log.debug("Header: {} : {}", headerKey, headerValue);
+            if (headerValue != null) {
+                dataBuilder.append(headerValue).append(Constant.REST_REQUEST_DATA_SEPARATOR);
+            }
+        }
+        if (payload != null && !payload.isEmpty()) {
+            dataBuilder.append(payload);
+        } else {
+            // remove the last added [Constant.REST_REQUEST_DATA_SEPARATOR]
+            dataBuilder.deleteCharAt(dataBuilder.length()-1);
+        }
+        return dataBuilder.toString();
+    }
+
+    /**
+     * Takes necessary information and formats it in a specific order, this is the format which is to be used while
+     * verifying the JWS. The order of header is added as a configuration, refer to jws.header.order in
+     * application-jws.yaml.
+     *
+     * @param response response object
+     * @param payload can be raw/json body or the form data
+     * @return data which is to be verified in particular format
+     */
+    public String getDataToBeHashed(HttpServletResponse response, String payload) {
+        StringBuilder dataBuilder = new StringBuilder();
+        for (String headerKey: headers) {
+            String headerValue = response.getHeader(headerKey);
+            log.debug("Header: {} : {}", headerKey, headerValue);
             if (headerValue != null) {
                 dataBuilder.append(headerValue).append(Constant.REST_REQUEST_DATA_SEPARATOR);
             }
