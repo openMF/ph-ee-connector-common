@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j
@@ -104,21 +105,12 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
      * @return data which is to be verified in particular format
      */
     public String getDataToBeHashed(HttpServletRequest request, String payload) {
-        StringBuilder dataBuilder = new StringBuilder();
-        for (String headerKey: headers) {
-            String headerValue = request.getHeader(headerKey);
-            log.debug("Header: {} : {}", headerKey, headerValue);
-            if (headerValue != null) {
-                dataBuilder.append(headerValue).append(Constant.REST_REQUEST_DATA_SEPARATOR);
-            }
+        HashMap<String, Object> headers = new HashMap<>();
+        while (request.getHeaderNames().hasMoreElements()) {
+            String headerKey = request.getHeaderNames().nextElement();
+            headers.put(headerKey, request.getHeader(headerKey));
         }
-        if (payload != null && !payload.isEmpty()) {
-            dataBuilder.append(payload);
-        } else {
-            // remove the last added [Constant.REST_REQUEST_DATA_SEPARATOR]
-            dataBuilder.deleteCharAt(dataBuilder.length()-1);
-        }
-        return dataBuilder.toString();
+        return getDataToBeHashed(headers, payload);
     }
 
     /**
@@ -131,9 +123,26 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
      * @return data which is to be verified in particular format
      */
     public String getDataToBeHashed(HttpServletResponse response, String payload) {
+        HashMap<String, Object> headers = new HashMap<>();
+        for (String headerKey: response.getHeaderNames()) {
+            headers.put(headerKey, response.getHeader(headerKey));
+        }
+        return getDataToBeHashed(headers, payload);
+    }
+
+    /**
+     * Takes necessary information and formats it in a specific order, this is the format which is to be used while
+     * verifying the JWS. The order of header is added as a configuration, refer to jws.header.order in
+     * application-jws.yaml.
+     *
+     * @param header hashmap of header
+     * @param payload can be raw/json body or the form data
+     * @return data which is to be verified in particular format
+     */
+    public String getDataToBeHashed(Map<String, Object> header, String payload) {
         StringBuilder dataBuilder = new StringBuilder();
         for (String headerKey: headers) {
-            String headerValue = response.getHeader(headerKey);
+            String headerValue = (String) header.get(headerKey);
             log.debug("Header: {} : {}", headerKey, headerValue);
             if (headerValue != null) {
                 dataBuilder.append(headerValue).append(Constant.REST_REQUEST_DATA_SEPARATOR);
