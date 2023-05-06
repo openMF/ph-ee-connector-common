@@ -29,7 +29,7 @@ public class JWSFilterStrategy extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        log.info("Started doFilter");
+        log.debug("Started doFilter");
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
         ContentCachingResponseWrapper wrappedResponse = new ContentCachingResponseWrapper(httpResponse);
@@ -39,17 +39,17 @@ public class JWSFilterStrategy extends GenericFilterBean {
         String responseBody = new String(responseBytes, httpResponse.getCharacterEncoding());
 
         String clientCorrelationId = httpResponse.getHeader(Constant.HEADER_CORRELATION_ID);
+        log.debug("ClientCorrelationId: {}", clientCorrelationId);
         try {
+            log.debug("Fetching data to be hashed from doFilter");
             String dataToBeHashed = webSignatureInterceptor.getDataToBeHashed(httpResponse, responseBody);
             String tenantName = webSignatureInterceptor.getTenantLocalStore().get(clientCorrelationId);
             String signature = jsonWebSignatureService.signForTenant(dataToBeHashed, tenantName);
 
-            wrappedResponse.setHeader(Constant.HEADER_CORRELATION_ID, null);
             wrappedResponse.setHeader(Constant.HEADER_JWS, signature);
-            log.info("ClientCorrelationId: {}", clientCorrelationId);
-            log.info("Response str: {}", responseBody);
-            log.info("Out data: {}", dataToBeHashed);
-            log.info("Signature: {}", signature);
+            log.debug("Response str: {}", responseBody);
+            log.debug("Out data: {}", dataToBeHashed);
+            log.debug("Signature: {}", signature);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Error while creating signature(SERVER TO CLIENT) stacktrace: {}", e.getMessage());
@@ -58,7 +58,7 @@ public class JWSFilterStrategy extends GenericFilterBean {
             wrappedResponse.copyBodyToResponse();
         }
 
-        log.info("Ended doFilter");
+        log.debug("Ended doFilter");
     }
 
 }

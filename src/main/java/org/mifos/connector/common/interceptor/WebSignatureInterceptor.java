@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         PhErrorDTO errorDTO = null;
 
         String signature = request.getHeader(Constant.HEADER_JWS);
+        log.debug("Signature inbound: {}", signature);
         String data = null;
         try {
             data = parseBodyPayload(request);
@@ -106,10 +108,12 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
      */
     public String getDataToBeHashed(HttpServletRequest request, String payload) {
         HashMap<String, Object> headers = new HashMap<>();
-        while (request.getHeaderNames().hasMoreElements()) {
-            String headerKey = request.getHeaderNames().nextElement();
+        Enumeration<String> headersEnumeration = request.getHeaderNames();
+        while (headersEnumeration.hasMoreElements()) {
+            String headerKey = headersEnumeration.nextElement().toUpperCase();
             headers.put(headerKey, request.getHeader(headerKey));
         }
+        log.debug("Headers: {}", headers);
         return getDataToBeHashed(headers, payload);
     }
 
@@ -135,14 +139,14 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
      * verifying the JWS. The order of header is added as a configuration, refer to jws.header.order in
      * application-jws.yaml.
      *
-     * @param header hashmap of header
+     * @param header hashmap of header, with all the header in capital case
      * @param payload can be raw/json body or the form data
      * @return data which is to be verified in particular format
      */
     public String getDataToBeHashed(Map<String, Object> header, String payload) {
         StringBuilder dataBuilder = new StringBuilder();
         for (String headerKey: headers) {
-            String headerValue = (String) header.get(headerKey);
+            String headerValue = (String) header.get(headerKey.toUpperCase());
             log.debug("Header: {} : {}", headerKey, headerValue);
             if (headerValue != null) {
                 dataBuilder.append(headerValue).append(Constant.REST_REQUEST_DATA_SEPARATOR);
