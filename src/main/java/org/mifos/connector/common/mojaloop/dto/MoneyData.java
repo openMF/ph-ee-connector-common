@@ -7,7 +7,6 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import com.ilp.conditions.models.pdp.Money;
 import org.hibernate.validator.constraints.Length;
 import org.mifos.connector.common.util.ContextUtil;
 
@@ -69,13 +68,6 @@ public class MoneyData {
         this.currency = currency;
     }
 
-    @Transient
-    public Money getIlpMoney() {
-        Money money = new Money();
-        money.setAmount(amount);
-        money.setCurrency(currency);
-        return money;
-    }
 
     @Transient
     public static FspMoneyData toFspMoneyData(MoneyData moneyData) {

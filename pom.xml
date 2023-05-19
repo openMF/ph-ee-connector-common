@@ -23,17 +23,6 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 
-	<repositories>
-		<repository>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<id>modusbox-release-local</id>
-			<name>libs-release</name>
-			<url>https://modusbox.jfrog.io/modusbox/libs-release</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -59,11 +48,6 @@
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
 			<version>${camel.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.interop.ilp.conditions</groupId>
-			<artifactId>interop-ilp-conditions</artifactId>
-			<version>${ilp.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
