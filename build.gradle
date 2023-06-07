@@ -39,7 +39,7 @@ dependencies {
 }
 
 group = 'org.mifos'
-version = '1.4.1-SNAPSHOT'
+version = '1.5.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 def artifactId = 'ph-ee-connector-common'
 def versionNumber = version
