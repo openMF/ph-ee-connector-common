@@ -6,8 +6,10 @@ plugins {
     id 'java'
     id 'eclipse'
     id 'maven-publish'
+    id 'checkstyle'
     id "com.jfrog.artifactory" version "4.24.23"
-    id 'org.springframework.boot' version '2.1.9.RELEASE'
+    id 'org.springframework.boot' version '2.6.2'
+    id 'com.diffplug.spotless' version '6.19.0'
 }
 apply plugin: "io.spring.dependency-management"
 
@@ -17,6 +19,28 @@ repositories {
         url = uri('https://repo.maven.apache.org/maven2')
     }
 
+}
+
+apply plugin:'com.diffplug.spotless'
+spotless {
+    format 'misc', {
+        target '**/*.md', '**/*.properties', '**/.gitignore', '**/.openapi-generator-ignore', '**/*.yml', '**/*.xml', '**/**.json', '**/*.sql'
+        targetExclude '**/build/**', '**/bin/**', '**/.settings/**', '**/.idea/**', '**/.gradle/**', '**/gradlew.bat', '**/licenses/**', '**/banner.txt', '.vscode/**'
+        indentWithSpaces(4)
+        endWithNewline()
+        trimTrailingWhitespace()
+    }
+
+    groovyGradle {
+        target '*.gradle', '**/*.gradle'
+        targetExclude '**/build/**'
+        greclipse()
+        indentWithSpaces(4)
+        endWithNewline()
+        trimTrailingWhitespace()
+    }
+
+    lineEndings 'UNIX'
 }
 
 dependencies {
@@ -38,12 +62,114 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok:1.18.24'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    checkstyle 'com.puppycrawl.tools:checkstyle:10.9.3'
+    checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.44.1'
+    implementation 'com.diffplug.gradle.spotless:spotless:2.4.1'
+    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.17.0'
+}
 
+configure(this) {
+    // NOTE: order matters!
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'checkstyle'
+    configurations {
+        implementation.setCanBeResolved(true)
+        api.setCanBeResolved(true)
+    }
+    tasks.withType(JavaCompile) {
+        options.compilerArgs += [
+                "-Xlint:unchecked",
+                "-Xlint:cast",
+                "-Xlint:auxiliaryclass",
+                "-Xlint:deprecation",
+                "-Xlint:dep-ann",
+                "-Xlint:divzero",
+                "-Xlint:empty",
+                "-Xlint:exports",
+                "-Xlint:fallthrough",
+                "-Xlint:finally",
+                "-Xlint:module",
+                "-Xlint:opens",
+                "-Xlint:options",
+                "-Xlint:overloads",
+                "-Xlint:overrides",
+                "-Xlint:path",
+                "-Xlint:processing",
+                "-Xlint:removal",
+                "-Xlint:requires-automatic",
+                "-Xlint:requires-transitive-automatic",
+                "-Xlint:try",
+                "-Xlint:varargs",
+                "-Xlint:preview",
+                "-Xlint:static",
+                // -Werror needs to be disabled because EclipseLink's static weaving doesn't generate warning-free code
+                // and during an IntelliJ recompilation, it fails
+                //"-Werror",
+                "-Xmaxwarns",
+                1500,
+                "-Xmaxerrs",
+                1500
+        ]
+        options.deprecation = true
+    }
+    // Configuration for the spotless plugin
+    // https://github.com/diffplug/spotless/tree/main/plugin-gradle
+    spotless {
+        java {
+            targetExclude '**/build/**', '**/bin/**', '**/out/**'
+            importOrder() //sort imports alphabetically
+            removeUnusedImports()
+            eclipse().configFile "$rootDir/config/common-formatter.xml"
+            endWithNewline()
+            trimTrailingWhitespace()
+            // Enforce style modifier order
+            custom 'Modifier ordering', {
+                def modifierRanking = [
+                        public      : 1,
+                        protected   : 2,
+                        private     : 3,
+                        abstract    : 4,
+                        default     : 5,
+                        static      : 6,
+                        final       : 7,
+                        transient   : 8,
+                        volatile    : 9,
+                        synchronized: 10,
+                        native      : 11,
+                        strictfp    : 12]
+                // Find any instance of multiple modifiers. Lead with a non-word character to avoid
+                // accidental matching against for instance, "an alternative default value"
+                it.replaceAll(/\W(?:public |protected |private |abstract |default |static |final |transient |volatile |synchronized |native |strictfp ){2,}/, {
+                    // Do not replace the leading non-word character.  Identify the modifiers
+                    it.replaceAll(/(?:public |protected |private |abstract |default |static |final |transient |volatile |synchronized |native |strictfp ){2,}/, {
+                        // Sort the modifiers according to the ranking above
+                        it.split().sort({ modifierRanking[it] }).join(' ') + ' '
+                    }
+                    )
+                }
+                )
+            }
+        }
+        lineEndings 'UNIX'
+    }
+    // If we are running Gradle within Eclipse to enhance classes,
+    // set the classes directory to point to Eclipse's default build directory
+    if (project.hasProperty('env') && project.getProperty('env') == 'eclipse') {
+        sourceSets.main.java.outputDir = file("$projectDir/bin/main")
+    }
+    // Configuration for the Checkstyle plugin
+    // https://docs.gradle.org/current/userguide/checkstyle_plugin.html
+    dependencies {
+        checkstyle 'com.puppycrawl.tools:checkstyle:10.3.1'
+        checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.42.0'
+    }
 }
 
 group = 'org.mifos'
 version = '1.5.0-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = JavaVersion.VERSION_17
 def artifactId = 'ph-ee-connector-common'
 def versionNumber = version
 
