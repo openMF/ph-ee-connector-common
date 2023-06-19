@@ -3,6 +3,7 @@ package org.mifos.connector.common.identityaccountmapper.dto;
 import java.util.List;
 
 public class AccountLookupResponseDTO {
+
     private String payeeIdentity;
     private List<PaymentModalityDTO> paymentModalityList;
 

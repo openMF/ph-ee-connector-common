@@ -22,85 +22,85 @@ import java.util.Set;
 
 public class ProductInstance {
 
-  private String customerIdentifier;
-  private String productIdentifier;
-  private String accountIdentifier;
-  private String alternativeAccountNumber;
-  private Set<String> beneficiaries;
-  private String openedOn;
-  private String lastTransactionDate;
-  private String state;
-  private Double balance;
+    private String customerIdentifier;
+    private String productIdentifier;
+    private String accountIdentifier;
+    private String alternativeAccountNumber;
+    private Set<String> beneficiaries;
+    private String openedOn;
+    private String lastTransactionDate;
+    private String state;
+    private Double balance;
 
-  public String getCustomerIdentifier() {
-    return customerIdentifier;
-  }
+    public String getCustomerIdentifier() {
+        return customerIdentifier;
+    }
 
-  public void setCustomerIdentifier(String customerIdentifier) {
-    this.customerIdentifier = customerIdentifier;
-  }
+    public void setCustomerIdentifier(String customerIdentifier) {
+        this.customerIdentifier = customerIdentifier;
+    }
 
-  public String getProductIdentifier() {
-    return productIdentifier;
-  }
+    public String getProductIdentifier() {
+        return productIdentifier;
+    }
 
-  public void setProductIdentifier(String productIdentifier) {
-    this.productIdentifier = productIdentifier;
-  }
+    public void setProductIdentifier(String productIdentifier) {
+        this.productIdentifier = productIdentifier;
+    }
 
-  public String getAccountIdentifier() {
-    return accountIdentifier;
-  }
+    public String getAccountIdentifier() {
+        return accountIdentifier;
+    }
 
-  public void setAccountIdentifier(String accountIdentifier) {
-    this.accountIdentifier = accountIdentifier;
-  }
+    public void setAccountIdentifier(String accountIdentifier) {
+        this.accountIdentifier = accountIdentifier;
+    }
 
-  public String getAlternativeAccountNumber() {
-    return alternativeAccountNumber;
-  }
+    public String getAlternativeAccountNumber() {
+        return alternativeAccountNumber;
+    }
 
-  public void setAlternativeAccountNumber(String alternativeAccountNumber) {
-    this.alternativeAccountNumber = alternativeAccountNumber;
-  }
+    public void setAlternativeAccountNumber(String alternativeAccountNumber) {
+        this.alternativeAccountNumber = alternativeAccountNumber;
+    }
 
-  public Set<String> getBeneficiaries() {
-    return beneficiaries;
-  }
+    public Set<String> getBeneficiaries() {
+        return beneficiaries;
+    }
 
-  public void setBeneficiaries(Set<String> beneficiaries) {
-    this.beneficiaries = beneficiaries;
-  }
+    public void setBeneficiaries(Set<String> beneficiaries) {
+        this.beneficiaries = beneficiaries;
+    }
 
-  public String getOpenedOn() {
-    return openedOn;
-  }
+    public String getOpenedOn() {
+        return openedOn;
+    }
 
-  public void setOpenedOn(String openedOn) {
-    this.openedOn = openedOn;
-  }
+    public void setOpenedOn(String openedOn) {
+        this.openedOn = openedOn;
+    }
 
-  public String getLastTransactionDate() {
-    return lastTransactionDate;
-  }
+    public String getLastTransactionDate() {
+        return lastTransactionDate;
+    }
 
-  public void setLastTransactionDate(String lastTransactionDate) {
-    this.lastTransactionDate = lastTransactionDate;
-  }
+    public void setLastTransactionDate(String lastTransactionDate) {
+        this.lastTransactionDate = lastTransactionDate;
+    }
 
-  public String getState() {
-    return state;
-  }
+    public String getState() {
+        return state;
+    }
 
-  public void setState(String state) {
-    this.state = state;
-  }
+    public void setState(String state) {
+        this.state = state;
+    }
 
-  public Double getBalance() {
-    return balance;
-  }
+    public Double getBalance() {
+        return balance;
+    }
 
-  public void setBalance(Double balance) {
-    this.balance = balance;
-  }
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
 }

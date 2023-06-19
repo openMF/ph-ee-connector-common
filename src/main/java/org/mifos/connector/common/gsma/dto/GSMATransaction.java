@@ -14,6 +14,7 @@ package org.mifos.connector.common.gsma.dto;
 import java.util.Arrays;
 
 public class GSMATransaction {
+
     String amount;
     String currency;
     String type;
@@ -242,7 +243,6 @@ public class GSMATransaction {
         this.metadata = metadata;
     }
 
-
     public Fee[] getFees() {
         return fees;
     }
@@ -261,32 +261,16 @@ public class GSMATransaction {
 
     @Override
     public String toString() {
-        return "GSMATransaction{" +
-                "amount='" + amount + '\'' +
-                ", currency='" + currency + '\'' +
-                ", type='" + type + '\'' +
-                ", subType='" + subType + '\'' +
-                ", descriptionText='" + descriptionText + '\'' +
-                ", requestDate='" + requestDate + '\'' +
-                ", requestingOrganisationTransactionReference='" + requestingOrganisationTransactionReference + '\'' +
-                ", oneTimeCode='" + oneTimeCode + '\'' +
-                ", geoCode='" + geoCode + '\'' +
-                ", debitParty=" + Arrays.toString(debitParty) +
-                ", creditParty=" + Arrays.toString(creditParty) +
-                ", senderKyc=" + senderKyc +
-                ", receiverKyc=" + receiverKyc +
-                ", originalTransactionReference='" + originalTransactionReference + '\'' +
-                ", servicingIdentity='" + servicingIdentity + '\'' +
-                ", requestingLei='" + requestingLei + '\'' +
-                ", receivingLei='" + receivingLei + '\'' +
-                ", metadata=" + Arrays.toString(metadata) +
-                ", transactionStatus='" + transactionStatus + '\'' +
-                ", creationDate='" + creationDate + '\'' +
-                ", modificationDate='" + modificationDate + '\'' +
-                ", transactionReference='" + transactionReference + '\'' +
-                ", transactionReceipt='" + transactionReceipt + '\'' +
-                ", internationalTransferInformation=" + internationalTransferInformation +
-                ", convLockKey=" + convLockKey +
-                '}';
+        return "GSMATransaction{" + "amount='" + amount + '\'' + ", currency='" + currency + '\'' + ", type='" + type + '\'' + ", subType='"
+                + subType + '\'' + ", descriptionText='" + descriptionText + '\'' + ", requestDate='" + requestDate + '\''
+                + ", requestingOrganisationTransactionReference='" + requestingOrganisationTransactionReference + '\'' + ", oneTimeCode='"
+                + oneTimeCode + '\'' + ", geoCode='" + geoCode + '\'' + ", debitParty=" + Arrays.toString(debitParty) + ", creditParty="
+                + Arrays.toString(creditParty) + ", senderKyc=" + senderKyc + ", receiverKyc=" + receiverKyc
+                + ", originalTransactionReference='" + originalTransactionReference + '\'' + ", servicingIdentity='" + servicingIdentity
+                + '\'' + ", requestingLei='" + requestingLei + '\'' + ", receivingLei='" + receivingLei + '\'' + ", metadata="
+                + Arrays.toString(metadata) + ", transactionStatus='" + transactionStatus + '\'' + ", creationDate='" + creationDate + '\''
+                + ", modificationDate='" + modificationDate + '\'' + ", transactionReference='" + transactionReference + '\''
+                + ", transactionReceipt='" + transactionReceipt + '\'' + ", internationalTransferInformation="
+                + internationalTransferInformation + ", convLockKey=" + convLockKey + '}';
     }
 }

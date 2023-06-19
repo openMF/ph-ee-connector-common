@@ -1,6 +1,7 @@
 package org.mifos.connector.common.gsma.dto;
 
 public class ErrorParameter {
+
     public String key;
     public String value;
 

@@ -7,12 +7,8 @@
  */
 package org.mifos.connector.common.channel.dto;
 
-import org.mifos.connector.common.mojaloop.type.TransferState;
-import org.mifos.connector.common.util.ContextUtil;
-
-import java.beans.Transient;
 import java.time.LocalDateTime;
-
+import org.mifos.connector.common.mojaloop.type.TransferState;
 
 public class TransactionStatusResponseDTO {
 
@@ -22,8 +18,7 @@ public class TransactionStatusResponseDTO {
     private String transferId;
     private TransferState transferState;
 
-    public TransactionStatusResponseDTO() {
-    }
+    public TransactionStatusResponseDTO() {}
 
     public String getClientRefId() {
         return clientRefId;

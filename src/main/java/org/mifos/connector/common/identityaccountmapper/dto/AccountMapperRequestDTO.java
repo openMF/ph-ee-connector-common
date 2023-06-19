@@ -3,9 +3,10 @@ package org.mifos.connector.common.identityaccountmapper.dto;
 import java.util.List;
 
 public class AccountMapperRequestDTO {
+
     private String requestID;
     private String sourceBBID;
-    private List< BeneficiaryDTO > beneficiaries ;
+    private List<BeneficiaryDTO> beneficiaries;
 
     public AccountMapperRequestDTO(String requestID, String sourceBBID, List<BeneficiaryDTO> beneficiaries) {
         this.requestID = requestID;

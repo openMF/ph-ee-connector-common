@@ -1,5 +1,8 @@
 package org.mifos.connector.common.interceptor;
 
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.mifos.connector.common.channel.dto.PhErrorDTO;
@@ -10,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -56,8 +56,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             isValidSignature = jsonWebSignatureService.verifyForTenant(dataToBeHashed, signature, tenant);
         } catch (Exception e) {
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidPublicKeyConfigured)
-                    .developerMessage("Certificate" +
-                            jsonWebSignatureService.getTenantKeysProperties().getCertificate(tenant)).build();
+                    .developerMessage("Certificate" + jsonWebSignatureService.getTenantKeysProperties().getCertificate(tenant)).build();
             JWSUtil.writeErrorResponse(response, errorDTO);
             return false;
         }
@@ -68,8 +67,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             log.error("JWS Signature verification failed: {}", signature);
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidJsonWebSignature)
                     .addErrorParameter(Constant.HEADER_JWS, signature)
-                    .developerMessage("Pass the valid header value for " + Constant.HEADER_JWS)
-                    .build();
+                    .developerMessage("Pass the valid header value for " + Constant.HEADER_JWS).build();
             JWSUtil.writeErrorResponse(response, errorDTO);
         }
         response.setHeader(Constant.HEADER_PLATFORM_TENANT_ID, tenant);

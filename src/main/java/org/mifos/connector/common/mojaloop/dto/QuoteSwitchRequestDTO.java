@@ -7,11 +7,9 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
+import java.time.LocalDateTime;
 import org.mifos.connector.common.mojaloop.type.AmountType;
 import org.mifos.connector.common.util.ContextUtil;
-
-import java.time.LocalDateTime;
-
 
 public class QuoteSwitchRequestDTO {
 
@@ -29,12 +27,11 @@ public class QuoteSwitchRequestDTO {
     private String expiration;
     private ExtensionList extensionList;
 
-    public QuoteSwitchRequestDTO() {
-    }
+    public QuoteSwitchRequestDTO() {}
 
     public QuoteSwitchRequestDTO(String transactionId, String transactionRequestId, String quoteId, Party payee, Party payer,
-                                 AmountType amountType, MoneyData amount, MoneyData fees, TransactionType transactionType,
-                                 GeoCode geoCode, String note, LocalDateTime expiration, ExtensionList extensionList) {
+            AmountType amountType, MoneyData amount, MoneyData fees, TransactionType transactionType, GeoCode geoCode, String note,
+            LocalDateTime expiration, ExtensionList extensionList) {
         this.transactionId = transactionId;
         this.transactionRequestId = transactionRequestId;
         this.quoteId = quoteId;

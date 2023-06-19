@@ -20,7 +20,6 @@ package org.mifos.connector.common.ams.dto;
 
 import java.time.LocalDate;
 
-
 public class ClientTimelineData {
 
     private LocalDate submittedOnDate;

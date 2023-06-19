@@ -3,6 +3,7 @@ package org.mifos.connector.common.identityaccountmapper.dto;
 import java.util.List;
 
 public class CallbackDTO {
+
     private String requestID;
     private String registerRequestID;
     private int numberFailedCases;

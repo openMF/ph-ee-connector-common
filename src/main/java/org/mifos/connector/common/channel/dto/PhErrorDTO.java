@@ -1,20 +1,20 @@
 package org.mifos.connector.common.channel.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubException;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class PhErrorDTO {
+public final class PhErrorDTO {
 
     @NotNull
     private String errorCategory;
@@ -38,13 +38,11 @@ public class PhErrorDTO {
     /**
      * Creates builder to build {@link PhErrorDTO}.
      *
-     * Example:
-     * new PhErrorDTOBuilder(PaymentHubError.IdNotFound).build()
+     * Example: new PhErrorDTOBuilder(PaymentHubError.IdNotFound).build()
      *
      * new PhErrorDTOBuilder("idnotfound).build()
      *
-     * new PhErrorDTOBuilder(PaymentHubError.IdNotFound)
-     *     .addErrorParameter("accountId", "1231231").build()
+     * new PhErrorDTOBuilder(PaymentHubError.IdNotFound) .addErrorParameter("accountId", "1231231").build()
      */
     public static class PhErrorDTOBuilder {
 

@@ -9,6 +9,5 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum AmountType {
 
-    SEND,
-    RECEIVE;
+    SEND, RECEIVE;
 }

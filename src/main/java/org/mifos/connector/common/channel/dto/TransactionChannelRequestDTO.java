@@ -7,26 +7,22 @@
  */
 package org.mifos.connector.common.channel.dto;
 
+import java.util.List;
+import javax.validation.constraints.NotNull;
 import org.mifos.connector.common.gsma.dto.CustomData;
 import org.mifos.connector.common.mojaloop.dto.ExtensionList;
-import org.mifos.connector.common.mojaloop.dto.Party;
-import org.mifos.connector.common.mojaloop.type.AmountType;
-import org.mifos.connector.common.mojaloop.dto.Extension;
 import org.mifos.connector.common.mojaloop.dto.GeoCode;
 import org.mifos.connector.common.mojaloop.dto.MoneyData;
+import org.mifos.connector.common.mojaloop.dto.Party;
 import org.mifos.connector.common.mojaloop.dto.TransactionType;
-import org.mifos.connector.common.util.ContextUtil;
-
-import javax.validation.constraints.NotNull;
-import java.beans.Transient;
-import java.time.LocalDateTime;
-import java.util.List;
+import org.mifos.connector.common.mojaloop.type.AmountType;
 
 public class TransactionChannelRequestDTO {
 
     private String clientRefId;
     @NotNull
-    private Party payer, payee;
+    private Party payer;
+    private Party payee;
     private AmountType amountType;
     @NotNull
     private MoneyData amount;
@@ -127,18 +123,8 @@ public class TransactionChannelRequestDTO {
 
     @Override
     public String toString() {
-        return "TransactionChannelRequestDTO{" +
-                "clientRefId='" + clientRefId + '\'' +
-                ", payer=" + payer +
-                ", payee=" + payee +
-                ", amountType=" + amountType +
-                ", amount=" + amount +
-                ", transactionType=" + transactionType +
-                ", note='" + note + '\'' +
-                ", expiration='" + expiration + '\'' +
-                ", customData=" + customData +
-                '}';
+        return "TransactionChannelRequestDTO{" + "clientRefId='" + clientRefId + '\'' + ", payer=" + payer + ", payee=" + payee
+                + ", amountType=" + amountType + ", amount=" + amount + ", transactionType=" + transactionType + ", note='" + note + '\''
+                + ", expiration='" + expiration + '\'' + ", customData=" + customData + '}';
     }
 }
-
-

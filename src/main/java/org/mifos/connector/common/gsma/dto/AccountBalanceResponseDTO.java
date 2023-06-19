@@ -1,6 +1,7 @@
 package org.mifos.connector.common.gsma.dto;
 
 public class AccountBalanceResponseDTO {
+
     private String currentBalance;
     private String availableBalance;
     private String reservedBalance;
@@ -58,13 +59,8 @@ public class AccountBalanceResponseDTO {
 
     @Override
     public String toString() {
-        return "AccountBalanceResponseDTO{" +
-                "currentBalance='" + currentBalance + '\'' +
-                ", availableBalance='" + availableBalance + '\'' +
-                ", reservedBalance='" + reservedBalance + '\'' +
-                ", unclearedBalance='" + unclearedBalance + '\'' +
-                ", currency='" + currency + '\'' +
-                ", accountStatus='" + accountStatus + '\'' +
-                '}';
+        return "AccountBalanceResponseDTO{" + "currentBalance='" + currentBalance + '\'' + ", availableBalance='" + availableBalance + '\''
+                + ", reservedBalance='" + reservedBalance + '\'' + ", unclearedBalance='" + unclearedBalance + '\'' + ", currency='"
+                + currency + '\'' + ", accountStatus='" + accountStatus + '\'' + '}';
     }
 }

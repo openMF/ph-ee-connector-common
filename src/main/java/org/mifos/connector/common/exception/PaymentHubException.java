@@ -3,10 +3,10 @@ package org.mifos.connector.common.exception;
 import lombok.Getter;
 
 @Getter
-public class PaymentHubException extends Exception {
+public final class PaymentHubException extends Exception {
 
-    private String errorCode;
-    private String errorDescription;
+    private final String errorCode;
+    private final String errorDescription;
 
     private PaymentHubException(PhExceptionBuilder builder) {
         this.errorCode = builder.errorCode;
@@ -22,24 +22,18 @@ public class PaymentHubException extends Exception {
      *
      * Ways to create an exception object
      *
-     * 1. Set error code and description (Can be used for creating custom errors)
-     * new PaymentHubException.PhExceptionBuilder()
-     *                 .withErrorCode(ec)
-     *                 .withErrorDescription(ed)
-     *                 .build()
+     * 1. Set error code and description (Can be used for creating custom errors) new
+     * PaymentHubException.PhExceptionBuilder() .withErrorCode(ec) .withErrorDescription(ed) .build()
      *
-     * 2. Set [PaymentHubErrors] enum (Can be used for creating predefined errors)
-     * new PaymentHubException.PhExceptionBuilder()
-     *                 .withErrorInformation(PaymentHubErrors.PayerFSPIdNotFound)
-     *                 .build();
+     * 2. Set [PaymentHubErrors] enum (Can be used for creating predefined errors) new
+     * PaymentHubException.PhExceptionBuilder() .withErrorInformation(PaymentHubErrors.PayerFSPIdNotFound) .build();
      *
-     * 3. Set error code (can be used when error code belong to existing list of errors)
-     * new PaymentHubException.PhExceptionBuilder()
-     *                 .withErrorCode("PayerFSPIdNotFound")
-     *                 .build();
+     * 3. Set error code (can be used when error code belong to existing list of errors) new
+     * PaymentHubException.PhExceptionBuilder() .withErrorCode("PayerFSPIdNotFound") .build();
      *
      */
     public static class PhExceptionBuilder {
+
         private String errorCode;
         private String errorDescription;
 

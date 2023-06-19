@@ -7,12 +7,9 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-
+import java.time.LocalDateTime;
 import org.mifos.connector.common.mojaloop.type.TransferState;
 import org.mifos.connector.common.util.ContextUtil;
-
-import java.time.LocalDateTime;
-
 
 public class TransferSwitchResponseDTO {
 
@@ -21,10 +18,10 @@ public class TransferSwitchResponseDTO {
     private TransferState transferState; // mandatory
     private ExtensionList extensionList;
 
-    public TransferSwitchResponseDTO() {
-    }
+    public TransferSwitchResponseDTO() {}
 
-    public TransferSwitchResponseDTO(String fulfilment, LocalDateTime completedTimestamp, TransferState transferState, ExtensionList extensionList) {
+    public TransferSwitchResponseDTO(String fulfilment, LocalDateTime completedTimestamp, TransferState transferState,
+            ExtensionList extensionList) {
         this.fulfilment = fulfilment;
         this.completedTimestamp = ContextUtil.formatDate(completedTimestamp);
         this.transferState = transferState;

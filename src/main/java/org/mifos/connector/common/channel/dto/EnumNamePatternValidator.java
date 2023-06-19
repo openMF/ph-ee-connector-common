@@ -1,8 +1,8 @@
 package org.mifos.connector.common.channel.dto;
 
+import java.util.stream.Stream;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.stream.Stream;
 
 public class EnumNamePatternValidator implements ConstraintValidator<EnumNamePattern, Enum<?>> {
 
@@ -15,9 +15,6 @@ public class EnumNamePatternValidator implements ConstraintValidator<EnumNamePat
 
     @Override
     public boolean isValid(Enum<?> value, ConstraintValidatorContext context) {
-        return value != null && Stream.of(enumType.getEnumConstants())
-                .filter(e -> e.equals(value))
-                .findFirst()
-                .orElse(null) != null;
+        return value != null && Stream.of(enumType.getEnumConstants()).filter(e -> e.equals(value)).findFirst().orElse(null) != null;
     }
 }

@@ -4,8 +4,7 @@ public class CallbackMapping {
 
     private String type, value;
 
-    public CallbackMapping() {
-    }
+    public CallbackMapping() {}
 
     public String getType() {
         return type;

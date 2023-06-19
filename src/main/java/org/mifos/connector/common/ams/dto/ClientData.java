@@ -19,16 +19,15 @@
 package org.mifos.connector.common.ams.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.LocalDate;
-
 
 public class ClientData {
 
     private Long id;
     private String accountNo;
     private String externalId;
-    private EnumOptionData status, legalForm;
+    private EnumOptionData status;
+    private EnumOptionData legalForm;
     private CodeValueData subStatus;
     private Boolean active;
     private LocalDate activationDate;
@@ -43,7 +42,7 @@ public class ClientData {
     private CodeValueData gender;
     private CodeValueData clientType;
     private CodeValueData clientClassification;
-    @JsonProperty(value="isStaff")
+    @JsonProperty(value = "isStaff")
     private Boolean isStaff;
     private Long officeId;
     private String officeName;

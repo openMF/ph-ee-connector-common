@@ -19,6 +19,5 @@
 package org.mifos.connector.common.ams.dto;
 
 public enum TimeUnit {
-  MONTH,
-  YEAR
+    MONTH, YEAR
 }

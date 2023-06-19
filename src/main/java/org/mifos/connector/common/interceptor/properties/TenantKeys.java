@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class TenantKeys {
 
-    private String name, certificate, privateKey;
-
+    private String name;
+    private String privateKey;
+    private String certificate;
 }

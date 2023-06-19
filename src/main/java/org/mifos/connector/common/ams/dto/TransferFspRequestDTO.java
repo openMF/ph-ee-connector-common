@@ -11,7 +11,6 @@ import org.mifos.connector.common.mojaloop.dto.FspMoneyData;
 import org.mifos.connector.common.mojaloop.dto.TransactionType;
 import org.mifos.connector.common.mojaloop.type.TransactionRole;
 
-
 public class TransferFspRequestDTO {
 
     private String transactionCode;
@@ -24,11 +23,10 @@ public class TransferFspRequestDTO {
     private TransactionType transactionType;
     private String note;
 
-    TransferFspRequestDTO() {
-    }
+    TransferFspRequestDTO() {}
 
     public TransferFspRequestDTO(String transactionCode, String transferCode, String accountId, FspMoneyData amount, FspMoneyData fspFee,
-                                 FspMoneyData fspCommission, TransactionRole transactionRole, TransactionType transactionType, String note) {
+            FspMoneyData fspCommission, TransactionRole transactionRole, TransactionType transactionType, String note) {
         this.transactionCode = transactionCode;
         this.transferCode = transferCode;
         this.accountId = accountId;
@@ -40,7 +38,8 @@ public class TransferFspRequestDTO {
         this.note = note;
     }
 
-    public TransferFspRequestDTO(String transactionCode, String transferCode, String accountId, FspMoneyData amount, TransactionRole transactionRole) {
+    public TransferFspRequestDTO(String transactionCode, String transferCode, String accountId, FspMoneyData amount,
+            TransactionRole transactionRole) {
         this(transactionCode, transferCode, accountId, amount, null, null, transactionRole, null, null);
     }
 

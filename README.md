@@ -1,5 +1,5 @@
 # payment-hub-ee
-Payment Hub Enterprise Edition middleware for integration to real-time payment systems. 
+Payment Hub Enterprise Edition middleware for integration to real-time payment systems.
 
 # How to enable JWSWebInterceptor
 Step1: Add `@EnableJsonWebSignature` annotation to the main application class of your microservice.

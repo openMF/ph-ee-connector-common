@@ -7,10 +7,8 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import org.mifos.connector.common.util.ContextUtil;
-
 import java.time.LocalDateTime;
-
+import org.mifos.connector.common.util.ContextUtil;
 
 public class TransferSwitchRequestDTO {
 
@@ -23,11 +21,10 @@ public class TransferSwitchRequestDTO {
     private String expiration;
     private ExtensionList extensionList;
 
-    public TransferSwitchRequestDTO() {
-    }
+    public TransferSwitchRequestDTO() {}
 
     public TransferSwitchRequestDTO(String transferId, String payerFsp, String payeeFsp, MoneyData amount, String ilpPacket,
-                                    String condition, LocalDateTime expiration, ExtensionList extensionList) {
+            String condition, LocalDateTime expiration, ExtensionList extensionList) {
         this.transferId = transferId;
         this.payerFsp = payerFsp;
         this.payeeFsp = payeeFsp;

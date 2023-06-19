@@ -2,10 +2,10 @@ package org.mifos.connector.common.operations.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 import org.mifos.connector.common.operations.type.TransferStatus;
 
 public class Transfer {
+
     private Long workflowInstanceKey;
     private String transactionId;
     private Date startedAt;
@@ -28,8 +28,7 @@ public class Transfer {
     private String currency;
     private String direction;
 
-    public Transfer() {
-    }
+    public Transfer() {}
 
     public Date getCompletedAt() {
         return completedAt;

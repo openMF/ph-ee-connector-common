@@ -108,6 +108,6 @@ public class LoginFineractXResponseDTO implements LoginFspResponse {
     }
 
     public Date getAccessTokenExpiration() {
-        return shouldRenewPassword ? new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000) : null; //TODO: TIMEZONE
+        return shouldRenewPassword ? new Date(System.currentTimeMillis() + 5 * 60 * 60 * 1000) : null; // TODO: TIMEZONE
     }
 }

@@ -13,8 +13,7 @@ public class ExtensionList {
 
     private List<Extension> extension;
 
-    public ExtensionList() {
-    }
+    public ExtensionList() {}
 
     public List<Extension> getExtension() {
         return extension;

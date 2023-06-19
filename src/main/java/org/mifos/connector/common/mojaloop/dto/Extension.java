@@ -12,8 +12,7 @@ public class Extension {
     private String key; // mandatory, String(1..32)
     private String value; // mandatory, String(1..128)
 
-    Extension() {
-    }
+    Extension() {}
 
     public Extension(String key, String value) {
         this.key = key;

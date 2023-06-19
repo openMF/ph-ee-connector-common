@@ -1,5 +1,11 @@
 package org.mifos.mojaloop;
 
+import static java.util.Spliterators.spliteratorUnknownSize;
+import static java.util.stream.StreamSupport.stream;
+
+import java.util.Spliterator;
+import java.util.UUID;
+import java.util.function.Consumer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
@@ -15,16 +21,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Spliterator;
-import java.util.UUID;
-import java.util.function.Consumer;
-
-import static java.util.Spliterators.spliteratorUnknownSize;
-import static java.util.stream.StreamSupport.stream;
-
 /**
- * !!!READ COMMENTS!!!
- * Compatible with Mojaloop version: 11.0.0
+ * !!!READ COMMENTS!!! Compatible with Mojaloop version: 11.0.0
  */
 @SpringBootApplication
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -113,7 +111,7 @@ public class OnboardDfsps {
         /**
          * Check also if you want to execute against a local installment or remote with peroperty: {mojaloop.local}
          */
-        if(!onboardingEnabled) {
+        if (!onboardingEnabled) {
             logger.info("Onboarding turned off");
             return;
         }
@@ -145,15 +143,15 @@ public class OnboardDfsps {
                 logger.info("Dfsp {} enabled: {}", dfsp.getId(), dfsp.isEnabled());
                 if (dfsp.isEnabled()) {
                     logger.info("Onboarding dfsp: {}", dfsp.getId());
-                    if(dfsp.isRegisterOnlyCallbackUrls()) {
+                    if (dfsp.isRegisterOnlyCallbackUrls()) {
                         logger.info("Updating only dfsp callback urls: {}", dfsp.getId());
                         updateCallbackUrls(dfsp);
                         continue;
                     }
                     String response = addDfsp(dfsp);
-                    int settlementAccountId = ((JSONObject) stream(spliteratorUnknownSize(new JSONObject(response).getJSONArray("accounts").iterator(), Spliterator.ORDERED), false)
-                            .filter(a -> "SETTLEMENT".equals(((JSONObject) a).getString("ledgerAccountType")))
-                            .findFirst()
+                    int settlementAccountId = ((JSONObject) stream(
+                            spliteratorUnknownSize(new JSONObject(response).getJSONArray("accounts").iterator(), Spliterator.ORDERED),
+                            false).filter(a -> "SETTLEMENT".equals(((JSONObject) a).getString("ledgerAccountType"))).findFirst()
                             .orElseThrow(() -> new RuntimeException("No SETTLEMENT account found!"))).getInt("id");
                     addInitialPositionAndLimit(dfsp);
                     updateCallbackUrls(dfsp);
@@ -162,7 +160,7 @@ public class OnboardDfsps {
                      * if participants were already added to the external oracle before -> this part should be skipped
                      * this part is not dependant to mojaloop installment
                      */
-                    if(dfsp.isAddToExternalOracle()) {
+                    if (dfsp.isAddToExternalOracle()) {
                         addParticipantToDfsp(dfsp); // TODO multiple participants in single dfsp
                     }
                 }
@@ -182,8 +180,8 @@ public class OnboardDfsps {
         body.put("type", hub);
         body.put("currency", mojaCurrency);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubAccountsPath, mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubAccountsPath, mojaCentralLedgerService, body.toString(),
+                h -> {});
         logger.info("Hub '{}' added", hub);
     }
 
@@ -193,8 +191,8 @@ public class OnboardDfsps {
         body.put("type", hub);
         body.put("currency", mojaCurrency);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubAccountsPath, mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubAccountsPath, mojaCentralLedgerService, body.toString(),
+                h -> {});
         logger.info("Hub '{}' added", hub);
     }
 
@@ -204,8 +202,8 @@ public class OnboardDfsps {
         body.put("type", email);
         body.put("value", mojaConectacEmail);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(),
+                h -> {});
         logger.info("Email '{}' added", email);
     }
 
@@ -215,8 +213,8 @@ public class OnboardDfsps {
         body.put("type", email);
         body.put("value", mojaConectacEmail);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(),
+                h -> {});
         logger.info("Email '{}' added", email);
     }
 
@@ -226,8 +224,8 @@ public class OnboardDfsps {
         body.put("type", email);
         body.put("value", mojaConectacEmail);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsHubEndpointsPath, mojaCentralLedgerService, body.toString(),
+                h -> {});
         logger.info("Email '{}' added", email);
     }
 
@@ -250,8 +248,8 @@ public class OnboardDfsps {
         body.put("name", dfsp.getId());
         body.put("currency", mojaCurrency);
 
-        String response = rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsPath, mojaCentralLedgerService, body.toString(), h -> {
-        });
+        String response = rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsPath, mojaCentralLedgerService,
+                body.toString(), h -> {});
         logger.info("Dfsp added: {}", dfsp.getId());
         return response;
     }
@@ -265,20 +263,20 @@ public class OnboardDfsps {
         limit.put("value", dfsp.getFundsInPrepareAmount());
         body.put("limit", limit);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsPositionAndLimitPath.replace("{dfspid}", dfsp.getId()), mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsPositionAndLimitPath.replace("{dfspid}", dfsp.getId()),
+                mojaCentralLedgerService, body.toString(), h -> {});
         logger.info("Dfsp limits and position added");
     }
 
     private void addCallbackUrl(Dfsp dfsp, CallbackMapping mapping) {
         JSONObject body = new JSONObject();
         body.put("type", mapping.getType());
-        String registeredValue = mapping.getType().contains("EMAIL") ? mapping.getValue().replace("{dfspDomain}", mojaConectacEmail) :
-                mapping.getValue().replace("{dfspDomain}", dfsp.getDomain());
+        String registeredValue = mapping.getType().contains("EMAIL") ? mapping.getValue().replace("{dfspDomain}", mojaConectacEmail)
+                : mapping.getValue().replace("{dfspDomain}", dfsp.getDomain());
         body.put("value", registeredValue);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsRegistrationPath.replace("{dfspid}", dfsp.getId()), mojaCentralLedgerService, body.toString(), h -> {
-        });
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsRegistrationPath.replace("{dfspid}", dfsp.getId()),
+                mojaCentralLedgerService, body.toString(), h -> {});
         logger.info("Registration success type: {} value: {}", mapping.getType(), registeredValue);
     }
 
@@ -301,11 +299,10 @@ public class OnboardDfsps {
         extensionList.put("extension", extensionArray);
         body.put("extensionList", extensionList);
 
-        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsAccountsPath.replace("{dfspid}", dfsp.getId()).replace("{settlementAccountId}", String.valueOf(settlementAccountId)),
-                mojaCentralLedgerService,
-                body.toString(), h -> {
-                });
-        logger.info("Dfsp fund recorded: {} on settlement account: {}", Integer.parseInt(dfsp.getFundsInPrepareAmount()), settlementAccountId);
+        rest((isLocalMojaloop ? localCentralLedger : mojaHost) + participantsAccountsPath.replace("{dfspid}", dfsp.getId())
+                .replace("{settlementAccountId}", String.valueOf(settlementAccountId)), mojaCentralLedgerService, body.toString(), h -> {});
+        logger.info("Dfsp fund recorded: {} on settlement account: {}", Integer.parseInt(dfsp.getFundsInPrepareAmount()),
+                settlementAccountId);
     }
 
     private void addParticipantToDfsp(Dfsp dfsp) {
@@ -313,8 +310,8 @@ public class OnboardDfsps {
         body.put("fspId", dfsp.getId());
         body.put("currency", mojaCurrency);
 
-        rest(oracleHost + oraclePath.replace("{partyIdType}", dfsp.getPartyIdType()).replace("{partyIdentifier}", dfsp.getPartyIdentifier()),
-                null,
+        rest(oracleHost
+                + oraclePath.replace("{partyIdType}", dfsp.getPartyIdType()).replace("{partyIdentifier}", dfsp.getPartyIdentifier()), null,
                 body.toString(), h -> h.add("Date", "2019-09-20 08:52:19"));
         logger.info("Client with type {} value {} added to {}", dfsp.getPartyIdType(), dfsp.getPartyIdentifier(), dfsp.getId());
     }

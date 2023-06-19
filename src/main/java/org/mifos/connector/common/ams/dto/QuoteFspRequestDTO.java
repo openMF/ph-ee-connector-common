@@ -12,7 +12,6 @@ import org.mifos.connector.common.mojaloop.dto.TransactionType;
 import org.mifos.connector.common.mojaloop.type.AmountType;
 import org.mifos.connector.common.mojaloop.type.TransactionRole;
 
-
 public class QuoteFspRequestDTO {
 
     private String transactionCode;
@@ -24,11 +23,10 @@ public class QuoteFspRequestDTO {
     private TransactionRole transactionRole;
     private TransactionType transactionType;
 
-    public QuoteFspRequestDTO() {
-    }
+    public QuoteFspRequestDTO() {}
 
-    public QuoteFspRequestDTO(String transactionCode, String requestCode, String quoteCode, String accountId, FspMoneyData amount, AmountType amountType,
-                              TransactionRole transactionRole, TransactionType transactionType) {
+    public QuoteFspRequestDTO(String transactionCode, String requestCode, String quoteCode, String accountId, FspMoneyData amount,
+            AmountType amountType, TransactionRole transactionRole, TransactionType transactionType) {
         this.transactionCode = transactionCode;
         this.requestCode = requestCode;
         this.quoteCode = quoteCode;

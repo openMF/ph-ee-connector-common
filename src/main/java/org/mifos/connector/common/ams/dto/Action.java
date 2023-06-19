@@ -20,44 +20,44 @@ package org.mifos.connector.common.ams.dto;
 
 public class Action {
 
-  private String identifier;
-  private String name;
-  private String description;
-  private String transactionType;
+    private String identifier;
+    private String name;
+    private String description;
+    private String transactionType;
 
-  public Action() {
-    super();
-  }
+    public Action() {
+        super();
+    }
 
-  public String getIdentifier() {
-    return this.identifier;
-  }
+    public String getIdentifier() {
+        return this.identifier;
+    }
 
-  public void setIdentifier(final String identifier) {
-    this.identifier = identifier;
-  }
+    public void setIdentifier(final String identifier) {
+        this.identifier = identifier;
+    }
 
-  public String getName() {
-    return this.name;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public void setName(final String name) {
-    this.name = name;
-  }
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public void setDescription(final String description) {
-    this.description = description;
-  }
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
-  public String getTransactionType() {
-    return this.transactionType;
-  }
+    public String getTransactionType() {
+        return this.transactionType;
+    }
 
-  public void setTransactionType(final String transactionType) {
-    this.transactionType = transactionType;
-  }
+    public void setTransactionType(final String transactionType) {
+        this.transactionType = transactionType;
+    }
 }

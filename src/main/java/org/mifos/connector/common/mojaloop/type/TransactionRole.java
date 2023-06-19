@@ -9,8 +9,7 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum TransactionRole {
 
-    PAYER,
-    PAYEE;
+    PAYER, PAYEE;
 
     public static TransactionRole[] VALUES = values();
 }

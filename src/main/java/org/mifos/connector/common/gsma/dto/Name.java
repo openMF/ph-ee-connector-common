@@ -59,13 +59,7 @@ public class Name {
 
     @Override
     public String toString() {
-        return "Name{" +
-                "title='" + title + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", nativeName='" + nativeName + '\'' +
-                '}';
+        return "Name{" + "title='" + title + '\'' + ", firstName='" + firstName + '\'' + ", middleName='" + middleName + '\''
+                + ", lastName='" + lastName + '\'' + ", fullName='" + fullName + '\'' + ", nativeName='" + nativeName + '\'' + '}';
     }
 }

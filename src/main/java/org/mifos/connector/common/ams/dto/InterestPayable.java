@@ -19,8 +19,5 @@
 package org.mifos.connector.common.ams.dto;
 
 public enum InterestPayable {
-  MATURITY,
-  ANNUALLY,
-  MONTHLY,
-  QUARTERLY
+    MATURITY, ANNUALLY, MONTHLY, QUARTERLY
 }

@@ -1,6 +1,7 @@
 package org.mifos.connector.common.gsma.dto;
 
 public class Fee {
+
     private String feeType;
     private String feeAmount;
     private String feeCurrency;
@@ -31,10 +32,6 @@ public class Fee {
 
     @Override
     public String toString() {
-        return "Fee{" +
-                "feeType='" + feeType + '\'' +
-                ", feeAmount='" + feeAmount + '\'' +
-                ", feeCurrency='" + feeCurrency + '\'' +
-                '}';
+        return "Fee{" + "feeType='" + feeType + '\'' + ", feeAmount='" + feeAmount + '\'' + ", feeCurrency='" + feeCurrency + '\'' + '}';
     }
 }

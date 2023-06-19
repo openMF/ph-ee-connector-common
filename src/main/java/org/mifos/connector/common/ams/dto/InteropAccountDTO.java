@@ -42,8 +42,7 @@ public class InteropAccountDTO {
     private List<InteropIdentifierData> identifiers;
     private String clientId;
 
-    public InteropAccountDTO() {
-    }
+    public InteropAccountDTO() {}
 
     public String getAccountId() {
         return accountId;

@@ -10,6 +10,7 @@ import lombok.ToString;
 @ToString
 @NoArgsConstructor
 public class Party {
+
     public String partyIdType;
     public String partyIdIdentifier;
 }

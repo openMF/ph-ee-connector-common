@@ -5,8 +5,7 @@ public class Dfsp {
     private boolean enabled, addToExternalOracle, registerOnlyCallbackUrls;
     private String id, partyIdType, partyIdentifier, fundsInPrepareAmount, domain;
 
-    public Dfsp() {
-    }
+    public Dfsp() {}
 
     public boolean isRegisterOnlyCallbackUrls() {
         return registerOnlyCallbackUrls;

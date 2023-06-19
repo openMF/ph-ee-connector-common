@@ -77,15 +77,8 @@ public class RequestStateDTO {
 
     @Override
     public String toString() {
-        return "RequestStateDTO{" +
-                "notificationMethod='" + notificationMethod + '\'' +
-                ", serverCorrelationId='" + serverCorrelationId + '\'' +
-                ", status='" + status + '\'' +
-                ", pendingReason='" + pendingReason + '\'' +
-                ", objectReference='" + objectReference + '\'' +
-                ", expiryTime='" + expiryTime + '\'' +
-                ", pollLimit='" + pollLimit + '\'' +
-                ", error=" + error +
-                '}';
+        return "RequestStateDTO{" + "notificationMethod='" + notificationMethod + '\'' + ", serverCorrelationId='" + serverCorrelationId
+                + '\'' + ", status='" + status + '\'' + ", pendingReason='" + pendingReason + '\'' + ", objectReference='" + objectReference
+                + '\'' + ", expiryTime='" + expiryTime + '\'' + ", pollLimit='" + pollLimit + '\'' + ", error=" + error + '}';
     }
 }

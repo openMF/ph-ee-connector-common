@@ -11,8 +11,7 @@ public class PartySwitchResponseDTO {
 
     private Party party;
 
-    PartySwitchResponseDTO() {
-    }
+    PartySwitchResponseDTO() {}
 
     public PartySwitchResponseDTO(Party party) {
         this.party = party;
