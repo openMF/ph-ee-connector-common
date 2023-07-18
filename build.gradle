@@ -63,7 +63,7 @@ jar {
 }
 
 artifactory {
-    contextUrl = 'https://fynarfin.jfrog.io/artifactory' // base artifactory url
+    contextUrl = 'https://jfrog.sandbox.fynarfin.io/artifactory' // base artifactory url
     publish {
         repository {
             repoKey = 'fyn-libs-snapshot'    //Artifactory repository key to publish to
