@@ -9,7 +9,9 @@ import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
 import org.apache.commons.codec.binary.Base64;
 
-public class CertificateUtil {
+public final class CertificateUtil {
+
+    private CertificateUtil() {}
 
     /**
      * Parses the public key from X509 certificate and returns it in form of string

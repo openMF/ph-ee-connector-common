@@ -27,9 +27,7 @@ public class Charge {
     private Boolean proportional;
     private Double amount;
 
-    public Charge() {
-        super();
-    }
+    public Charge() {}
 
     public String getActionIdentifier() {
         return this.actionIdentifier;

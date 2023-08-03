@@ -24,7 +24,9 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.codec.digest.DigestUtils;
 
-public class SecurityUtil {
+public final class SecurityUtil {
+
+    private SecurityUtil() {}
 
     public static String hash(String data) {
         return new DigestUtils("SHA3-256").digestAsHex(data);

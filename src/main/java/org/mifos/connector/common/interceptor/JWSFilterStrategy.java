@@ -51,7 +51,7 @@ public class JWSFilterStrategy extends GenericFilterBean {
             log.debug("Out data: {}", dataToBeHashed);
             log.debug("Signature: {}", signature);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.debug("{}", e.getMessage());
             log.error("Error while creating signature(SERVER TO CLIENT) stacktrace: {}", e.getMessage());
         } finally {
             wrappedResponse.copyBodyToResponse();

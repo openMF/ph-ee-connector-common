@@ -18,7 +18,9 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class ContextUtil {
+public final class ContextUtil {
+
+    private ContextUtil() {}
 
     private static final SimpleDateFormat LOCAL_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
     private static final DecimalFormat AMOUNT_FORMAT = new DecimalFormat("#.####");

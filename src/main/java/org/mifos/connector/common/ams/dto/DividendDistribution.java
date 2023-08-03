@@ -23,9 +23,7 @@ public class DividendDistribution {
     private DateOfBirth dueDate;
     private String dividendRate;
 
-    public DividendDistribution() {
-        super();
-    }
+    public DividendDistribution() {}
 
     public DateOfBirth getDueDate() {
         return this.dueDate;

@@ -24,9 +24,7 @@ public class Term {
     private TimeUnit timeUnit;
     private InterestPayable interestPayable;
 
-    public Term() {
-        super();
-    }
+    public Term() {}
 
     public Integer getPeriod() {
         return this.period;

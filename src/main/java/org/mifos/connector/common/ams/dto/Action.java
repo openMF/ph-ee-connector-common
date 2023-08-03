@@ -25,9 +25,7 @@ public class Action {
     private String description;
     private String transactionType;
 
-    public Action() {
-        super();
-    }
+    public Action() {}
 
     public String getIdentifier() {
         return this.identifier;

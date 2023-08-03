@@ -25,9 +25,7 @@ public class Currency {
     private String sign;
     private Integer scale;
 
-    public Currency() {
-        super();
-    }
+    public Currency() {}
 
     public String getCode() {
         return this.code;

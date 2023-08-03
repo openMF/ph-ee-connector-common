@@ -25,7 +25,9 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 
 @Slf4j
-public class JWSUtil {
+public final class JWSUtil {
+
+    private JWSUtil() {}
 
     /**
      * Takes necessary information and formats it in a specific order, this is the format which is to be used while

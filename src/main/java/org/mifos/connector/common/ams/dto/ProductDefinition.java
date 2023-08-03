@@ -38,9 +38,7 @@ public class ProductDefinition {
     private Boolean flexible;
     private Boolean active;
 
-    public ProductDefinition() {
-        super();
-    }
+    public ProductDefinition() {}
 
     public String getType() {
         return this.type.name();
