@@ -23,6 +23,17 @@ import org.mifos.connector.common.exception.PaymentHubErrorCategory;
 import org.mifos.connector.common.util.Constant;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Collection;
 
 @Slf4j
 public final class JWSUtil {
@@ -149,6 +160,7 @@ public final class JWSUtil {
         } else {
             data = body;
         }
+        log.debug("Parsed data: {}", data);
         return data;
     }
 
@@ -162,8 +174,19 @@ public final class JWSUtil {
      * @throws IOException
      */
     public static String parseFormData(HttpServletRequest httpServletRequest) throws ServletException, IOException {
+        log.debug("Parsing form data");
         StringBuilder stringBuilder = new StringBuilder();
-        for (Part part : httpServletRequest.getParts()) {
+        Collection<Part> parts;
+        try {
+            parts = httpServletRequest.getParts();
+            assert parts != null;
+            assert !parts.isEmpty();
+        } catch (Exception e) {
+            return "";
+        }
+        log.debug("HttpServletRequest: {}", parts);
+        for (Part part: parts) {
+            log.debug("Part loop");
             String partString = IOUtils.toString(part.getInputStream(), Charset.defaultCharset());
             stringBuilder.append(partString);
         }

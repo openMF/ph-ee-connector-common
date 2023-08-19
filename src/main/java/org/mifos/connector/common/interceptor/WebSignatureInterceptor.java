@@ -13,7 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
 @Component
 @Slf4j
 @Getter
@@ -69,6 +73,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
                     .addErrorParameter(Constant.HEADER_JWS, signature)
                     .developerMessage("Pass the valid header value for " + Constant.HEADER_JWS).build();
             JWSUtil.writeErrorResponse(response, errorDTO);
+            response.setStatus(400);
         }
         response.setHeader(Constant.HEADER_PLATFORM_TENANT_ID, tenant);
         log.debug("Request ended at interceptor");
