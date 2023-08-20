@@ -182,6 +182,7 @@ public final class JWSUtil {
             assert parts != null;
             assert !parts.isEmpty();
         } catch (Exception e) {
+            log.warn("Empty payload in multipart form: {}", e.getLocalizedMessage());
             return "";
         }
         log.debug("HttpServletRequest: {}", parts);

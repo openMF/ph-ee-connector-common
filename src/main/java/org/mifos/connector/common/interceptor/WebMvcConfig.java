@@ -23,7 +23,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        log.info("Added interceptor");
+        log.debug("Added interceptor");
         registry.addInterceptor(webSignatureInterceptor);
         super.addInterceptors(registry);
     }
@@ -31,7 +31,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Bean
     @ConditionalOnProperty(prefix = "security.jws.response", name = "enable", havingValue = "true")
     public FilterRegistrationBean jwsFilter() {
-        log.info("Registered filter");
+        log.debug("Registered filter");
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(jwsFilterStrategy);
         registration.addUrlPatterns("/*");
