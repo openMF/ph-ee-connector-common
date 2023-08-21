@@ -179,10 +179,12 @@ public final class JWSUtil {
         Collection<Part> parts;
         try {
             parts = httpServletRequest.getParts();
-            assert parts != null;
-            assert !parts.isEmpty();
-        } catch (Exception e) {
+            if (parts == null || parts.isEmpty()) {
+                return "";
+            }
+        } catch (IOException | ServletException e) {
             log.warn("Empty payload in multipart form: {}", e.getLocalizedMessage());
+            log.error("Empty payload in multipart form", e);
             return "";
         }
         log.debug("HttpServletRequest: {}", parts);
