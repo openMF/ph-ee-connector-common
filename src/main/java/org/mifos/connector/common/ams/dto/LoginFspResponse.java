@@ -11,7 +11,7 @@ import java.util.Date;
 
 public interface LoginFspResponse {
 
-    public String getAccessToken();
+    String getAccessToken();
 
-    public Date getAccessTokenExpiration();
+    Date getAccessTokenExpiration();
 }

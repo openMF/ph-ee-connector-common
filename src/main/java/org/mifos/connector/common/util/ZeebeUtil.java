@@ -1,8 +1,7 @@
 package org.mifos.connector.common.util;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
 
 public class ZeebeUtil {
 
@@ -26,10 +25,10 @@ public class ZeebeUtil {
 
     public String customSizeTransactionId() {
         String transactionId = generateTransactionId();
-        if(transactionIdLength == -1 || transactionIdLength < 13) {
+        if (transactionIdLength == -1 || transactionIdLength < 13) {
             return transactionId;
         }
-        String originalUUID = transactionId.replace("-","");
+        String originalUUID = transactionId.replace("-", "");
         String uuid12digits = originalUUID.substring(0, 12);
         String randomString = randomCharOfSize(transactionIdLength - 12);
         return uuid12digits + randomString;

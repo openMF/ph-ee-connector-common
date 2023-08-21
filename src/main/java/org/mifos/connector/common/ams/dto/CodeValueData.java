@@ -20,7 +20,6 @@ package org.mifos.connector.common.ams.dto;
 
 import java.io.Serializable;
 
-
 public class CodeValueData implements Serializable {
 
     private Long id;

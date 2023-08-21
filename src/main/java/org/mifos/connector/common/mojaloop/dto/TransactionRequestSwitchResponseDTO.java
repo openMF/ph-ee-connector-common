@@ -7,9 +7,7 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-
 import org.mifos.connector.common.mojaloop.type.TransactionRequestState;
-
 
 public class TransactionRequestSwitchResponseDTO {
 

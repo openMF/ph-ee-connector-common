@@ -18,15 +18,18 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class ContextUtil {
+public final class ContextUtil {
 
-    private final static SimpleDateFormat LOCAL_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-    private final static DecimalFormat AMOUNT_FORMAT = new DecimalFormat("#.####");
-    private final static SimpleDateFormat DATE_HEADER_FORMATTER = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
+    private ContextUtil() {}
+
+    private static final SimpleDateFormat LOCAL_DATE_TIME_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    private static final DecimalFormat AMOUNT_FORMAT = new DecimalFormat("#.####");
+    private static final SimpleDateFormat DATE_HEADER_FORMATTER = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", Locale.ENGLISH);
 
     public static LocalDateTime parseDate(String date) {
-        if (date == null)
+        if (date == null) {
             return null;
+        }
         try {
             return LocalDateTime.ofInstant(Instant.ofEpochMilli(LOCAL_DATE_TIME_FORMAT.parse(date).getTime()), ZoneOffset.UTC);
         } catch (ParseException e) {
@@ -35,8 +38,9 @@ public class ContextUtil {
     }
 
     public static LocalDateTime parseMojaDate(String date) {
-        if (date == null)
+        if (date == null) {
             return null;
+        }
         try {
             return LocalDateTime.ofInstant(Instant.ofEpochMilli(DATE_HEADER_FORMATTER.parse(date).getTime()), ZoneOffset.UTC);
         } catch (ParseException e) {

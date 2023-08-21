@@ -17,8 +17,6 @@ public class AuthRouteBuilder extends ErrorHandlerRouteBuilder {
 
     @Override
     public void configure() {
-        from("direct:get-public-key")
-                .id("get-public-key")
-                .toD("rest:GET:/oauth/token_key?host={{rest.authorization.host}}");
+        from("direct:get-public-key").id("get-public-key").toD("rest:GET:/oauth/token_key?host={{rest.authorization.host}}");
     }
 }

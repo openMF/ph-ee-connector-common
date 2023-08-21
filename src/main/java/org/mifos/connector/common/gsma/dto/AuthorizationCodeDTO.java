@@ -116,19 +116,11 @@ public class AuthorizationCodeDTO {
 
     @Override
     public String toString() {
-        return "AuthorizationCodeDTO{" +
-                "authorisationCode='" + authorisationCode + '\'' +
-                ", codeState='" + codeState + '\'' +
-                ", codeLifetime='" + codeLifetime + '\'' +
-                ", requestDate='" + requestDate + '\'' +
-                ", amount='" + amount + '\'' +
-                ", currency='" + currency + '\'' +
-                ", amountType='" + amountType + '\'' +
-                ", holdFundsIndicator='" + holdFundsIndicator + '\'' +
-                ", redemptionChannels=" + Arrays.toString(redemptionChannels) +
-                ", redemptionTransactionTypes=" + Arrays.toString(redemptionTransactionTypes) +
-                ", redemptionAccountIdentifiers=" + Arrays.toString(redemptionAccountIdentifiers) +
-                ", metadata=" + Arrays.toString(metadata) +
-                '}';
+        return "AuthorizationCodeDTO{" + "authorisationCode='" + authorisationCode + '\'' + ", codeState='" + codeState + '\''
+                + ", codeLifetime='" + codeLifetime + '\'' + ", requestDate='" + requestDate + '\'' + ", amount='" + amount + '\''
+                + ", currency='" + currency + '\'' + ", amountType='" + amountType + '\'' + ", holdFundsIndicator='" + holdFundsIndicator
+                + '\'' + ", redemptionChannels=" + Arrays.toString(redemptionChannels) + ", redemptionTransactionTypes="
+                + Arrays.toString(redemptionTransactionTypes) + ", redemptionAccountIdentifiers="
+                + Arrays.toString(redemptionAccountIdentifiers) + ", metadata=" + Arrays.toString(metadata) + '}';
     }
 }

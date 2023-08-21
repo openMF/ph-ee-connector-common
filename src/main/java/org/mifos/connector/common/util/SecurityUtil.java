@@ -1,16 +1,32 @@
 package org.mifos.connector.common.util;
 
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
-import javax.crypto.*;
-import javax.crypto.spec.PBEKeySpec;
-import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.security.spec.*;
+import java.security.InvalidKeyException;
+import java.security.Key;
+import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.EncodedKeySpec;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.KeySpec;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 
-public class SecurityUtil {
+public final class SecurityUtil {
+
+    private SecurityUtil() {}
 
     public static String hash(String data) {
         return new DigestUtils("SHA3-256").digestAsHex(data);
@@ -19,19 +35,26 @@ public class SecurityUtil {
     /**
      * Encrypts the [content] using the [privateKey]
      *
-     * @param content    data to be encrypted
-     * @param key encryption key
+     * @param content
+     *            data to be encrypted
+     * @param key
+     *            encryption key
      * @return encrypted data
-     * @throws NoSuchPaddingException    see @getSecretKey
-     * @throws IllegalBlockSizeException see @encryptFromCipher
-     * @throws NoSuchAlgorithmException  see @getCipher
-     * @throws BadPaddingException       see @encryptFromCipher
-     * @throws InvalidKeySpecException   see @getSecretKey
-     * @throws InvalidKeyException       see @encrypt
+     * @throws NoSuchPaddingException
+     *             see @getSecretKey
+     * @throws IllegalBlockSizeException
+     *             see @encryptFromCipher
+     * @throws NoSuchAlgorithmException
+     *             see @getCipher
+     * @throws BadPaddingException
+     *             see @encryptFromCipher
+     * @throws InvalidKeySpecException
+     *             see @getSecretKey
+     * @throws InvalidKeyException
+     *             see @encrypt
      */
-    public static String signContent(String content, String key) throws
-            NoSuchPaddingException, IllegalBlockSizeException, NoSuchAlgorithmException,
-            BadPaddingException, InvalidKeySpecException, InvalidKeyException {
+    public static String signContent(String content, String key) throws NoSuchPaddingException, IllegalBlockSizeException,
+            NoSuchAlgorithmException, BadPaddingException, InvalidKeySpecException, InvalidKeyException {
 
         return encryptUsingPublicKey(content, key);
     }
@@ -39,7 +62,8 @@ public class SecurityUtil {
     /**
      * Generates [SecretKey] instance using custom password and salt
      *
-     * @param key the base key used for generating secret
+     * @param key
+     *            the base key used for generating secret
      * @return [SecretKey] An instance of the [SecretKey]
      */
     public static SecretKey getSecretKey(String key) throws NoSuchAlgorithmException, InvalidKeySpecException {
@@ -51,7 +75,8 @@ public class SecurityUtil {
     /**
      * Generates [PublicKey] object from String public key
      *
-     * @param key string value of public key
+     * @param key
+     *            string value of public key
      * @return
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
@@ -71,7 +96,8 @@ public class SecurityUtil {
     /**
      * Generates [PrivateKey] object from String public key
      *
-     * @param key string value of public key
+     * @param key
+     *            string value of public key
      * @return
      * @throws NoSuchAlgorithmException
      * @throws InvalidKeySpecException
@@ -86,8 +112,10 @@ public class SecurityUtil {
     /**
      * Applies given cipher on a plain text
      *
-     * @param input  text to be encoded
-     * @param cipher teh instance of the [Cipher]
+     * @param input
+     *            text to be encoded
+     * @param cipher
+     *            teh instance of the [Cipher]
      * @return [String] encrypted data as a Base64 encoded text
      */
     private static String encryptFromCipher(String input, Cipher cipher) throws IllegalBlockSizeException, BadPaddingException {
@@ -98,8 +126,10 @@ public class SecurityUtil {
     /**
      * Applies given cipher on a plain text
      *
-     * @param input  text to be encoded
-     * @param cipher teh instance of the [Cipher]
+     * @param input
+     *            text to be encoded
+     * @param cipher
+     *            teh instance of the [Cipher]
      * @return [String] encrypted data as a Base64 encoded text
      */
     private static String decryptFromCipher(String input, Cipher cipher) throws IllegalBlockSizeException, BadPaddingException {
@@ -119,15 +149,14 @@ public class SecurityUtil {
         return Cipher.getInstance("RSA");
     }
 
-    private static String applyCipher(String input, Key key, int cipherMode) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException {
+    private static String applyCipher(String input, Key key, int cipherMode)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = getCipher();
         switch (cipherMode) {
-            case(Cipher.ENCRYPT_MODE):
+            case (Cipher.ENCRYPT_MODE):
                 cipher.init(Cipher.ENCRYPT_MODE, key);
                 return encryptFromCipher(input, cipher);
-            case(Cipher.DECRYPT_MODE):
+            case (Cipher.DECRYPT_MODE):
                 cipher.init(Cipher.DECRYPT_MODE, key);
                 return decryptFromCipher(input, cipher);
             default:
@@ -138,60 +167,53 @@ public class SecurityUtil {
     /**
      * Encrypts the string data using [key] (SecretKey) and [iv] (IvParameterSpec)
      *
-     * @param input  text to be encoded
-     * @param encKey secret key to be used for encryption
+     * @param input
+     *            text to be encoded
+     * @param encKey
+     *            secret key to be used for encryption
      * @return [String] encoded data as plain text
      */
-    public static String encryptUsingPublicKey(String input, String encKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+    public static String encryptUsingPublicKey(String input, String encKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
         PublicKey publicKey = getPublicKeyFromString(encKey);
         return encrypt(input, publicKey);
     }
 
-    public static String encryptUsingPrivateKey(String input, String encKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+    public static String encryptUsingPrivateKey(String input, String encKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
         PrivateKey publicKey = getPrivateKeyFromString(encKey);
         return encrypt(input, publicKey);
     }
 
-    public static String encrypt(String input, PublicKey publicKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException {
+    public static String encrypt(String input, PublicKey publicKey)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         return applyCipher(input, publicKey, Cipher.ENCRYPT_MODE);
     }
 
-    public static String encrypt(String input, PrivateKey privateKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException {
+    public static String encrypt(String input, PrivateKey privateKey)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         return applyCipher(input, privateKey, Cipher.ENCRYPT_MODE);
     }
 
-    public static String decryptUsingPrivateKey(String input, String decKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+    public static String decryptUsingPrivateKey(String input, String decKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
         PrivateKey privateKey = getPrivateKeyFromString(decKey);
         return decrypt(input, privateKey);
     }
 
-
-    public static String decryptUsingPublicKey(String input, String decKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
+    public static String decryptUsingPublicKey(String input, String decKey) throws NoSuchPaddingException, NoSuchAlgorithmException,
+            InvalidKeyException, IllegalBlockSizeException, BadPaddingException, InvalidKeySpecException {
         PublicKey privateKey = getPublicKeyFromString(decKey);
         return decrypt(input, privateKey);
     }
 
-    public static String decrypt(String input, PublicKey publicKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException {
+    public static String decrypt(String input, PublicKey publicKey)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         return applyCipher(input, publicKey, Cipher.DECRYPT_MODE);
     }
 
-    public static String decrypt(String input, PrivateKey privateKey) throws
-            NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException,
-            IllegalBlockSizeException, BadPaddingException {
+    public static String decrypt(String input, PrivateKey privateKey)
+            throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         return applyCipher(input, privateKey, Cipher.DECRYPT_MODE);
     }
 }

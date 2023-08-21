@@ -2,10 +2,10 @@ package org.mifos.connector.common.camel;
 
 public class EndpointSetting {
 
-    private String endpoint, authority;
+    private String endpoint;
+    private String authority;
 
-    public EndpointSetting() {
-    }
+    public EndpointSetting() {}
 
     public String getEndpoint() {
         return endpoint;

@@ -9,6 +9,5 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum AuthenticationType {
 
-    OTP,
-    QRCODE;
+    OTP, QRCODE;
 }

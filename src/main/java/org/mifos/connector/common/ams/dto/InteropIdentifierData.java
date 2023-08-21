@@ -24,8 +24,7 @@ public class InteropIdentifierData {
     private String idValue;
     private String subIdOrType;
 
-    public InteropIdentifierData() {
-    }
+    public InteropIdentifierData() {}
 
     public InteropIdentifierType getIdType() {
         return idType;

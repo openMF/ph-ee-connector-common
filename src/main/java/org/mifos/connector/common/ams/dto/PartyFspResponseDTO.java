@@ -7,7 +7,6 @@
  */
 package org.mifos.connector.common.ams.dto;
 
-
 public class PartyFspResponseDTO {
 
     private String accountId;

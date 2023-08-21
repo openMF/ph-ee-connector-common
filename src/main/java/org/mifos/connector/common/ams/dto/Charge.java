@@ -20,62 +20,60 @@ package org.mifos.connector.common.ams.dto;
 
 public class Charge {
 
-  private String actionIdentifier;
-  private String incomeAccountIdentifier;
-  private String name;
-  private String description;
-  private Boolean proportional;
-  private Double amount;
+    private String actionIdentifier;
+    private String incomeAccountIdentifier;
+    private String name;
+    private String description;
+    private Boolean proportional;
+    private Double amount;
 
-  public Charge() {
-    super();
-  }
+    public Charge() {}
 
-  public String getActionIdentifier() {
-    return this.actionIdentifier;
-  }
+    public String getActionIdentifier() {
+        return this.actionIdentifier;
+    }
 
-  public void setActionIdentifier(final String actionIdentifier) {
-    this.actionIdentifier = actionIdentifier;
-  }
+    public void setActionIdentifier(final String actionIdentifier) {
+        this.actionIdentifier = actionIdentifier;
+    }
 
-  public String getIncomeAccountIdentifier() {
-    return this.incomeAccountIdentifier;
-  }
+    public String getIncomeAccountIdentifier() {
+        return this.incomeAccountIdentifier;
+    }
 
-  public void setIncomeAccountIdentifier(final String incomeAccountIdentifier) {
-    this.incomeAccountIdentifier = incomeAccountIdentifier;
-  }
+    public void setIncomeAccountIdentifier(final String incomeAccountIdentifier) {
+        this.incomeAccountIdentifier = incomeAccountIdentifier;
+    }
 
-  public String getName() {
-    return this.name;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public void setName(final String name) {
-    this.name = name;
-  }
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public void setDescription(final String description) {
-    this.description = description;
-  }
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
-  public Boolean getProportional() {
-    return this.proportional;
-  }
+    public Boolean getProportional() {
+        return this.proportional;
+    }
 
-  public void setProportional(final Boolean proportional) {
-    this.proportional = proportional;
-  }
+    public void setProportional(final Boolean proportional) {
+        this.proportional = proportional;
+    }
 
-  public Double getAmount() {
-    return this.amount;
-  }
+    public Double getAmount() {
+        return this.amount;
+    }
 
-  public void setAmount(final Double amount) {
-    this.amount = amount;
-  }
+    public void setAmount(final Double amount) {
+        this.amount = amount;
+    }
 }

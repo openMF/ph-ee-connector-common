@@ -12,8 +12,8 @@ import java.util.List;
 
 public class ErrorInformation {
 
-    private short errorCode; //mandatory, 4 digits
-    private String errorDescription; //mandatory
+    private short errorCode; // mandatory, 4 digits
+    private String errorDescription; // mandatory
     private List<Extension> extensionList;
 
     public ErrorInformation() {}
@@ -49,10 +49,7 @@ public class ErrorInformation {
 
     @Override
     public String toString() {
-        return "ErrorInformation{" +
-                "errorCode:" + errorCode +
-                ", errorDescription:'" + errorDescription + '\'' +
-                ", extensionList:" + (extensionList == null ? "" : Arrays.toString(extensionList.toArray())) +
-                '}';
+        return "ErrorInformation{" + "errorCode:" + errorCode + ", errorDescription:'" + errorDescription + '\'' + ", extensionList:"
+                + (extensionList == null ? "" : Arrays.toString(extensionList.toArray())) + '}';
     }
 }

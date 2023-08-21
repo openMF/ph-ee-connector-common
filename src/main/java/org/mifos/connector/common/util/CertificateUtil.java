@@ -1,6 +1,5 @@
 package org.mifos.connector.common.util;
 
-import org.apache.commons.codec.binary.Base64;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -8,15 +7,20 @@ import java.security.PublicKey;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import org.apache.commons.codec.binary.Base64;
 
-public class CertificateUtil {
+public final class CertificateUtil {
+
+    private CertificateUtil() {}
 
     /**
      * Parses the public key from X509 certificate and returns it in form of string
      *
-     * @param encodedCertificate the base64 encoded string of X509 certificate
+     * @param encodedCertificate
+     *            the base64 encoded string of X509 certificate
      * @return public key in form of string
-     * @throws CertificateException error thrown in case of invalid certificate
+     * @throws CertificateException
+     *             error thrown in case of invalid certificate
      */
     public static String getPublicKey(String encodedCertificate) throws CertificateException {
         X509Certificate certificate = parseX509Certificate(encodedCertificate);
@@ -27,7 +31,8 @@ public class CertificateUtil {
     /**
      * Takes the base64 encoded string of certificate and returns the instance of the X509Certificate class
      *
-     * @param encodedCertificate the base64 encoded string of certificate
+     * @param encodedCertificate
+     *            the base64 encoded string of certificate
      * @return [X509Certificate] the instance of X509Certificate class
      */
     public static X509Certificate parseX509Certificate(String encodedCertificate) throws CertificateException {
@@ -40,7 +45,8 @@ public class CertificateUtil {
     /**
      * Takes the X509Certificate certificate object and extracts the public key from it
      *
-     * @param certificate the instance of X509Certificate
+     * @param certificate
+     *            the instance of X509Certificate
      * @return [PublicKey] the instance of PublicKey class
      */
     public static PublicKey parseRSAPublicKey(X509Certificate certificate) {

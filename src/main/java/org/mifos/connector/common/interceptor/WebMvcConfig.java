@@ -31,7 +31,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(jwsFilterStrategy);
         registration.addUrlPatterns("/*");
-        registration.setOrder(Integer.MIN_VALUE+2);
+        registration.setOrder(Integer.MIN_VALUE + 2);
         return registration;
     }
 

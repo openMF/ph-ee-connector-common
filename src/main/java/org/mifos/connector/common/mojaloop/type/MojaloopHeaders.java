@@ -2,8 +2,7 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum MojaloopHeaders {
 
-    FSPIOP_SOURCE("fspiop-source"),
-    FSPIOP_DESTINATION("fspiop-destination");
+    FSPIOP_SOURCE("fspiop-source"), FSPIOP_DESTINATION("fspiop-destination");
 
     private String headerName;
 

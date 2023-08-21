@@ -2,8 +2,8 @@ package org.mifos.connector.common.gsma.dto;
 
 public class AccessTokenDTO {
 
-    private String access_token;
-    private int expires_in;
+    private String accessToken;
+    private int expiresIn;
 
     public AccessTokenDTO() {
 
@@ -11,30 +11,27 @@ public class AccessTokenDTO {
 
     @Override
     public String toString() {
-        return "AccessTokenDTO{" +
-                "access_token='" + access_token + '\'' +
-                ", expires_in=" + expires_in +
-                '}';
+        return "AccessTokenDTO{" + "accessToken='" + accessToken + '\'' + ", expiresIn=" + expiresIn + '}';
     }
 
-    public String getAccess_token() {
-        return access_token;
+    public String getaccessToken() {
+        return accessToken;
     }
 
-    public void setAccess_token(String access_token) {
-        this.access_token = access_token;
+    public void setaccessToken(String accessToken) {
+        this.accessToken = accessToken;
     }
 
-    public int getExpires_in() {
-        return expires_in;
+    public int getexpiresIn() {
+        return expiresIn;
     }
 
-    public void setExpires_in(int expires_in) {
-        this.expires_in = expires_in;
+    public void setexpiresIn(int expiresIn) {
+        this.expiresIn = expiresIn;
     }
 
-    public AccessTokenDTO(String access_token, int expires_in) {
-        this.access_token = access_token;
-        this.expires_in = expires_in;
+    public AccessTokenDTO(String accessToken, int expiresIn) {
+        this.accessToken = accessToken;
+        this.expiresIn = expiresIn;
     }
 }

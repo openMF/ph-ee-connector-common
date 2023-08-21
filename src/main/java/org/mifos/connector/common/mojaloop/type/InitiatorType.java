@@ -9,8 +9,5 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum InitiatorType {
 
-    CONSUMER,
-    AGENT,
-    BUSINESS,
-    DEVICE;
+    CONSUMER, AGENT, BUSINESS, DEVICE;
 }

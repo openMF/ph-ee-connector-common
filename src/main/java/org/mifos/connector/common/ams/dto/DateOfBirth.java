@@ -18,7 +18,6 @@
  */
 package org.mifos.connector.common.ams.dto;
 
-
 public class DateOfBirth {
 
     private Integer year;

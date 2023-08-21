@@ -13,9 +13,7 @@ public class JWSRoute extends ErrorHandlerRouteBuilder {
 
     @Override
     public void configure() {
-        from("direct:set-jws-signature")
-                .id("set-jws-signature")
-                .process(jwsProcessor);
+        from("direct:set-jws-signature").id("set-jws-signature").process(jwsProcessor);
     }
 
 }

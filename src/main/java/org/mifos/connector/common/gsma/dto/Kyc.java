@@ -159,7 +159,4 @@ public class Kyc {
         this.birthCountry = birthCountry;
     }
 
-
-
 }
-

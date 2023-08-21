@@ -11,15 +11,13 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.mifos.connector.common.mojaloop.dto.Extension;
 import org.mifos.connector.common.mojaloop.dto.FspMoneyData;
 import org.mifos.connector.common.mojaloop.dto.GeoCode;
 import org.mifos.connector.common.mojaloop.dto.TransactionType;
 import org.mifos.connector.common.mojaloop.type.TransactionRole;
-
-import java.time.LocalDateTime;
-import java.util.List;
-
 
 public class TransactionRequestFspRequestDTO {
 
@@ -36,12 +34,11 @@ public class TransactionRequestFspRequestDTO {
     private LocalDateTime expiration;
     private List<Extension> extensionList;
 
-    TransactionRequestFspRequestDTO() {
-    }
+    TransactionRequestFspRequestDTO() {}
 
     public TransactionRequestFspRequestDTO(String transactionCode, String requestCode, String accountId, FspMoneyData amount,
-                                           TransactionRole transactionRole, TransactionType transactionType, String note,
-                                           GeoCode geoCode, LocalDateTime expiration, List<Extension> extensionList) {
+            TransactionRole transactionRole, TransactionType transactionType, String note, GeoCode geoCode, LocalDateTime expiration,
+            List<Extension> extensionList) {
         this.transactionCode = transactionCode;
         this.requestCode = requestCode;
         this.accountId = accountId;
@@ -55,7 +52,7 @@ public class TransactionRequestFspRequestDTO {
     }
 
     public TransactionRequestFspRequestDTO(String transactionCode, String requestCode, String accountId, FspMoneyData amount,
-                                           TransactionRole transactionRole) {
+            TransactionRole transactionRole) {
         this(transactionCode, requestCode, accountId, amount, transactionRole, null, null, null, null, null);
     }
 
@@ -137,8 +134,9 @@ public class TransactionRequestFspRequestDTO {
 
     public Extension getExtension(String key) {
         for (Extension extension : extensionList) {
-            if (extension.getKey().equals(key))
+            if (extension.getKey().equals(key)) {
                 return extension;
+            }
         }
         return null;
     }

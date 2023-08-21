@@ -1,6 +1,7 @@
 package org.mifos.connector.common.identityaccountmapper.dto;
 
 public class PaymentModalityDTO {
+
     private String paymentModality;
     private String financialAddress;
     private String bankingInstitutionCode;

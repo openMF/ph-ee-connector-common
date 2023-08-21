@@ -3,7 +3,10 @@ package org.mifos.connector.common.util;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class MpesaUtils {
+public final class MpesaUtils {
+
+    private MpesaUtils() {}
+
     public static String mpesaChannelRequestToChannelRequestConvertor(String channelRequest) {
 
         JSONObject mpesaChannelRequestJson = new JSONObject();
@@ -20,7 +23,7 @@ public class MpesaUtils {
         String payee;
 
         // payer payee conversion
-        if( ((JSONObject) payerArray.get(0)).getString("key").equals("MSISDN") ) {
+        if (((JSONObject) payerArray.get(0)).getString("key").equals("MSISDN")) {
             // case when 0th index is MSISDN
             String msisdn = ((JSONObject) payerArray.get(0)).getString("value");
             String accountId = ((JSONObject) payerArray.get(1)).getString("value");
@@ -37,14 +40,9 @@ public class MpesaUtils {
         }
 
         // setting payer and payee
-        mpesaChannelRequestJson.put("payer", getPartyInfoJson(
-                payer.split(" ")[0], payer.split(" ")[1]
-        ));
+        mpesaChannelRequestJson.put("payer", getPartyInfoJson(payer.split(" ")[0], payer.split(" ")[1]));
 
-        mpesaChannelRequestJson.put("payee", getPartyInfoJson(
-                payee.split(" ")[0], payee.split(" ")[1]
-        ));
-
+        mpesaChannelRequestJson.put("payee", getPartyInfoJson(payee.split(" ")[0], payee.split(" ")[1]));
 
         return mpesaChannelRequestJson.toString();
     }

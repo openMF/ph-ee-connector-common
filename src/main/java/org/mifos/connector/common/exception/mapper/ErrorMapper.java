@@ -1,14 +1,12 @@
 package org.mifos.connector.common.exception.mapper;
 
-import org.mifos.connector.common.exception.PaymentHubError;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.mifos.connector.common.exception.PaymentHubError;
 
 /**
- * Default implementation of mapper. This class can be used in ams or
- * payment schema connector for creating there respective mappings of
- * external error codes.
+ * Default implementation of mapper. This class can be used in ams or payment schema connector for creating there
+ * respective mappings of external error codes.
  */
 public abstract class ErrorMapper implements Mapper {
 
@@ -36,23 +34,15 @@ public abstract class ErrorMapper implements Mapper {
     @Override
     public String getExternalError(String internalErrorCode) {
         PaymentHubError paymentHubErrors = PaymentHubError.fromCode(internalErrorCode);
-        PaymentHubError filterResult = errorMap.values()
-                .stream()
-                .filter(paymentHubErrors::equals)
-                .findFirst().orElseThrow(() ->
-                        new RuntimeException("Can not get external error code for internal error code: " +
-                                internalErrorCode));
+        PaymentHubError filterResult = errorMap.values().stream().filter(paymentHubErrors::equals).findFirst()
+                .orElseThrow(() -> new RuntimeException("Can not get external error code for internal error code: " + internalErrorCode));
         return filterResult.getErrorCode();
     }
 
     @Override
     public String getExternalError(PaymentHubError internalErrorCode) {
-        PaymentHubError filterResult = errorMap.values()
-                .stream()
-                .filter(internalErrorCode::equals)
-                .findFirst().orElseThrow(() ->
-                        new RuntimeException("Can not get external error code for internal error code: " +
-                                internalErrorCode));
+        PaymentHubError filterResult = errorMap.values().stream().filter(internalErrorCode::equals).findFirst()
+                .orElseThrow(() -> new RuntimeException("Can not get external error code for internal error code: " + internalErrorCode));
         return filterResult.getErrorCode();
     }
 }

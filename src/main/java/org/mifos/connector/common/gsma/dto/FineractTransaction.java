@@ -13,9 +13,8 @@
 package org.mifos.connector.common.gsma.dto;
 
 public class FineractTransaction {
-	
-	public FineractTransaction() {
-    }
+
+    public FineractTransaction() {}
 
     String locale;
     String dateFormat;
@@ -107,6 +106,5 @@ public class FineractTransaction {
     public void setBankNumber(String bankNumber) {
         this.bankNumber = bankNumber;
     }
-
 
 }

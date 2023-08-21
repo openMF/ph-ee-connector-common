@@ -15,8 +15,7 @@ public class FspMoneyData {
     private BigDecimal amount;
     private String currency;
 
-    public FspMoneyData() {
-    }
+    public FspMoneyData() {}
 
     public FspMoneyData(BigDecimal amount, String currency) {
         this.amount = amount;
@@ -39,13 +38,13 @@ public class FspMoneyData {
         this.currency = currency;
     }
 
-//    @Transient
-//    public Money toIlpMoney() {
-//        Money money = new Money();
-//        money.setAmount(ContextUtil.formatAmount(amount));
-//        money.setCurrency(currency);
-//        return money;
-//    }
+    // @Transient
+    // public Money toIlpMoney() {
+    // Money money = new Money();
+    // money.setAmount(ContextUtil.formatAmount(amount));
+    // money.setCurrency(currency);
+    // return money;
+    // }
 
     @Transient
     public static MoneyData toMoneyData(FspMoneyData moneyData) {

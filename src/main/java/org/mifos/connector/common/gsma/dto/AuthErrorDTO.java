@@ -2,10 +2,10 @@ package org.mifos.connector.common.gsma.dto;
 
 public class AuthErrorDTO {
 
-    private  String errorCode;
+    private String errorCode;
     private String errorMessage;
 
-    public AuthErrorDTO(){
+    public AuthErrorDTO() {
 
     }
 

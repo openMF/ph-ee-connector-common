@@ -18,32 +18,26 @@
  */
 package org.mifos.connector.common.ams.dto;
 
-import org.hibernate.validator.constraints.NotBlank;
-
-import javax.validation.constraints.NotNull;
-
 public class DividendDistribution {
 
-  private DateOfBirth dueDate;
-  private String dividendRate;
+    private DateOfBirth dueDate;
+    private String dividendRate;
 
-  public DividendDistribution() {
-    super();
-  }
+    public DividendDistribution() {}
 
-  public DateOfBirth getDueDate() {
-    return this.dueDate;
-  }
+    public DateOfBirth getDueDate() {
+        return this.dueDate;
+    }
 
-  public void setDueDate(final DateOfBirth dueDate) {
-    this.dueDate = dueDate;
-  }
+    public void setDueDate(final DateOfBirth dueDate) {
+        this.dueDate = dueDate;
+    }
 
-  public String getDividendRate() {
-    return this.dividendRate;
-  }
+    public String getDividendRate() {
+        return this.dividendRate;
+    }
 
-  public void setDividendRate(final String dividendRate) {
-    this.dividendRate = dividendRate;
-  }
+    public void setDividendRate(final String dividendRate) {
+        this.dividendRate = dividendRate;
+    }
 }

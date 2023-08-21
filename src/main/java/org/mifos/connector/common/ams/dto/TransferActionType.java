@@ -9,7 +9,5 @@ package org.mifos.connector.common.ams.dto;
 
 public enum TransferActionType {
 
-    PREPARE,
-    CREATE,
-    RELEASE;
+    PREPARE, CREATE, RELEASE;
 }

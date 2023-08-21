@@ -9,14 +9,7 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum IdentifierType {
 
-    MSISDN,
-    EMAIL,
-    PERSONAL_ID,
-    BUSINESS,
-    DEVICE,
-    ACCOUNT_ID,
-    IBAN,
-    ALIAS;
+    MSISDN, EMAIL, PERSONAL_ID, BUSINESS, DEVICE, ACCOUNT_ID, IBAN, ALIAS;
 
-    public static final String[] REGEX_VALUES = {"a"};
+    public static final String[] REGEX_VALUES = { "a" };
 }

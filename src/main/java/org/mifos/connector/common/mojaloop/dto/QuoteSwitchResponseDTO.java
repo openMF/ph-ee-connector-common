@@ -7,10 +7,8 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import org.mifos.connector.common.util.ContextUtil;
-
 import java.time.LocalDateTime;
-
+import org.mifos.connector.common.util.ContextUtil;
 
 public class QuoteSwitchResponseDTO {
 
@@ -24,11 +22,11 @@ public class QuoteSwitchResponseDTO {
     private String condition; // mandatory
     private ExtensionList extensionList;
 
-    public QuoteSwitchResponseDTO() {
-    }
+    public QuoteSwitchResponseDTO() {}
 
-    public QuoteSwitchResponseDTO(MoneyData transferAmount, MoneyData payeeReceiveAmount, MoneyData payeeFspFee, MoneyData payeeFspCommission,
-                                  LocalDateTime expiration, GeoCode geoCode, String ilpPacket, String condition, ExtensionList extensionList) {
+    public QuoteSwitchResponseDTO(MoneyData transferAmount, MoneyData payeeReceiveAmount, MoneyData payeeFspFee,
+            MoneyData payeeFspCommission, LocalDateTime expiration, GeoCode geoCode, String ilpPacket, String condition,
+            ExtensionList extensionList) {
         this.transferAmount = transferAmount;
         this.payeeReceiveAmount = payeeReceiveAmount;
         this.payeeFspFee = payeeFspFee;

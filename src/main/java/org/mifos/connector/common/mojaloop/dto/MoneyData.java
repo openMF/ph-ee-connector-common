@@ -9,9 +9,7 @@ package org.mifos.connector.common.mojaloop.dto;
 
 import java.beans.Transient;
 import java.math.BigDecimal;
-
 import javax.validation.constraints.NotEmpty;
-
 import org.hibernate.validator.constraints.Length;
 import org.mifos.connector.common.util.ContextUtil;
 
@@ -24,15 +22,11 @@ public class MoneyData {
     @Length(min = 3, max = 3)
     private String currency;
 
-    public MoneyData() {
-    }
+    public MoneyData() {}
 
     @Override
     public String toString() {
-        return "MoneyData{" +
-                "amount='" + amount + '\'' +
-                ", currency='" + currency + '\'' +
-                '}';
+        return "MoneyData{" + "amount='" + amount + '\'' + ", currency='" + currency + '\'' + '}';
     }
 
     public MoneyData(String amount, String currency) {
@@ -69,13 +63,13 @@ public class MoneyData {
         this.currency = currency;
     }
 
-//    @Transient
-//    public Money getIlpMoney() {
-//        Money money = new Money();
-//        money.setAmount(amount);
-//        money.setCurrency(currency);
-//        return money;
-//    }
+    // @Transient
+    // public Money getIlpMoney() {
+    // Money money = new Money();
+    // money.setAmount(amount);
+    // money.setCurrency(currency);
+    // return money;
+    // }
 
     @Transient
     public static FspMoneyData toFspMoneyData(MoneyData moneyData) {

@@ -9,8 +9,5 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum TransactionRequestState {
 
-    RECEIVED,
-    PENDING,
-    ACCEPTED,
-    REJECTED;
+    RECEIVED, PENDING, ACCEPTED, REJECTED;
 }

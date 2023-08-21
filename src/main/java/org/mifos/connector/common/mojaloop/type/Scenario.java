@@ -9,10 +9,5 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum Scenario {
 
-    DEPOSIT,
-    WITHDRAWAL,
-    TRANSFER,
-    PAYMENT,
-    REFUND,
-    MPESA;
+    DEPOSIT, WITHDRAWAL, TRANSFER, PAYMENT, REFUND, MPESA;
 }

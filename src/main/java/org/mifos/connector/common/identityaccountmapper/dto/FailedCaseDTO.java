@@ -1,7 +1,8 @@
 package org.mifos.connector.common.identityaccountmapper.dto;
 
 public class FailedCaseDTO {
-    private String payeeIdentity ;
+
+    private String payeeIdentity;
     private String paymentModality;
     private String failureReason;
 

@@ -3,6 +3,7 @@ package org.mifos.connector.common.gsma.dto;
 import java.util.List;
 
 public class ErrorDTO {
+
     public String errorCategory;
     public String errorCode;
     public String errorDescription;
@@ -51,12 +52,7 @@ public class ErrorDTO {
 
     @Override
     public String toString() {
-        return "ErrorDTO{" +
-                "errorCategory='" + errorCategory + '\'' +
-                ", errorCode='" + errorCode + '\'' +
-                ", errorDescription='" + errorDescription + '\'' +
-                ", errorDateTime='" + errorDateTime + '\'' +
-                ", errorParameters=" + errorParameters +
-                '}';
+        return "ErrorDTO{" + "errorCategory='" + errorCategory + '\'' + ", errorCode='" + errorCode + '\'' + ", errorDescription='"
+                + errorDescription + '\'' + ", errorDateTime='" + errorDateTime + '\'' + ", errorParameters=" + errorParameters + '}';
     }
 }

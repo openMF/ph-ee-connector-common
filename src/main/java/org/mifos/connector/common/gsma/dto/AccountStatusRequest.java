@@ -1,6 +1,7 @@
 package org.mifos.connector.common.gsma.dto;
 
 public class AccountStatusRequest {
+
     public String identifierType;
     public String identifier;
 

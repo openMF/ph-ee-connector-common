@@ -11,19 +11,17 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import java.time.LocalDateTime;
+import java.util.List;
 import org.mifos.connector.common.mojaloop.dto.Extension;
 import org.mifos.connector.common.mojaloop.dto.FspMoneyData;
 import org.mifos.connector.common.mojaloop.type.TransactionRequestState;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-
 public class QuoteFspResponseDTO {
 
-    private String transactionCode; //mandatory
-    private String quoteCode; //mandatory
-    private TransactionRequestState state; //mandatory
+    private String transactionCode; // mandatory
+    private String quoteCode; // mandatory
+    private TransactionRequestState state; // mandatory
     private FspMoneyData fspFee;
     private FspMoneyData fspCommission;
     @JsonSerialize(using = LocalDateTimeSerializer.class)

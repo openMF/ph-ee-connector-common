@@ -2,8 +2,10 @@ package org.mifos.connector.common.ams.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LoanRepaymentDTO {
+
     @JsonProperty("transactionDate")
     public String transactionDate;
     @JsonProperty("paymentTypeId")
@@ -14,15 +16,12 @@ public class LoanRepaymentDTO {
     public String locale;
     @JsonProperty("dateFormat")
     public String dateFormat;
+
     @Override
     public String toString() {
-        return "LoanRepaymentDTO{" +
-                "transactionDate='" + transactionDate + '\'' +
-                ", paymentTypeId='" + paymentTypeId + '\'' +
-                ", transactionAmount='" + transactionAmount + '\'' +
-                ", locale='" + locale + '\'' +
-                ", dateFormat='" + dateFormat + '\'' +
-                '}';
+        return "LoanRepaymentDTO{" + "transactionDate='" + transactionDate + '\'' + ", paymentTypeId='" + paymentTypeId + '\''
+                + ", transactionAmount='" + transactionAmount + '\'' + ", locale='" + locale + '\'' + ", dateFormat='" + dateFormat + '\''
+                + '}';
     }
 
     public String getTransactionDate() {
@@ -65,8 +64,7 @@ public class LoanRepaymentDTO {
         this.dateFormat = dateFormat;
     }
 
-    public LoanRepaymentDTO() {
-    }
+    public LoanRepaymentDTO() {}
 
     public LoanRepaymentDTO(String transactionDate, String paymentTypeId, String transactionAmount, String locale, String dateFormat) {
         this.transactionDate = transactionDate;

@@ -7,41 +7,39 @@
  */
 package org.mifos.connector.common.mojaloop.ilp;
 
-
-
-
-//public class CodecContextFactory {
+// public class CodecContextFactory {
 //
-//    public static CodecContext interledger() {
-//        return (new CodecContext())
-//                .register(OerUint8Codec.OerUint8.class, new OerUint8Codec())
-//                .register(OerUint32Codec.OerUint32.class, new OerUint32Codec())
-//                .register(OerUint64Codec.OerUint64.class, new OerUint64Codec())
-//                .register(OerUint256Codec.OerUint256.class, new OerUint256Codec())
-//                .register(OerLengthPrefixCodec.OerLengthPrefix.class, new OerLengthPrefixCodec())
-//                .register(OerIA5StringCodec.OerIA5String.class, new OerIA5StringCodec())
-//                .register(OerOctetStringCodec.OerOctetString.class, new OerOctetStringCodec())
-//                .register(OerGeneralizedTimeCodec.OerGeneralizedTime.class, new OerGeneralizedTimeCodec())
-//                .register(InterledgerAddress.class, new InterledgerAddressOerCodec())
-//                .register(InterledgerPacketType.class, new InterledgerPacketTypeOerCodec())
-//                .register(org.interledger.ilp.InterledgerPayment.class, new org.interledger.codecs.oer.ilp.InterledgerPaymentOerCodec())
-//                .register(InterledgerPaymentRequest.class, new InterledgerPaymentRequestOerCodec())
-//                .register(Condition.class, new ConditionOerCodec())
-//                .register(QuoteByDestinationAmountRequest.class, new QuoteByDestinationAmountRequestOerCodec())
-//                .register(QuoteByDestinationAmountResponse.class, new QuoteByDestinationAmountResponseOerCodec())
-//                .register(QuoteBySourceAmountRequest.class, new QuoteBySourceAmountRequestOerCodec())
-//                .register(QuoteBySourceAmountResponse.class, new QuoteBySourceAmountResponseOerCodec())
-//                .register(QuoteLiquidityRequest.class, new QuoteLiquidityRequestOerCodec())
-//                .register(QuoteLiquidityResponse.class, new QuoteLiquidityResponseOerCodec())
-//                .register(PskMessage.class, new PskMessageBinaryCodec())
-//                .register(InterledgerPayment.class, new InterledgerPaymentOerCodec());
-//    }
+// public static CodecContext interledger() {
+// return (new CodecContext())
+// .register(OerUint8Codec.OerUint8.class, new OerUint8Codec())
+// .register(OerUint32Codec.OerUint32.class, new OerUint32Codec())
+// .register(OerUint64Codec.OerUint64.class, new OerUint64Codec())
+// .register(OerUint256Codec.OerUint256.class, new OerUint256Codec())
+// .register(OerLengthPrefixCodec.OerLengthPrefix.class, new OerLengthPrefixCodec())
+// .register(OerIA5StringCodec.OerIA5String.class, new OerIA5StringCodec())
+// .register(OerOctetStringCodec.OerOctetString.class, new OerOctetStringCodec())
+// .register(OerGeneralizedTimeCodec.OerGeneralizedTime.class, new OerGeneralizedTimeCodec())
+// .register(InterledgerAddress.class, new InterledgerAddressOerCodec())
+// .register(InterledgerPacketType.class, new InterledgerPacketTypeOerCodec())
+// .register(org.interledger.ilp.InterledgerPayment.class, new
+// org.interledger.codecs.oer.ilp.InterledgerPaymentOerCodec())
+// .register(InterledgerPaymentRequest.class, new InterledgerPaymentRequestOerCodec())
+// .register(Condition.class, new ConditionOerCodec())
+// .register(QuoteByDestinationAmountRequest.class, new QuoteByDestinationAmountRequestOerCodec())
+// .register(QuoteByDestinationAmountResponse.class, new QuoteByDestinationAmountResponseOerCodec())
+// .register(QuoteBySourceAmountRequest.class, new QuoteBySourceAmountRequestOerCodec())
+// .register(QuoteBySourceAmountResponse.class, new QuoteBySourceAmountResponseOerCodec())
+// .register(QuoteLiquidityRequest.class, new QuoteLiquidityRequestOerCodec())
+// .register(QuoteLiquidityResponse.class, new QuoteLiquidityResponseOerCodec())
+// .register(PskMessage.class, new PskMessageBinaryCodec())
+// .register(InterledgerPayment.class, new InterledgerPaymentOerCodec());
+// }
 //
-//    public static CodecContext interledgerJson() {
-//        throw new RuntimeException("Not yet implemented!");
-//    }
+// public static CodecContext interledgerJson() {
+// throw new RuntimeException("Not yet implemented!");
+// }
 //
-//    public static CodecContext interledgerProtobuf() {
-//        throw new RuntimeException("Not yet implemented!");
-//    }
-//}
+// public static CodecContext interledgerProtobuf() {
+// throw new RuntimeException("Not yet implemented!");
+// }
+// }

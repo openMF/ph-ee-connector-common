@@ -7,10 +7,9 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import org.mifos.connector.common.mojaloop.type.IdentifierType;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import org.mifos.connector.common.mojaloop.type.IdentifierType;
 
 public class PartyIdInfo {
 
@@ -21,8 +20,7 @@ public class PartyIdInfo {
     private String partySubIdOrType; // optional, immutable
     private String fspId; // optional
 
-    PartyIdInfo() {
-    }
+    PartyIdInfo() {}
 
     public PartyIdInfo(IdentifierType partyIdType, String partyIdentifier, String partySubIdOrType, String fspId) {
         this.partyIdType = partyIdType;
@@ -68,43 +66,52 @@ public class PartyIdInfo {
     }
 
     public void setFspId(String fspId) {
-        if (fspId == null)
+        if (fspId == null) {
             return;
-        if (this.fspId != null && !this.fspId.equals(fspId))
+        }
+        if (this.fspId != null && !this.fspId.equals(fspId)) {
             throw new RuntimeException("Technical error: try to change fspId from " + this.fspId + " to " + fspId);
+        }
         this.fspId = fspId;
     }
 
     public void update(PartyIdInfo oInfo) {
-        if (oInfo == null)
+        if (oInfo == null) {
             return;
-        if (!equals(oInfo))
+        }
+        if (!equals(oInfo)) {
             throw new RuntimeException("Incompatible party info " + this + '/' + oInfo);
+        }
 
         String oFspId = oInfo.fspId;
-        if (oFspId != null)
+        if (oFspId != null) {
             fspId = oFspId;
+        }
     }
 
     @Override
     public String toString() {
-        return "PartyIdInfo{" +
-                "idType:" + partyIdType +
-                ", id:'" + partyIdentifier + '\'' +
-                ", subIdOrType:'" + partySubIdOrType + '\'' +
-                ", fspId:'" + fspId + '\'' +
-                '}';
+        return "PartyIdInfo{" + "idType:" + partyIdType + ", id:'" + partyIdentifier + '\'' + ", subIdOrType:'" + partySubIdOrType + '\''
+                + ", fspId:'" + fspId + '\'' + '}';
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         PartyIdInfo that = (PartyIdInfo) o;
 
-        if (partyIdType != that.partyIdType) return false;
-        if (!partyIdentifier.equals(that.partyIdentifier)) return false;
+        if (partyIdType != that.partyIdType) {
+            return false;
+        }
+        if (!partyIdentifier.equals(that.partyIdentifier)) {
+            return false;
+        }
         return partySubIdOrType != null ? partySubIdOrType.equals(that.partySubIdOrType) : that.partySubIdOrType == null;
     }
 

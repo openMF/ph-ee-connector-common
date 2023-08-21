@@ -7,7 +7,6 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-
 public class ErrorSwitchResponseDTO {
 
     private ErrorInformation errorInformation;
@@ -22,8 +21,6 @@ public class ErrorSwitchResponseDTO {
 
     @Override
     public String toString() {
-        return "ErrorSwitchResponseDTO{" +
-                "errorInformation:" + errorInformation +
-                '}';
+        return "ErrorSwitchResponseDTO{" + "errorInformation:" + errorInformation + '}';
     }
 }

@@ -7,26 +7,29 @@
  */
 package org.mifos.connector.common.mojaloop.ilp;
 
-//public class InterledgerPaymentOerCodec implements InterledgerPaymentCodec {
-//    public InterledgerPaymentOerCodec() {
-//    }
+// public class InterledgerPaymentOerCodec implements InterledgerPaymentCodec {
+// public InterledgerPaymentOerCodec() {
+// }
 //
-//    public InterledgerPayment read(CodecContext context, InputStream inputStream) throws IOException {
-//        Objects.requireNonNull(context);
-//        Objects.requireNonNull(inputStream);
-//        String destinationAmount = context.read(OerIA5StringCodec.OerIA5String.class, inputStream).getValue();
-//        InterledgerAddress destinationAccount = context.read(InterledgerAddress.class, inputStream);
-//        byte[] data = context.read(OerOctetStringCodec.OerOctetString.class, inputStream).getValue();
-//        return InterledgerPayment.builder().destinationAmount(destinationAmount).destinationAccount(destinationAccount).data(data).build();
-//    }
+// public InterledgerPayment read(CodecContext context, InputStream inputStream) throws IOException {
+// Objects.requireNonNull(context);
+// Objects.requireNonNull(inputStream);
+// String destinationAmount = context.read(OerIA5StringCodec.OerIA5String.class, inputStream).getValue();
+// InterledgerAddress destinationAccount = context.read(InterledgerAddress.class, inputStream);
+// byte[] data = context.read(OerOctetStringCodec.OerOctetString.class, inputStream).getValue();
+// return
+// InterledgerPayment.builder().destinationAmount(destinationAmount).destinationAccount(destinationAccount).data(data).build();
+// }
 //
-//    public void write(CodecContext context, InterledgerPayment instance, OutputStream outputStream) throws IOException {
-//        Objects.requireNonNull(context);
-//        Objects.requireNonNull(instance);
-//        Objects.requireNonNull(outputStream);
-//        context.write(InterledgerPacketType.class, this.getTypeId(), outputStream);
-//        context.write(OerIA5StringCodec.OerIA5String.class, new OerIA5StringCodec.OerIA5String(instance.getDestinationAmount()), outputStream);
-//        context.write(InterledgerAddress.class, instance.getDestinationAccount(), outputStream);
-//        context.write(OerOctetStringCodec.OerOctetString.class, new OerOctetStringCodec.OerOctetString(instance.getData()), outputStream);
-//    }
-//}
+// public void write(CodecContext context, InterledgerPayment instance, OutputStream outputStream) throws IOException {
+// Objects.requireNonNull(context);
+// Objects.requireNonNull(instance);
+// Objects.requireNonNull(outputStream);
+// context.write(InterledgerPacketType.class, this.getTypeId(), outputStream);
+// context.write(OerIA5StringCodec.OerIA5String.class, new
+// OerIA5StringCodec.OerIA5String(instance.getDestinationAmount()), outputStream);
+// context.write(InterledgerAddress.class, instance.getDestinationAccount(), outputStream);
+// context.write(OerOctetStringCodec.OerOctetString.class, new OerOctetStringCodec.OerOctetString(instance.getData()),
+// outputStream);
+// }
+// }

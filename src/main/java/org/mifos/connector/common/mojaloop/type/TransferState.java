@@ -9,8 +9,5 @@ package org.mifos.connector.common.mojaloop.type;
 
 public enum TransferState {
 
-    RECEIVED,
-    RESERVED,
-    COMMITTED,
-    ABORTED;
+    RECEIVED, RESERVED, COMMITTED, ABORTED;
 }

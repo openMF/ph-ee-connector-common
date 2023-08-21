@@ -19,7 +19,5 @@
 package org.mifos.connector.common.ams.dto;
 
 public enum Type {
-  CHECKING,
-  SAVINGS,
-  SHARE
+    CHECKING, SAVINGS, SHARE
 }
