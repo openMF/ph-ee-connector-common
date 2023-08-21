@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -23,17 +24,6 @@ import org.mifos.connector.common.exception.PaymentHubErrorCategory;
 import org.mifos.connector.common.util.Constant;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Collection;
 
 @Slf4j
 public final class JWSUtil {
@@ -188,7 +178,7 @@ public final class JWSUtil {
             return "";
         }
         log.debug("HttpServletRequest: {}", parts);
-        for (Part part: parts) {
+        for (Part part : parts) {
             log.debug("Part loop");
             String partString = IOUtils.toString(part.getInputStream(), Charset.defaultCharset());
             stringBuilder.append(partString);
