@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -149,6 +150,7 @@ public final class JWSUtil {
         } else {
             data = body;
         }
+        log.debug("Parsed data: {}", data);
         return data;
     }
 
@@ -162,8 +164,22 @@ public final class JWSUtil {
      * @throws IOException
      */
     public static String parseFormData(HttpServletRequest httpServletRequest) throws ServletException, IOException {
+        log.debug("Parsing form data");
         StringBuilder stringBuilder = new StringBuilder();
-        for (Part part : httpServletRequest.getParts()) {
+        Collection<Part> parts;
+        try {
+            parts = httpServletRequest.getParts();
+            if (parts == null || parts.isEmpty()) {
+                return "";
+            }
+        } catch (IOException | ServletException e) {
+            log.warn("Empty payload in multipart form: {}", e.getLocalizedMessage());
+            log.error("Empty payload in multipart form", e);
+            return "";
+        }
+        log.debug("HttpServletRequest: {}", parts);
+        for (Part part : parts) {
+            log.debug("Part loop");
             String partString = IOUtils.toString(part.getInputStream(), Charset.defaultCharset());
             stringBuilder.append(partString);
         }

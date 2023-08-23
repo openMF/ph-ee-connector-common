@@ -69,6 +69,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
                     .addErrorParameter(Constant.HEADER_JWS, signature)
                     .developerMessage("Pass the valid header value for " + Constant.HEADER_JWS).build();
             JWSUtil.writeErrorResponse(response, errorDTO);
+            response.setStatus(400);
         }
         response.setHeader(Constant.HEADER_PLATFORM_TENANT_ID, tenant);
         log.debug("Request ended at interceptor");

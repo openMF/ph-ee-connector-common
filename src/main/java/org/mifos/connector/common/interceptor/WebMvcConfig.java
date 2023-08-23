@@ -1,5 +1,6 @@
 package org.mifos.connector.common.interceptor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @Component("JWSMvcConfig")
+@Slf4j
 @ConditionalOnExpression("${security.jws.enable:false}")
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
@@ -20,7 +22,8 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     private JWSFilterStrategy jwsFilterStrategy;
 
     @Override
-    protected void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(InterceptorRegistry registry) {
+        log.debug("Added interceptor");
         registry.addInterceptor(webSignatureInterceptor);
         super.addInterceptors(registry);
     }
@@ -28,6 +31,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     @Bean
     @ConditionalOnProperty(prefix = "security.jws.response", name = "enable", havingValue = "true")
     public FilterRegistrationBean jwsFilter() {
+        log.debug("Registered filter");
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(jwsFilterStrategy);
         registration.addUrlPatterns("/*");
