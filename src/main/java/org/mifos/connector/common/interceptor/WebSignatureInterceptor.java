@@ -45,7 +45,6 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             JWSUtil.writeErrorResponse(response, errorDTO);
             return false;
         }
-
         String dataToBeHashed = JWSUtil.getDataToBeHashed(request, data, headerOrder);
         log.debug("Data to be hashed: {}", dataToBeHashed);
 
