@@ -28,7 +28,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // return true means forward this request and false means don;t forward this to controller
-        log.debug("Request at interceptor");
+        log.info("Request at interceptor");
         if (headerOrder.size() == 0) {
             throw new RuntimeException("Header is null");
         }
@@ -45,7 +45,6 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             JWSUtil.writeErrorResponse(response, errorDTO);
             return false;
         }
-
         String dataToBeHashed = JWSUtil.getDataToBeHashed(request, data, headerOrder);
         log.debug("Data to be hashed: {}", dataToBeHashed);
 
@@ -62,7 +61,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
         }
 
         if (isValidSignature) {
-            log.debug("Signature is valid");
+            log.info("Signature is valid");
         } else {
             log.error("JWS Signature verification failed: {}", signature);
             errorDTO = new PhErrorDTO.PhErrorDTOBuilder(PaymentHubError.InvalidJsonWebSignature)
@@ -72,7 +71,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
             response.setStatus(400);
         }
         response.setHeader(Constant.HEADER_PLATFORM_TENANT_ID, tenant);
-        log.debug("Request ended at interceptor");
+        log.info("Request ended at interceptor");
         return isValidSignature;
     }
 }

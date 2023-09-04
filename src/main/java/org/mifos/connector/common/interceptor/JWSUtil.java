@@ -6,24 +6,24 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.mifos.connector.common.channel.dto.PhErrorDTO;
 import org.mifos.connector.common.exception.PaymentHubErrorCategory;
 import org.mifos.connector.common.util.Constant;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
 @Slf4j
 public final class JWSUtil {
@@ -123,7 +123,7 @@ public final class JWSUtil {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         try {
-            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json");
+            response.setHeader(CONTENT_TYPE, "application/json");
             response.getWriter().write(getObjectMapper().writeValueAsString(errorDTO));
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -138,13 +138,13 @@ public final class JWSUtil {
      * @return data for verification in form of string
      * @throws IOException
      *             throws as part of input stream
-     * @throws ServletException
-     *             inherited from functional chain
      */
-    public static String parseBodyPayload(HttpServletRequest request) throws IOException, ServletException {
+    public static String parseBodyPayload(HttpServletRequest request) throws IOException {
+        log.debug("Content-type: {}", request.getHeader(CONTENT_TYPE));
         String data = null;
         String body = IOUtils.toString(request.getInputStream(), Charset.defaultCharset());
-        if (body.isEmpty() && !request.getMethod().equals(HttpMethod.GET.name())) {
+        if (isMultipartRequest(request) &&
+                !request.getMethod().equals(HttpMethod.GET.name())) {
             // parse form data only if body is empty and REQUEST TYPE is not GET
             data = parseFormData(request);
         } else {
@@ -154,36 +154,67 @@ public final class JWSUtil {
         return data;
     }
 
+    // parses the boundary value form the content type
+    // works if content type is of below kind
+    // 'multipart/form-data; boundary=--------------------------188270859567880981670528'
+    public static String parseBoundaryValueFromContentTypeValue(String contentType) {
+        String[] contentTypeArray = contentType.split("boundary=");
+        if (contentTypeArray.length < 2) {
+            return "";
+        }
+        return contentTypeArray[1].strip();
+    }
+
     /**
      * Use to parse the string data from the multipart data passed in api
      *
-     * @param httpServletRequest
+     * @param request
      *            request object passed to the controller
      * @return multipart data in form of string
-     * @throws ServletException
      * @throws IOException
      */
-    public static String parseFormData(HttpServletRequest httpServletRequest) throws ServletException, IOException {
+    public static String parseFormData(HttpServletRequest request) throws IOException {
         log.debug("Parsing form data");
-        StringBuilder stringBuilder = new StringBuilder();
-        Collection<Part> parts;
-        try {
-            parts = httpServletRequest.getParts();
-            if (parts == null || parts.isEmpty()) {
-                return "";
+        String contentTypeHeaderValue = request.getHeader(CONTENT_TYPE);
+        String boundary = parseBoundaryValueFromContentTypeValue(contentTypeHeaderValue);
+        return parseFormData(request.getInputStream(), boundary);
+    }
+
+    /**
+     * Use to parse the multipart/form-data  from the input stream
+     *
+     * @param inputStream
+     * @param boundary the boundary can be parsed from CONTENT-TYPE header in
+     *                 API request header
+     * @return parsed data in the form of String
+     * @throws IOException
+     */
+    public static String parseFormData(InputStream inputStream, String boundary) throws IOException {
+        log.debug("inside MultipartParser");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder partContent = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.contains(boundary)) {
+                // Read and process the part headers
+                while ((line = reader.readLine()) != null && !line.isEmpty()) {
+                    // Process part headers if needed
+                }
+
+                // Read and process the part content
+                while ((line = reader.readLine()) != null && !line.equals(boundary)
+                        && !line.contains(boundary) && !line.equals("\n") && !line.isEmpty()) {
+                    partContent.append(line);
+                    partContent.append("\n");
+                }
             }
-        } catch (IOException | ServletException e) {
-            log.warn("Empty payload in multipart form: {}", e.getLocalizedMessage());
-            log.error("Empty payload in multipart form", e);
-            return "";
         }
-        log.debug("HttpServletRequest: {}", parts);
-        for (Part part : parts) {
-            log.debug("Part loop");
-            String partString = IOUtils.toString(part.getInputStream(), Charset.defaultCharset());
-            stringBuilder.append(partString);
-        }
-        return stringBuilder.toString();
+        return partContent.toString();
+    }
+
+    // returns true if the request is of multipart type
+    public static boolean isMultipartRequest(HttpServletRequest request) {
+        return request.getHeader(CONTENT_TYPE).contains("multipart/form-data");
     }
 
     /**

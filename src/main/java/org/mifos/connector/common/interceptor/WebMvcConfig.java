@@ -6,9 +6,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+
+import javax.servlet.annotation.MultipartConfig;
 
 @Component("JWSMvcConfig")
 @Slf4j
@@ -27,6 +30,16 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         registry.addInterceptor(webSignatureInterceptor);
         super.addInterceptors(registry);
     }
+
+    @Bean
+    public FilterRegistrationBean cachingFilter() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        registrationBean.setFilter(new MultiReadFilter());
+        registrationBean.addUrlPatterns("/*");
+        registrationBean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        return registrationBean;
+    }
+
 
     @Bean
     @ConditionalOnProperty(prefix = "security.jws.response", name = "enable", havingValue = "true")
