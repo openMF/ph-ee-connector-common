@@ -209,7 +209,7 @@ public final class JWSUtil {
                 }
             }
         }
-        return partContent.toString();
+        return partContent.toString().trim();
     }
 
     // returns true if the request is of multipart type
