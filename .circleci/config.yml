@@ -29,7 +29,7 @@ jobs:
             fi
 
             # Build and tag the Docker image
-            ./gradlew bootJar
+            ./gradlew Jar
             docker build -t "openmf/ph-ee-connector-common:$IMAGE_TAG" .
 
             # Push the Docker image to Docker Hub
@@ -55,7 +55,7 @@ jobs:
           name: Build Docker image
           command: |
             IMAGE_TAG=$CIRCLE_TAG
-            ./gradlew bootJar
+            ./gradlew Jar
             docker build -t openmf/ph-ee-connector-common:latest .
 
       # Log in to DockerHub using environment variables
