@@ -9,5 +9,4 @@ jws:
   header:
     order: "X-BatchID,X-CorrelationID,Platform-TenantId"
   # below are the exceptions in jws feature
-  exception:
-    	endpoints: "authorization/callback" #endpoints to be ignored from interceptor
+  exception-endpoints: "authorization/callback"

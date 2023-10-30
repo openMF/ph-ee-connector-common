@@ -1,6 +1,7 @@
 package org.mifos.connector.common.interceptor;
 
 import java.util.List;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.Getter;
@@ -25,7 +26,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     @Value("#{'${jws.header.order}'.split(',')}")
     private List<String> headerOrder;
 
-    @Value("#{'${jws.exception.endpoints}'.split(',')}")
+    @Value("#{'${jws.exception-endpoints}'.split(',')}")
     protected List<String> exceptionEndpoints;
 
     @Override
