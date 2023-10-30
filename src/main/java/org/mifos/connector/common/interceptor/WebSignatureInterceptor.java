@@ -25,10 +25,20 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     @Value("#{'${jws.header.order}'.split(',')}")
     private List<String> headerOrder;
 
+    @Value("#{'${jws.exception.endpoints}'.split(',')}")
+    protected List<String> exceptionEndpoints;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // return true means forward this request and false means don;t forward this to controller
         log.info("Request at interceptor");
+        for (String endpoint: exceptionEndpoints) {
+            if (request.getRequestURL().toString().contains(endpoint)) {
+                log.info("This is exception endpoint, hence passing the request without JWS validation");
+                return true;
+            }
+        }
+        log.info("URL: {}", request.getRequestURL().toString());
         if (headerOrder.size() == 0) {
             throw new RuntimeException("Header is null");
         }
