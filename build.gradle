@@ -167,7 +167,7 @@ configure(this) {
 }
 
 group = 'org.mifos'
-version = '1.6.1-rc.2'
+version = '1.7.0-SNAPSHOT'
 sourceCompatibility = JavaVersion.VERSION_17
 def artifactId = 'ph-ee-connector-common'
 def versionNumber = version
