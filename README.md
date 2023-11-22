@@ -13,6 +13,17 @@ security:
       enable: true
 ```
 
+# How to generate signature
+
+```java
+JsonWebSignature jwsSignature = new JsonWebSignature.JsonWebSignatureBuilder()
+.setClientCorrelationId(UUID.randomUUID().toString())
+.setTenantId("rhino").setData("/src/main/resources/demo.csv").build();
+
+String signature = jwsSignature.getSignature("<private-key>");
+```
+
+
 # Checkstyle
 Use below command to execute the checkstyle test.
 ```shell
