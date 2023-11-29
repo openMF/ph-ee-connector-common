@@ -25,6 +25,7 @@ public final class PhErrorDTO {
     private String developerMessage;
     private String defaultUserMessage;
     private List<ErrorParameter> errorParameters;
+    private List<Errors> errors;
 
     private PhErrorDTO(PhErrorDTOBuilder builder) {
         this.errorCategory = builder.errorCategory;
@@ -33,6 +34,7 @@ public final class PhErrorDTO {
         this.developerMessage = builder.developerMessage;
         this.defaultUserMessage = builder.defaultUserMessage;
         this.errorParameters = builder.errorParameters;
+        this.errors = builder.errors;
     }
 
     /**
@@ -52,6 +54,7 @@ public final class PhErrorDTO {
         private String developerMessage;
         private String defaultUserMessage;
         private List<ErrorParameter> errorParameters;
+        private List<Errors> errors;
 
         // sets not null fields using [PaymentHubError] object
         public PhErrorDTOBuilder(PaymentHubError error) {
@@ -107,6 +110,15 @@ public final class PhErrorDTO {
                 this.errorParameters = new ArrayList<>();
             }
             this.errorParameters.add(new ErrorParameter(key, value));
+            return this;
+        }
+
+         public PhErrorDTOBuilder addErrors(String errorCategory, String errorCode, String errorDescription,
+                                           List<ErrorParameter> errorParameters) {
+            if (this.errors == null) {
+                this.errors = new ArrayList<>();
+            }
+            this.errors.add(new Errors(errorCategory, errorCode, errorDescription, errorParameters));
             return this;
         }
 
