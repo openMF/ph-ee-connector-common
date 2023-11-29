@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.mifos.connector.common.gsma.dto.ErrorParameter;
 
 import java.util.List;
 
