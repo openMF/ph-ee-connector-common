@@ -4,20 +4,6 @@ executors:
     docker:
       - image: openjdk:17
 jobs:
-  # build:
-  #   docker:
-  #     - image: openjdk:17
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Set Build Description
-  #         command: |
-  #           echo "Tag: $CIRCLE_TAG"
-  #     - run:
-  #         name: Build JAR
-  #         command: |
-  #           ./gradlew jar
-
   deploy:
     docker:
       - image: cimg/openjdk:17.0.0
@@ -35,7 +21,35 @@ jobs:
             sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
             mv abc.txt build.gradle
             ./gradlew artifactoryPublish 
+  Deploy_tag_version:
+    docker:
+      - image: cimg/openjdk:17.0.0
+    environment:
+      JVM_OPTS: -Xmx512m
+      TERM: dumb  
+      GITHUB_TOKEN: ${GITHUB_TOKEN}  # Add the GitHub token as an environment variable
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+      - run:
+          name: Check if tag exists
+          command: |
+            TAG_EXIST=$(curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD -sSf "https://your-artifactory-url/api/docker/your-repository/v2/your-image/tags/list" | jq '.tags | contains(["${CIRCLE_TAG}"])')
+            if [ "$TAG_EXIST" == "false" ]; then
+              echo "Tag doesn't exist. Deploying artifact..."
+              # Add your deployment steps here
+            else
+              echo "Tag already exists. Skipping deployment."
+            fi
 
+            sed "s,<username>,$USERNAME,g" settings.gradle > abc.txt
+            sed "s,<password>,$PASSWORD,g" abc.txt > settings.gradle
+            sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
+            mv abc.txt build.gradle
+            ./gradlew artifactoryPublish
+
+          # when: always  # The job will be executed even if there's no match for the tag filter  
 workflows:
   version: 2
   build_and_deploy:
@@ -43,4 +57,9 @@ workflows:
       - deploy:
           filters:
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only: /^v\d+\.\d+\.\d+$/ # Ignore version tags in the job
+      - Deploy_tag_version:
+          filters:
+            tags:
+              only:
+                - /^v\d+\.\d+\.\d+$/ # Deploy only on version tags
