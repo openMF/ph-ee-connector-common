@@ -1,0 +1,46 @@
+version: 2.1
+executors:
+  default:
+    docker:
+      - image: openjdk:17
+jobs:
+  # build:
+  #   docker:
+  #     - image: openjdk:17
+  #   steps:
+  #     - checkout
+  #     - run:
+  #         name: Set Build Description
+  #         command: |
+  #           echo "Tag: $CIRCLE_TAG"
+  #     - run:
+  #         name: Build JAR
+  #         command: |
+  #           ./gradlew jar
+
+  deploy:
+    docker:
+      - image: cimg/openjdk:17.0.0
+    steps:
+      - checkout
+      # - run:
+      #     name: Set Build Description
+      #     command: |
+      #       echo "Tag: $CIRCLE_TAG"
+      - run:
+          name: Deploy to Artifactory
+          command: |
+            sed "s,<username>,$USERNAME,g" settings.gradle > abc.txt
+            sed "s,<password>,$PASSWORD,g" abc.txt > settings.gradle
+            sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
+            mv abc.txt build.gradle
+            ./gradlew artifactoryPublish 
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:    
+      - deploy:
+          filters:
+            tags:
+              only: /^v\d+\.\d+\.\d+$/

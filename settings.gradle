@@ -10,3 +10,4 @@ gradle.ext{
     app_username = '<username>'
     app_password = '<password>'
 }
+rootProject.name = 'ph-ee-connector-common'
