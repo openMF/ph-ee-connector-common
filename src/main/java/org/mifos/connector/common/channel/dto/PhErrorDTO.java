@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.mifos.connector.common.Validation.ValidatorBuilder;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubException;
 
@@ -113,12 +114,23 @@ public final class PhErrorDTO {
             return this;
         }
 
-         public PhErrorDTOBuilder addErrors(String errorCategory, String errorCode, String errorDescription,
+        public PhErrorDTOBuilder addErrors(String errorCategory, String errorCode, String errorDescription,
                                            List<ErrorParameter> errorParameters) {
             if (this.errors == null) {
                 this.errors = new ArrayList<>();
             }
             this.errors.add(new Errors(errorCategory, errorCode, errorDescription, errorParameters));
+            return this;
+        }
+
+        public PhErrorDTOBuilder fromValidatorBuilder(ValidatorBuilder validatorBuilder) {
+            this.errorCategory = validatorBuilder.getErrorCategory();
+            this.errorCode = validatorBuilder.getErrorCode();
+            this.errorDescription = validatorBuilder.getErrorDescription();
+            this.developerMessage = validatorBuilder.getDeveloperMessage();
+            this.defaultUserMessage = validatorBuilder.getDefaultUserMessage();
+            this.errorParameters = validatorBuilder.getErrorParameters();
+            this.errors = validatorBuilder.getErrorsList();
             return this;
         }
 
