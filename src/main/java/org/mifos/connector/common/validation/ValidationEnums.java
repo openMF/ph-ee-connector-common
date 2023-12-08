@@ -1,6 +1,6 @@
-package org.mifos.connector.common.Validation;
+package org.mifos.connector.common.validation;
 
-public enum ValidatorEnums implements ValidatorCodeAndMessage {
+public enum ValidationEnums implements ValidationCodeType {
     INVALID_LENGTH("INVALID_LENGTH", "length is invalid"),
     INVALID_LIST("INVALID_LIST", "list is invalid"),
     INVALID_NEGATIVE_FIELD("INVALID_NEGATIVE_FIELD", "this field cannot be negative"),
@@ -9,7 +9,7 @@ public enum ValidatorEnums implements ValidatorCodeAndMessage {
     private final String code;
     private final String message;
 
-    ValidatorEnums(String code, String message) {
+    ValidationEnums(String code, String message) {
         this.code = code;
         this.message = message;
     }

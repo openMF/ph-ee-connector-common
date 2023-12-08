@@ -1,4 +1,4 @@
-package org.mifos.connector.common.Validation;
+package org.mifos.connector.common.validation;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -113,14 +113,14 @@ public class ValidatorBuilder {
         return false;
     }
 
-    public ValidatorBuilder isNullWithFailureCode(final ValidatorCodeAndMessage errorCode) {
+    public ValidatorBuilder isNullWithFailureCode(final ValidationCodeType errorCode) {
         if (isNullOrEmpty()) {
             failWithCode(errorCode);
         }
         return this;
     }
 
-    public void failWithCode(final ValidatorCodeAndMessage errorCode) {
+    public void failWithCode(final ValidationCodeType errorCode) {
         final Errors error = new Errors(errorCode.getCode(), errorCode.getCode(), errorCode.getMessage(), null);
         this.errorsList.add(error);
     }
@@ -133,13 +133,13 @@ public class ValidatorBuilder {
         if (this.value != null) {
             final String stringValue = this.value.toString();
             if (StringUtils.isBlank(stringValue) || stringValue.length() != expectedLength) {
-                failWithCode(ValidatorEnums.INVALID_LENGTH);
+                failWithCode(ValidationEnums.INVALID_LENGTH);
             }
         }
         return this;
     }
 
-    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCode(final int expectedLength, final ValidatorCodeAndMessage errorCode) {
+    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCode(final int expectedLength, final ValidationCodeType errorCode) {
         if (this.value == null && this.ignoreNullValue) {
             return this;
         }
@@ -161,7 +161,7 @@ public class ValidatorBuilder {
         }
 
         if (this.value != null && this.value instanceof List && ((List<?>) this.value).isEmpty()) {
-            failWithCode(ValidatorEnums.INVALID_LIST);
+            failWithCode(ValidationEnums.INVALID_LIST);
         }
         return this;
     }
@@ -175,7 +175,7 @@ public class ValidatorBuilder {
             try {
                 final BigDecimal amount = new BigDecimal(this.value.toString());
                 if (amount.compareTo(BigDecimal.ZERO) < 0) {
-                    failWithCode(ValidatorEnums.INVALID_NEGATIVE_FIELD);
+                    failWithCode(ValidationEnums.INVALID_NEGATIVE_FIELD);
                 }
             } catch (NumberFormatException e) {
                 throw new RuntimeException("An error has occurred" + e.getMessage());
@@ -184,7 +184,7 @@ public class ValidatorBuilder {
         return this;
     }
 
-    public ValidatorBuilder validateBigDecimalFieldNotNegativeWithFailureCode(final ValidatorCodeAndMessage errorCode) {
+    public ValidatorBuilder validateBigDecimalFieldNotNegativeWithFailureCode(final ValidationCodeType errorCode) {
         if (this.value == null && this.ignoreNullValue) {
             return this;
         }
@@ -210,13 +210,13 @@ public class ValidatorBuilder {
         if (this.value != null) {
             final String stringValue = this.value.toString();
             if (stringValue.length() > maxLength) {
-                failWithCode(ValidatorEnums.INVALID_MAX_LENGTH);
+                failWithCode(ValidationEnums.INVALID_MAX_LENGTH);
             }
         }
         return this;
     }
 
-    public ValidatorBuilder validateFieldMaxLengthWithFailureCode(final int maxLength, final ValidatorCodeAndMessage errorCode) {
+    public ValidatorBuilder validateFieldMaxLengthWithFailureCode(final int maxLength, final ValidationCodeType errorCode) {
         if (this.value == null && this.ignoreNullValue) {
             return this;
         }
