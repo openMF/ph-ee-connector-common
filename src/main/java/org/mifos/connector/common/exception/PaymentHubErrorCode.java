@@ -2,15 +2,10 @@ package org.mifos.connector.common.exception;
 
 public enum PaymentHubErrorCode {
     BUSINESSRULE("BusinessRule"),
-
     VALIDATION("Validation"),
-
     AUTHORISATION("Authorisation"),
-
     IDENTIFICATION("Identification"),
-
     INTERNAL("Internal"),
-
     SERVICEUNAVAILABLE("Service Unavailable"),
     TOOMANYREQUEST("Too many requests");
 
