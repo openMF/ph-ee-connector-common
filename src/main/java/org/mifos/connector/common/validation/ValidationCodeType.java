@@ -5,8 +5,6 @@ import org.mifos.connector.common.exception.PaymentHubErrorCategory;
 public interface ValidationCodeType {
 
     String getCode();
-    default String getCategory(){
-        return PaymentHubErrorCategory.Validation.toString();
-    }
+    String getCategory();
     String getMessage();
 }
