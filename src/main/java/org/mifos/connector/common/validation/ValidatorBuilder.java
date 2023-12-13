@@ -126,7 +126,7 @@ public class ValidatorBuilder {
     }
 
     public void failWithCodeAndErrorParams(final ValidationCodeType errorCode, final List<ErrorParameter> errorParameters) {
-        final Errors error = new Errors(errorCode.getCode(), errorCode.getCategory(), errorCode.getMessage(), errorParameters);
+        final Errors error = new Errors(errorCode.getCategory(), errorCode.getCode(), errorCode.getMessage(), errorParameters);
         this.errorsList.add(error);
     }
 
