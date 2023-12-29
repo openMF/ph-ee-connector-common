@@ -121,7 +121,12 @@ public class ValidatorBuilder {
     }
 
     public void failWithCode(final ValidationCodeType errorCode) {
-        final Errors error = new Errors(errorCode.getCode(), errorCode.getCode(), errorCode.getMessage(), null);
+        final Errors error = new Errors(errorCode.getCategory(), errorCode.getCode(), errorCode.getMessage(), null);
+        this.errorsList.add(error);
+    }
+
+    public void failWithCodeAndErrorParams(final ValidationCodeType errorCode, final List<ErrorParameter> errorParameters) {
+        final Errors error = new Errors(errorCode.getCategory(), errorCode.getCode(), errorCode.getMessage(), errorParameters);
         this.errorsList.add(error);
     }
 
@@ -150,6 +155,23 @@ public class ValidatorBuilder {
             final String stringValue = this.value.toString();
             if (StringUtils.isBlank(stringValue) || stringValue.length() != expectedLength) {
                 failWithCode(errorCode);
+            }
+        }
+        return this;
+    }
+
+    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(final int expectedLength, final ValidationCodeType errorCode) {
+        if (this.value == null && this.ignoreNullValue) {
+            return this;
+        }
+
+        List<ErrorParameter> errorParam = List.of(new ErrorParameter(getParameter(), String.valueOf(expectedLength)));
+        if (isNullOrEmpty()) {
+            failWithCodeAndErrorParams(errorCode, errorParam);
+        } else if (this.value != null) {
+            final String stringValue = this.value.toString();
+            if (StringUtils.isBlank(stringValue) || stringValue.length() != expectedLength) {
+                failWithCodeAndErrorParams(errorCode, errorParam);
             }
         }
         return this;
@@ -227,6 +249,23 @@ public class ValidatorBuilder {
             final String stringValue = this.value.toString();
             if (stringValue.length() > maxLength) {
                 failWithCode(errorCode);
+            }
+        }
+        return this;
+    }
+
+    public ValidatorBuilder validateFieldMaxLengthWithFailureCodeAndErrorParams(final int maxLength, final ValidationCodeType errorCode) {
+        if (this.value == null && this.ignoreNullValue) {
+            return this;
+        }
+
+        List<ErrorParameter> errorParam = List.of(new ErrorParameter(getParameter(), String.valueOf(maxLength)));
+        if (isNullOrEmpty()) {
+            failWithCodeAndErrorParams(errorCode, errorParam);
+        } else if (this.value != null) {
+            final String stringValue = this.value.toString();
+            if (stringValue.length() > maxLength) {
+                failWithCodeAndErrorParams(errorCode, errorParam);
             }
         }
         return this;
