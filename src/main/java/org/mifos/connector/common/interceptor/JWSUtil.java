@@ -162,7 +162,9 @@ public final class JWSUtil {
         if (contentTypeArray.length < 2) {
             return "";
         }
-        return contentTypeArray[1].strip();
+        String boundary = contentTypeArray[1].strip();
+        int pos = boundary.indexOf(';');
+        return pos == -1 ? boundary : boundary.substring(0,pos).strip();
     }
 
     /**
