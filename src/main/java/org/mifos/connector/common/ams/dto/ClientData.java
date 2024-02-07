@@ -19,7 +19,6 @@
 package org.mifos.connector.common.ams.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.time.LocalDate;
 
 public class ClientData {

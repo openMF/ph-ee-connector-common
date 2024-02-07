@@ -1,5 +1,8 @@
 package org.mifos.connector.common.validation;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,14 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.mifos.connector.common.channel.dto.ErrorParameter;
 import org.mifos.connector.common.channel.dto.Errors;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @ToString
 @AllArgsConstructor
 public class ValidatorBuilder {
+
     private String errorCategory;
     private String errorCode;
     private String errorDescription;
@@ -75,7 +75,6 @@ public class ValidatorBuilder {
         this.defaultUserMessage = defaultUserMessage;
         return this;
     }
-
 
     public ValidatorBuilder resource(final String resource) {
         this.resource = resource;
@@ -160,7 +159,8 @@ public class ValidatorBuilder {
         return this;
     }
 
-    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(final int expectedLength, final ValidationCodeType errorCode) {
+    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(final int expectedLength,
+            final ValidationCodeType errorCode) {
         if (this.value == null && this.ignoreNullValue) {
             return this;
         }

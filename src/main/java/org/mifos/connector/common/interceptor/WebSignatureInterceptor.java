@@ -1,5 +1,8 @@
 package org.mifos.connector.common.interceptor;
 
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.mifos.connector.common.channel.dto.PhErrorDTO;
@@ -10,10 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -33,7 +32,7 @@ public class WebSignatureInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         // return true means forward this request and false means don;t forward this to controller
         log.info("Request at interceptor");
-        for (String endpoint: exceptionEndpoints) {
+        for (String endpoint : exceptionEndpoints) {
             if (request.getRequestURL().toString().contains(endpoint)) {
                 log.info("This is exception endpoint, hence passing the request without JWS validation");
                 return true;

@@ -34,12 +34,12 @@ jobs:
             sed "s,<password>,$PASSWORD,g" abc.txt > settings.gradle
             sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
             mv abc.txt build.gradle
-            ./gradlew artifactoryPublish 
+            ./gradlew artifactoryPublish
 
 workflows:
   version: 2
   build_and_deploy:
-    jobs:    
+    jobs:
       - deploy:
           filters:
             tags:

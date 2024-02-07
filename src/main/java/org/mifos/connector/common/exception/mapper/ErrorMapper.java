@@ -1,9 +1,8 @@
 package org.mifos.connector.common.exception.mapper;
 
-import org.mifos.connector.common.exception.PaymentHubError;
-
 import java.util.HashMap;
 import java.util.Map;
+import org.mifos.connector.common.exception.PaymentHubError;
 
 /**
  * Default implementation of mapper. This class can be used in ams or payment schema connector for creating there

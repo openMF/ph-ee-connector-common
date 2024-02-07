@@ -1,12 +1,11 @@
 package org.mifos.connector.common.operations.dto;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.mifos.connector.common.operations.type.TransferStatus;
-
-import java.math.BigDecimal;
-import java.util.Date;
 
 @Getter
 @Setter

@@ -38,7 +38,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         return registrationBean;
     }
 
-
     @Bean
     @ConditionalOnProperty(prefix = "security.jws.response", name = "enable", havingValue = "true")
     public FilterRegistrationBean jwsFilter() {

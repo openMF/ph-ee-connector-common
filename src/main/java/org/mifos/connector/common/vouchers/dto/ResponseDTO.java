@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseDTO {
+
     private String ResponseCode;
     private String ResponseDescription;
     private String RequestID;

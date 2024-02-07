@@ -7,9 +7,8 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import org.mifos.connector.common.util.ContextUtil;
-
 import java.time.LocalDateTime;
+import org.mifos.connector.common.util.ContextUtil;
 
 public class TransferSwitchRequestDTO {
 

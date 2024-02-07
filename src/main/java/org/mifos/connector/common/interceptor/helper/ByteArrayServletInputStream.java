@@ -1,9 +1,9 @@
 package org.mifos.connector.common.interceptor.helper;
 
-import javax.servlet.ReadListener;
-import javax.servlet.ServletInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import javax.servlet.ReadListener;
+import javax.servlet.ServletInputStream;
 
 public class ByteArrayServletInputStream extends ServletInputStream {
 
@@ -29,7 +29,6 @@ public class ByteArrayServletInputStream extends ServletInputStream {
     }
 
     @Override
-    public void setReadListener(ReadListener readListener) {
-    }
+    public void setReadListener(ReadListener readListener) {}
 
 }

@@ -7,12 +7,11 @@
  */
 package org.mifos.connector.common.channel.dto;
 
+import java.util.List;
+import javax.validation.constraints.NotNull;
 import org.mifos.connector.common.gsma.dto.CustomData;
 import org.mifos.connector.common.mojaloop.dto.*;
 import org.mifos.connector.common.mojaloop.type.AmountType;
-
-import javax.validation.constraints.NotNull;
-import java.util.List;
 
 public class TransactionChannelRequestDTO {
 
