@@ -1,9 +1,10 @@
 package org.mifos.connector.common.exception;
 
+import lombok.Getter;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.Getter;
 
 @Getter
 public enum PaymentHubError {

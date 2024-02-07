@@ -1,16 +1,19 @@
 package org.mifos.connector.common.interceptor.helper;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Collection;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.util.StreamUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.Part;
-import org.springframework.util.StreamUtils;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Collection;
 
 public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
 
@@ -20,14 +23,13 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
      * Creates a ServletRequest adaptor wrapping the given request object.
      *
      * @param request
-     * @throws IllegalArgumentException
-     *             if the request is null
+     * @throws IllegalArgumentException if the request is null
      */
     public MultiReadHttpServletRequest(HttpServletRequest request) {
         super(request);
         try {
             body = StreamUtils.copyToByteArray(request.getInputStream());
-        } catch (IOException e) {
+        }catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
