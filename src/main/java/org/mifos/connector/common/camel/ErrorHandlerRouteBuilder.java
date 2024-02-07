@@ -7,15 +7,13 @@
  */
 package org.mifos.connector.common.camel;
 
-import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
-import static org.mifos.connector.common.camel.AuthRouteBuilder.AUTH_ERROR;
-import static org.mifos.connector.common.camel.AuthRouteBuilder.HAS_AUTHORITY;
-import static org.mifos.connector.common.camel.AuthRouteBuilder.UNKNOWN_ERROR;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.json.JSONObject;
+
+import static org.apache.camel.Exchange.HTTP_RESPONSE_CODE;
+import static org.mifos.connector.common.camel.AuthRouteBuilder.*;
 
 public abstract class ErrorHandlerRouteBuilder extends RouteBuilder {
 

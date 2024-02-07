@@ -7,11 +7,12 @@
  */
 package org.mifos.connector.common.mojaloop.dto;
 
-import java.beans.Transient;
-import java.math.BigDecimal;
-import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 import org.mifos.connector.common.util.ContextUtil;
+
+import javax.validation.constraints.NotEmpty;
+import java.beans.Transient;
+import java.math.BigDecimal;
 
 public class MoneyData {
 

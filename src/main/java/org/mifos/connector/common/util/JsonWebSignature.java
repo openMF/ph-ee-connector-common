@@ -2,6 +2,7 @@ package org.mifos.connector.common.util;
 
 import lombok.Getter;
 import org.springframework.util.StringUtils;
+
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
@@ -11,7 +12,6 @@ import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.UUID;
 
 /**
  * This class represents a JSON Web Signature (JWS) object. It contains a hashed data field and a method to generate a

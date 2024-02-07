@@ -6,6 +6,15 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.mifos.connector.common.channel.dto.PhErrorDTO;
+import org.mifos.connector.common.exception.PaymentHubErrorCategory;
+import org.mifos.connector.common.util.Constant;
+import org.springframework.http.HttpMethod;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +24,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
-import org.mifos.connector.common.channel.dto.PhErrorDTO;
-import org.mifos.connector.common.exception.PaymentHubErrorCategory;
-import org.mifos.connector.common.util.Constant;
-import org.springframework.http.HttpMethod;
+
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
 @Slf4j
@@ -143,8 +145,8 @@ public final class JWSUtil {
         log.debug("Content-type: {}", request.getHeader(CONTENT_TYPE));
         String data = null;
         String body = IOUtils.toString(request.getInputStream(), Charset.defaultCharset());
-        if (isMultipartRequest(request) &&
-                !request.getMethod().equals(HttpMethod.GET.name())) {
+        if (isMultipartRequest(request)
+                && !request.getMethod().equals(HttpMethod.GET.name())) {
             // parse form data only if body is empty and REQUEST TYPE is not GET
             data = parseFormData(request);
         } else {
