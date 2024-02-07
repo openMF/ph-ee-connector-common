@@ -1,7 +1,5 @@
 package org.mifos.connector.common.camel;
 
-import java.util.List;
-import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -14,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.Map;
 
 @Component
 @Slf4j

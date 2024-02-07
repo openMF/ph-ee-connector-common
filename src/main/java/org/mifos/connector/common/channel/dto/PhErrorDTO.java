@@ -1,15 +1,16 @@
 package org.mifos.connector.common.channel.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.mifos.connector.common.validation.ValidatorBuilder;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubException;
+import org.mifos.connector.common.validation.ValidatorBuilder;
+
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter

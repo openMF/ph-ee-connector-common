@@ -1,9 +1,10 @@
 package org.mifos.connector.common.channel.dto;
 
-import java.util.Arrays;
 import org.mifos.connector.common.gsma.dto.GsmaParty;
 import org.mifos.connector.common.mojaloop.dto.MoneyData;
 import org.mifos.connector.common.mojaloop.dto.TransactionType;
+
+import java.util.Arrays;
 
 public class TransactionChannelC2BRequestDTO {
 

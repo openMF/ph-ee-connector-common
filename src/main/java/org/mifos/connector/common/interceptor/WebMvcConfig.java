@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
-import javax.servlet.annotation.MultipartConfig;
-
 @Component("JWSMvcConfig")
 @Slf4j
 @ConditionalOnExpression("${security.jws.enable:false}")

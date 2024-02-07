@@ -3,10 +3,6 @@ package org.mifos.connector.common.camel;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import java.security.KeyFactory;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
@@ -16,6 +12,11 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+
+import java.security.KeyFactory;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 @Configuration
 @ConditionalOnExpression("${rest.authorization.enabled:false}")
