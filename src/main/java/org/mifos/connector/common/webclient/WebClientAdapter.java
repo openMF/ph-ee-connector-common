@@ -119,10 +119,17 @@ public class WebClientAdapter {
         return deleteRequest(url, new HttpHeaders());
     }
 
-    public <T, R> CompletableFuture<R> callBack(String url, T body, HttpHeaders headers, MediaType mediaType, Class<R> responseType)
+    public <T, R> CompletableFuture<R> sendCallBackPost(String url, T body, HttpHeaders headers, MediaType mediaType, Class<R> responseType)
     {
         String headerName = "X-Correlation-ID";
         log.info("Client Correlation Id: {}", headers.getFirst(headerName));
         return postRequest(url, body, headers, mediaType, responseType);
+    }
+
+    public <T, R> CompletableFuture<R> sendCallBackPut(String url, T body, HttpHeaders headers, MediaType mediaType, Class<R> responseType)
+    {
+        String headerName = "X-Correlation-ID";
+        log.info("Client Correlation Id: {}", headers.getFirst(headerName));
+        return putRequest(url, body, headers, mediaType, responseType);
     }
 }
