@@ -29,7 +29,7 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
         super(request);
         try {
             body = StreamUtils.copyToByteArray(request.getInputStream());
-        } catch (IOException e) {
+        }catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
