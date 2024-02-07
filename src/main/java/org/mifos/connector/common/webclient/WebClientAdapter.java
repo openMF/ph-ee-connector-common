@@ -29,7 +29,7 @@ public class WebClientAdapter {
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("GET request to {} succeeded, response Body {}", url, responseBody))
+                .doOnSuccess(responseBody -> log.debug("GET request to {} succeeded, response Body {}", url, responseBody))
                 .doOnError(error -> log.error("GET request to {} failed: {}", url, error.getMessage()))
                 .toFuture();
     }
@@ -48,7 +48,7 @@ public class WebClientAdapter {
                 .body(Mono.just(body), body.getClass())
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded with response {}", url, responseBody))
+                .doOnSuccess(responseBody -> log.debug("POST request to {} succeeded with response {}", url, responseBody))
                 .doOnError(error -> log.error("POST request to {} failed: {}", url, error.getMessage()))
                 .toFuture();
     }
@@ -65,7 +65,7 @@ public class WebClientAdapter {
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded with response {}", url, responseBody))
+                .doOnSuccess(responseBody -> log.debug("POST request to {} succeeded with response {}", url, responseBody))
                 .doOnError(error -> log.error("POST request to {} failed: {}", url, error.getMessage()))
                 .toFuture();
     }
@@ -79,7 +79,7 @@ public class WebClientAdapter {
                 .uri(url)
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded", url))
+                .doOnSuccess(responseBody -> log.debug("POST request to {} succeeded, response {}", url, responseBody))
                 .doOnError(error -> log.error("POST request to {} failed: {}", url, error.getMessage()))
                 .toFuture();
     }
@@ -93,7 +93,7 @@ public class WebClientAdapter {
                 .body(BodyInserters.fromValue(body))
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("PUT request to {} succeeded", url))
+                .doOnSuccess(responseBody -> log.debug("PUT request to {} succeeded, response {}", url, body))
                 .doOnError(error -> log.error("PUT request to {} failed: {}", url, error.getMessage()))
                 .toFuture();
     }
@@ -110,7 +110,7 @@ public class WebClientAdapter {
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
                 .bodyToMono(String.class)
-                .doOnSuccess(responseBody -> log.info("DELETE request to {} succeeded, response body {}", url, responseBody))
+                .doOnSuccess(responseBody -> log.debug("DELETE request to {} succeeded, response body {}", url, responseBody))
                 .doOnError(error -> log.error("DELETE request to {} failed: {}", url, error.getMessage()))
                 .toFuture();
     }
