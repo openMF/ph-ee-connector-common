@@ -29,9 +29,8 @@ public class WebClientAdapter {
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("GET request to {} succeeded", url))
+                .doOnSuccess(responseBody -> log.info("GET request to {} succeeded, response Body {}", url, responseBody))
                 .doOnError(error -> log.error("GET request to {} failed: {}", url, error.getMessage()))
-                .doOnNext(body -> log.debug("GET Response: {}", body))
                 .toFuture();
     }
 
@@ -49,9 +48,8 @@ public class WebClientAdapter {
                 .body(Mono.just(body), body.getClass())
                 .retrieve()
                 .bodyToMono(responseType)
-                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded", url))
+                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded with response {}", url, responseBody))
                 .doOnError(error -> log.error("POST request to {} failed: {}", url, error.getMessage()))
-                .doOnNext(responseBody -> log.debug("POST Response: {}", responseBody))
                 .toFuture();
     }
 
@@ -59,7 +57,32 @@ public class WebClientAdapter {
         return postRequest(url, body, new HttpHeaders(), MediaType.APPLICATION_JSON, responseType);
     }
 
+    public <R> CompletableFuture<R> postRequest(String url, HttpHeaders headers, MediaType mediaType, Class<R> responseType) {
+        log.info("Executing POST request to URL: {} without a body", url);
+        return webClient.post()
+                .uri(url)
+                .contentType(mediaType)
+                .headers(httpHeaders -> httpHeaders.addAll(headers))
+                .retrieve()
+                .bodyToMono(responseType)
+                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded with response {}", url, responseBody))
+                .doOnError(error -> log.error("POST request to {} failed: {}", url, error.getMessage()))
+                .toFuture();
+    }
 
+    public <R> CompletableFuture<R> postRequest(String url, Class<R> responseType) {
+        return postRequest(url, new HttpHeaders(), MediaType.APPLICATION_JSON, responseType);
+    }
+    public <R> CompletableFuture<R> postRequestWithoutBodyAndHeaders(String url, Class<R> responseType) {
+        log.info("Executing POST request to URL: {} without a body and headers", url);
+        return webClient.post()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(responseType)
+                .doOnSuccess(responseBody -> log.info("POST request to {} succeeded", url))
+                .doOnError(error -> log.error("POST request to {} failed: {}", url, error.getMessage()))
+                .toFuture();
+    }
     // PUT
     public <T, R> CompletableFuture<R> putRequest(String url, T body, HttpHeaders headers, MediaType mediaType, Class<R> responseType) {
         log.info("Executing PUT request to URL: {}", url);
@@ -87,13 +110,19 @@ public class WebClientAdapter {
                 .headers(httpHeaders -> httpHeaders.addAll(headers))
                 .retrieve()
                 .bodyToMono(String.class)
-                .doOnSuccess(responseBody -> log.info("DELETE request to {} succeeded", url))
+                .doOnSuccess(responseBody -> log.info("DELETE request to {} succeeded, response body {}", url, responseBody))
                 .doOnError(error -> log.error("DELETE request to {} failed: {}", url, error.getMessage()))
-                .doOnNext(responseBody -> log.debug("DELETE Response Body: {}", responseBody))
                 .toFuture();
     }
 
     public CompletableFuture<String> deleteRequest(String url) {
         return deleteRequest(url, new HttpHeaders());
+    }
+
+    public <T, R> CompletableFuture<R> callBack(String url, T body, HttpHeaders headers, MediaType mediaType, Class<R> responseType)
+    {
+        String headerName = "X-Correlation-ID";
+        log.info("Client Correlation Id: {}", headers.getFirst(headerName));
+        return postRequest(url, body, headers, mediaType, responseType);
     }
 }
