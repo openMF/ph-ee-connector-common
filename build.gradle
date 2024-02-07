@@ -22,6 +22,27 @@ repositories {
     }
 }
 
+apply plugin:'com.diffplug.spotless'
+spotless {
+    format 'misc', {
+        target '**/*.md', '**/*.properties', '**/.gitignore', '**/.openapi-generator-ignore', '**/*.yml', '**/*.xml', '**/**.json', '**/*.sql'
+        targetExclude '**/build/**', '**/bin/**', '**/.settings/**', '**/.idea/**', '**/.gradle/**', '**/gradlew.bat', '**/licenses/**', '**/banner.txt', '.vscode/**'
+        indentWithSpaces(4)
+        endWithNewline()
+        trimTrailingWhitespace()
+    }
+
+    groovyGradle {
+        target '*.gradle', '**/*.gradle'
+        targetExclude '**/build/**'
+        greclipse()
+        indentWithSpaces(4)
+        endWithNewline()
+        trimTrailingWhitespace()
+    }
+
+    lineEndings 'UNIX'
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
@@ -50,27 +71,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
 }
 
-apply plugin:'com.diffplug.spotless'
-spotless {
-    format 'misc', {
-        target '**/*.md', '**/*.properties', '**/.gitignore', '**/.openapi-generator-ignore', '**/*.yml', '**/*.xml', '**/**.json', '**/*.sql'
-        targetExclude '**/build/**', '**/bin/**', '**/.settings/**', '**/.idea/**', '**/.gradle/**', '**/gradlew.bat', '**/licenses/**', '**/banner.txt', '.vscode/**'
-        indentWithSpaces(4)
-        endWithNewline()
-        trimTrailingWhitespace()
-    }
-
-    groovyGradle {
-        target '*.gradle', '**/*.gradle'
-        targetExclude '**/build/**'
-        greclipse()
-        indentWithSpaces(4)
-        endWithNewline()
-        trimTrailingWhitespace()
-    }
-
-    lineEndings 'UNIX'
-}
 configure(this) {
     // NOTE: order matters!
     apply plugin: 'java'
@@ -84,37 +84,37 @@ configure(this) {
     }
     tasks.withType(JavaCompile) {
         options.compilerArgs += [
-            "-Xlint:unchecked",
-            "-Xlint:cast",
-            "-Xlint:auxiliaryclass",
-            "-Xlint:deprecation",
-            "-Xlint:dep-ann",
-            "-Xlint:divzero",
-            "-Xlint:empty",
-            "-Xlint:exports",
-            "-Xlint:fallthrough",
-            "-Xlint:finally",
-            "-Xlint:module",
-            "-Xlint:opens",
-            "-Xlint:options",
-            "-Xlint:overloads",
-            "-Xlint:overrides",
-            "-Xlint:path",
-            "-Xlint:processing",
-            "-Xlint:removal",
-            "-Xlint:requires-automatic",
-            "-Xlint:requires-transitive-automatic",
-            "-Xlint:try",
-            "-Xlint:varargs",
-            "-Xlint:preview",
-            "-Xlint:static",
-            // -Werror needs to be disabled because EclipseLink's static weaving doesn't generate warning-free code
-            // and during an IntelliJ recompilation, it fails
-            //"-Werror",
-            "-Xmaxwarns",
-            1500,
-            "-Xmaxerrs",
-            1500
+                "-Xlint:unchecked",
+                "-Xlint:cast",
+                "-Xlint:auxiliaryclass",
+                "-Xlint:deprecation",
+                "-Xlint:dep-ann",
+                "-Xlint:divzero",
+                "-Xlint:empty",
+                "-Xlint:exports",
+                "-Xlint:fallthrough",
+                "-Xlint:finally",
+                "-Xlint:module",
+                "-Xlint:opens",
+                "-Xlint:options",
+                "-Xlint:overloads",
+                "-Xlint:overrides",
+                "-Xlint:path",
+                "-Xlint:processing",
+                "-Xlint:removal",
+                "-Xlint:requires-automatic",
+                "-Xlint:requires-transitive-automatic",
+                "-Xlint:try",
+                "-Xlint:varargs",
+                "-Xlint:preview",
+                "-Xlint:static",
+                // -Werror needs to be disabled because EclipseLink's static weaving doesn't generate warning-free code
+                // and during an IntelliJ recompilation, it fails
+                //"-Werror",
+                "-Xmaxwarns",
+                1500,
+                "-Xmaxerrs",
+                1500
         ]
         options.deprecation = true
     }
@@ -131,18 +131,18 @@ configure(this) {
             // Enforce style modifier order
             custom 'Modifier ordering', {
                 def modifierRanking = [
-                    public      : 1,
-                    protected   : 2,
-                    private     : 3,
-                    abstract    : 4,
-                    default     : 5,
-                    static      : 6,
-                    final       : 7,
-                    transient   : 8,
-                    volatile    : 9,
-                    synchronized: 10,
-                    native      : 11,
-                    strictfp    : 12]
+                        public      : 1,
+                        protected   : 2,
+                        private     : 3,
+                        abstract    : 4,
+                        default     : 5,
+                        static      : 6,
+                        final       : 7,
+                        transient   : 8,
+                        volatile    : 9,
+                        synchronized: 10,
+                        native      : 11,
+                        strictfp    : 12]
                 // Find any instance of multiple modifiers. Lead with a non-word character to avoid
                 // accidental matching against for instance, "an alternative default value"
                 it.replaceAll(/\W(?:public |protected |private |abstract |default |static |final |transient |volatile |synchronized |native |strictfp ){2,}/, {
@@ -203,7 +203,7 @@ configure(this) {
                     "SameNameButDifferent", // Until errorprone recognizes Lombok
                     "MultiVariableDeclaration", // Until errorprone recognizes Lombok
                     "UnnecessaryDefaultInEnumSwitch" // FINERACT-1911
-                    )
+            )
             error(
                     "DefaultCharset",
                     "RemoveUnusedImports",
@@ -269,7 +269,7 @@ configure(this) {
                     "ModifiedButNotUsed",
                     "InconsistentCapitalization",
                     "MissingOverride",
-                    )
+            )
         }
     }
 }
@@ -294,7 +294,6 @@ tasks.withType(JavaCompile) {
 jar {
     enabled = true
 }
-
 
 artifactory {
     contextUrl = 'https://jfrog.sandbox.fynarfin.io/artifactory' // base artifactory url

@@ -1,7 +1,5 @@
 package org.mifos.connector.common.interceptor;
 
-import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -25,6 +23,7 @@ import org.mifos.connector.common.channel.dto.PhErrorDTO;
 import org.mifos.connector.common.exception.PaymentHubErrorCategory;
 import org.mifos.connector.common.util.Constant;
 import org.springframework.http.HttpMethod;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 
 @Slf4j
 public final class JWSUtil {
@@ -144,7 +143,8 @@ public final class JWSUtil {
         log.debug("Content-type: {}", request.getHeader(CONTENT_TYPE));
         String data = null;
         String body = IOUtils.toString(request.getInputStream(), Charset.defaultCharset());
-        if (isMultipartRequest(request) && !request.getMethod().equals(HttpMethod.GET.name())) {
+        if (isMultipartRequest(request) &&
+                !request.getMethod().equals(HttpMethod.GET.name())) {
             // parse form data only if body is empty and REQUEST TYPE is not GET
             data = parseFormData(request);
         } else {
@@ -164,7 +164,7 @@ public final class JWSUtil {
         }
         String boundary = contentTypeArray[1].strip();
         int pos = boundary.indexOf(';');
-        return pos == -1 ? boundary : boundary.substring(0, pos).strip();
+        return pos == -1 ? boundary : boundary.substring(0,pos).strip();
     }
 
     /**
@@ -183,11 +183,11 @@ public final class JWSUtil {
     }
 
     /**
-     * Use to parse the multipart/form-data from the input stream
+     * Use to parse the multipart/form-data  from the input stream
      *
      * @param inputStream
-     * @param boundary
-     *            the boundary can be parsed from CONTENT-TYPE header in API request header
+     * @param boundary the boundary can be parsed from CONTENT-TYPE header in
+     *                 API request header
      * @return parsed data in the form of String
      * @throws IOException
      */
@@ -204,8 +204,8 @@ public final class JWSUtil {
                 }
 
                 // Read and process the part content
-                while ((line = reader.readLine()) != null && !line.equals(boundary) && !line.contains(boundary) && !line.equals("\n")
-                        && !line.isEmpty()) {
+                while ((line = reader.readLine()) != null && !line.equals(boundary)
+                        && !line.contains(boundary) && !line.equals("\n") && !line.isEmpty()) {
                     partContent.append(line);
                     partContent.append("\n");
                 }

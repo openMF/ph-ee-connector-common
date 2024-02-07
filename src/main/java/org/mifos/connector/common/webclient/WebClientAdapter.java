@@ -10,6 +10,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.concurrent.CompletableFuture;
+
 @Component
 public class WebClientAdapter {
 

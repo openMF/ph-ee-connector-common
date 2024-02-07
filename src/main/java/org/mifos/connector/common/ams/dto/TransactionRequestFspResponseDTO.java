@@ -11,10 +11,11 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import java.time.LocalDateTime;
-import java.util.List;
 import org.mifos.connector.common.mojaloop.dto.Extension;
 import org.mifos.connector.common.mojaloop.type.TransactionRequestState;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 public class TransactionRequestFspResponseDTO {
 

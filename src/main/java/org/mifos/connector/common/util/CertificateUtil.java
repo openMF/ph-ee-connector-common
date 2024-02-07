@@ -1,5 +1,7 @@
 package org.mifos.connector.common.util;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -7,7 +9,6 @@ import java.security.PublicKey;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
-import org.apache.commons.codec.binary.Base64;
 
 public final class CertificateUtil {
 

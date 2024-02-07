@@ -1,11 +1,12 @@
 package org.mifos.connector.common.camel;
 
-import static org.mifos.connector.common.camel.AuthRouteBuilder.*;
+import static org.mifos.connector.common.camel.AuthRouteBuilder.AUTH_ERROR;
+import static org.mifos.connector.common.camel.AuthRouteBuilder.HAS_AUTHORITY;
+import static org.mifos.connector.common.camel.AuthRouteBuilder.UNKNOWN_ERROR;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.auth0.jwt.interfaces.JWTVerifier;
-import java.util.stream.Stream;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.slf4j.Logger;
