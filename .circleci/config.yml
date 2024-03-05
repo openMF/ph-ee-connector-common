@@ -4,43 +4,53 @@ executors:
     docker:
       - image: openjdk:17
 jobs:
-  # build:
-  #   docker:
-  #     - image: openjdk:17
-  #   steps:
-  #     - checkout
-  #     - run:
-  #         name: Set Build Description
-  #         command: |
-  #           echo "Tag: $CIRCLE_TAG"
-  #     - run:
-  #         name: Build JAR
-  #         command: |
-  #           ./gradlew jar
-
-  deploy:
+  Deploy_tag_version:
     docker:
       - image: cimg/openjdk:17.0.0
+    environment:
+      JVM_OPTS: -Xmx512m
+      TERM: dumb  
+      GITHUB_TOKEN: ${GITHUB_TOKEN}  # Add the GitHub token as an environment variable
     steps:
       - checkout
-      # - run:
-      #     name: Set Build Description
-      #     command: |
-      #       echo "Tag: $CIRCLE_TAG"
+      - setup_remote_docker:
+          version: 20.10.24
       - run:
-          name: Deploy to Artifactory
+          name: Set Build Description
           command: |
-            sed "s,<username>,$USERNAME,g" settings.gradle > abc.txt
-            sed "s,<password>,$PASSWORD,g" abc.txt > settings.gradle
-            sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
-            mv abc.txt build.gradle
-            ./gradlew artifactoryPublish 
+            echo "Tag: $CIRCLE_TAG"
+      - run:
+          name: Check if tag exists
+          command: |                                                
+            # TAG_EXIST=$(curl -u "$USERNAME:$PASSWORD" -sSf "https://jfrog.sandbox.fynarfin.io/artifactory/fyn-libs-snapshot/org/mifos/ph-ee-connector-common/"  | grep -o "$CIRCLE_TAG" | awk '{print tolower($0)}')
 
+            echo "TAG_EXIST: $TAG_EXIST"
+
+            if [ -z "$TAG_EXIST" ]; then
+                echo "Tag doesn't exist. Deploying artifact..."
+                
+                # Backup original files
+                cp settings.gradle settings.gradle.bak
+                cp build.gradle build.gradle.bak
+
+                # Replace placeholders with credentials and URLs
+                sed -i "s,<username>,$USERNAME,g" settings.gradle
+                sed -i "s,<password>,$PASSWORD,g" settings.gradle
+                sed -i "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle
+
+                # Publish artifact
+                ./gradlew artifactoryPublish
+                # deployment steps here
+            else
+                echo "Tag already exists. Skipping deployment."
+            fi
+             
 workflows:
   version: 2
   build_and_deploy:
     jobs:    
-      - deploy:
+      - Deploy_tag_version:
           filters:
             tags:
-              only: /^v\d+\.\d+\.\d+$/
+              only:
+                - /^v\d+\.\d+\.\d+$/ # Deploy only on version tags
