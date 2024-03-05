@@ -4,23 +4,6 @@ executors:
     docker:
       - image: openjdk:17
 jobs:
-  deploy:
-    docker:
-      - image: cimg/openjdk:17.0.0
-    steps:
-      - checkout
-      # - run:
-      #     name: Set Build Description
-      #     command: |
-      #       echo "Tag: $CIRCLE_TAG"
-      - run:
-          name: Deploy to Artifactory
-          command: |
-            sed "s,<username>,$USERNAME,g" settings.gradle > abc.txt
-            sed "s,<password>,$PASSWORD,g" abc.txt > settings.gradle
-            sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
-            mv abc.txt build.gradle
-            ./gradlew artifactoryPublish 
   Deploy_tag_version:
     docker:
       - image: cimg/openjdk:17.0.0
@@ -31,33 +14,41 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.14
+          version: 20.10.24
+      - run:
+          name: Set Build Description
+          command: |
+            echo "Tag: $CIRCLE_TAG"
       - run:
           name: Check if tag exists
-          command: |
-            TAG_EXIST=$(curl -u $ARTIFACTORY_USERNAME:$ARTIFACTORY_PASSWORD -sSf "https://your-artifactory-url/api/docker/your-repository/v2/your-image/tags/list" | jq '.tags | contains(["${CIRCLE_TAG}"])')
-            if [ "$TAG_EXIST" == "false" ]; then
-              echo "Tag doesn't exist. Deploying artifact..."
-              # Add your deployment steps here
+          command: |                                                
+            # TAG_EXIST=$(curl -u "$USERNAME:$PASSWORD" -sSf "https://jfrog.sandbox.fynarfin.io/artifactory/fyn-libs-snapshot/org/mifos/ph-ee-connector-common/"  | grep -o "$CIRCLE_TAG" | awk '{print tolower($0)}')
+
+            echo "TAG_EXIST: $TAG_EXIST"
+
+            if [ -z "$TAG_EXIST" ]; then
+                echo "Tag doesn't exist. Deploying artifact..."
+                
+                # Backup original files
+                cp settings.gradle settings.gradle.bak
+                cp build.gradle build.gradle.bak
+
+                # Replace placeholders with credentials and URLs
+                sed -i "s,<username>,$USERNAME,g" settings.gradle
+                sed -i "s,<password>,$PASSWORD,g" settings.gradle
+                sed -i "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle
+
+                # Publish artifact
+                ./gradlew artifactoryPublish
+                # deployment steps here
             else
-              echo "Tag already exists. Skipping deployment."
+                echo "Tag already exists. Skipping deployment."
             fi
-
-            sed "s,<username>,$USERNAME,g" settings.gradle > abc.txt
-            sed "s,<password>,$PASSWORD,g" abc.txt > settings.gradle
-            sed "s,https://fynarfin.jfrog.io/artifactory,https://jfrog.sandbox.fynarfin.io/artifactory,g" build.gradle > abc.txt
-            mv abc.txt build.gradle
-            ./gradlew artifactoryPublish
-
-          # when: always  # The job will be executed even if there's no match for the tag filter  
+             
 workflows:
   version: 2
   build_and_deploy:
     jobs:    
-      - deploy:
-          filters:
-            tags:
-              only: /^v\d+\.\d+\.\d+$/ # Ignore version tags in the job
       - Deploy_tag_version:
           filters:
             tags:
