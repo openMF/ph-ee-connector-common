@@ -274,7 +274,7 @@ public class ValidatorBuilder {
     public ValidatorBuilder validateFieldIgnoreNullAndMaxLengthWithFailureCode(String resource, String parameter, Object value,
                                                                                int maxLength, ValidationCodeType maxLengthErrorCode) {
 
-        return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull().validateFieldMaxLengthWithFailureCode(maxLength,
+        return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull().validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength,
                 maxLengthErrorCode);
     }
 
@@ -289,7 +289,7 @@ public class ValidatorBuilder {
                                                                            ValidationCodeType nullErrorCode, int maxLength, ValidationCodeType maxLengthErrorCode) {
 
         return reset().resource(resource).parameter(parameter).value(value).isNullWithFailureCode(nullErrorCode)
-                .validateFieldMaxLengthWithFailureCode(maxLength, maxLengthErrorCode);
+                .validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength, maxLengthErrorCode);
     }
 
     public ValidatorBuilder validateFieldIsNullAndExactLengthWithFailureCode(String resource, String parameter, Object value,
