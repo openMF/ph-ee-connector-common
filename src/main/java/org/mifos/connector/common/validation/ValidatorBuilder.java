@@ -270,4 +270,32 @@ public class ValidatorBuilder {
         }
         return this;
     }
+
+    public ValidatorBuilder validateFieldIgnoreNullAndMaxLengthWithFailureCode(String resource, String parameter, Object value,
+                                                                               int maxLength, ValidationCodeType maxLengthErrorCode) {
+
+        return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull().validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength,
+                maxLengthErrorCode);
+    }
+
+    public ValidatorBuilder validateFieldIgnoreNullAndExactLengthWithFailureCode(String resource, String parameter, Object value,
+                                                                                 int exactLength, ValidationCodeType exactLengthErrorCode) {
+
+        return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull()
+                .validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(exactLength, exactLengthErrorCode);
+    }
+
+    public ValidatorBuilder validateFieldIsNullAndMaxLengthWithFailureCode(String resource, String parameter, Object value,
+                                                                           ValidationCodeType nullErrorCode, int maxLength, ValidationCodeType maxLengthErrorCode) {
+
+        return reset().resource(resource).parameter(parameter).value(value).isNullWithFailureCode(nullErrorCode)
+                .validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength, maxLengthErrorCode);
+    }
+
+    public ValidatorBuilder validateFieldIsNullAndExactLengthWithFailureCode(String resource, String parameter, Object value,
+                                                                             ValidationCodeType nullErrorCode, int exactLength, ValidationCodeType exactLengthErrorCode) {
+
+        return reset().resource(resource).parameter(parameter).value(value).isNullWithFailureCode(nullErrorCode)
+                .validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(exactLength, exactLengthErrorCode);
+    }
 }
