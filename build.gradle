@@ -10,7 +10,6 @@ plugins {
     id "com.jfrog.artifactory" version "4.24.23"
     id 'org.springframework.boot' version '2.6.2'
     id 'com.diffplug.spotless' version '6.19.0'
-    id("com.google.osdetector") version "1.7.0"
 }
 apply plugin: "io.spring.dependency-management"
 
@@ -169,9 +168,7 @@ configure(this) {
     }
 
     dependencies {
-        if (osdetector.arch.equals("aarch_64")) {
-            implementation("io.netty:netty-all")
-        }
+        implementation("io.netty:netty-all")
     }
 }
 
