@@ -10,7 +10,6 @@ plugins {
     id "com.jfrog.artifactory" version "4.24.23"
     id 'org.springframework.boot' version '2.6.2'
     id 'com.diffplug.spotless' version '6.19.0'
-    id("com.google.osdetector") version "1.7.0"
 }
 apply plugin: "io.spring.dependency-management"
 
@@ -67,7 +66,7 @@ dependencies {
     checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.44.1'
     implementation 'com.diffplug.gradle.spotless:spotless:2.4.1'
     implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.17.0'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.4.1'
 }
 
 configure(this) {
@@ -169,9 +168,7 @@ configure(this) {
     }
 
     dependencies {
-        if (osdetector.arch.equals("aarch_64")) {
-            implementation("io.netty:netty-all")
-        }
+        implementation("io.netty:netty-all:4.1.68.Final")
     }
 }
 
