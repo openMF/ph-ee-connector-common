@@ -66,7 +66,7 @@ dependencies {
     checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.44.1'
     implementation 'com.diffplug.gradle.spotless:spotless:2.4.1'
     implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.17.0'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.4.1'
 }
 
 configure(this) {
@@ -168,7 +168,7 @@ configure(this) {
     }
 
     dependencies {
-        implementation("io.netty:netty-all")
+        implementation("io.netty:netty-all:4.1.68.Final")
     }
 }
 
