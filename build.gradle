@@ -7,11 +7,12 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'checkstyle'
-    id "com.jfrog.artifactory" version "4.24.23"
+    id "com.jfrog.artifactory" version '5.+'
     id 'org.springframework.boot' version '2.6.2'
     id 'com.diffplug.spotless' version '6.19.0'
 }
 apply plugin: "io.spring.dependency-management"
+apply plugin: "com.jfrog.artifactory"
 
 repositories {
     // mavenLocal()
@@ -168,7 +169,7 @@ configure(this) {
 }
 
 group = 'org.mifos'
-version = '1.8.1-SNAPSHOT'
+version = '1.8.1-gazelle'
 sourceCompatibility = JavaVersion.VERSION_17
 def artifactId = 'ph-ee-connector-common'
 def versionNumber = version
@@ -189,22 +190,40 @@ jar {
 }
 
 artifactory {
-    contextUrl = 'https://jfrog.sandbox.fynarfin.io/artifactory' // base artifactory url
+    //contextUrl = 'http://40.82.204.22:8082/artifactory'
+    contextUrl = 'https://mifos.jfrog.io/artifactory'
     publish {
         repository {
-            repoKey = 'fyn-libs-snapshot'    //Artifactory repository key to publish to
-            // username = 'avik@fynarfin.io'    publisher user name
-            // password = '****'                publisher password
-            username = gradle.app_username
-            password = gradle.app_password
-            maven = true
+            repoKey = 'phee-gradle-local' // Use 'oss-release-local' for release versions
+            username = System.getenv('MIFOS_ARTIFACTORY_USER') 
+            password = System.getenv('MIFOS_ARTIFACTORY_TOKEN') 
+            // username = 'mifos'
         }
         defaults {
             publications('mavenJava')
+            publishArtifacts = true
+            publishPom = true
+            publishBuildInfo = false //  build info publishing
         }
     }
+    // Separate configuration for build info repository
+    // clientConfig.info.setBuildName('ph-ee-connector-common')
+    // clientConfig.info.setBuildNumber(System.currentTimeMillis().toString())
+    // clientConfig.info.setRepositoryKey('phee-gradle-local')  // Set build info repository
+    // clientConfig.info.setProject('phee') 
+    // clientConfig.info.setDeployBuildInfo(true)  // Deploy build info
+    // clientConfig.setIncludeEnvVars(false)
+    //clientConfig.logLevel = org.jfrog.build.extractor.clientConfiguration.ArtifactoryClientConfiguration.LogLevel.DEBUG
 }
 
 artifactoryPublish {
     dependsOn jar
+}
+
+// Add this at the end of your build.gradle for more detailed error logging
+gradle.buildFinished { result ->
+    if (result.failure) {
+        println "Build failed with: ${result.failure.message}"
+        result.failure.printStackTrace()
+    }
 }
