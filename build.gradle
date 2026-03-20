@@ -47,7 +47,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework:spring-webmvc'
     implementation 'javax.servlet:javax.servlet-api:3.1.0'
-    implementation 'com.auth0:java-jwt:3.10.2'
+    implementation 'com.auth0:java-jwt:4.5.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'
     implementation 'org.json:json:20190722'
     implementation 'io.camunda:zeebe-client-java:8.1.1'
