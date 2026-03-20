@@ -61,7 +61,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
     compileOnly 'org.hibernate.validator:hibernate-validator:6.0.20.Final'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
+    compileOnly 'org.projectlombok:lombok:1.18.44'
     annotationProcessor 'org.projectlombok:lombok:1.18.24'
     checkstyle 'com.puppycrawl.tools:checkstyle:10.9.3'
     checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.44.1'
