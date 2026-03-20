@@ -10,6 +10,7 @@ plugins {
     id "com.jfrog.artifactory" version "4.24.23"
     id 'org.springframework.boot' version '2.6.2'
     id 'com.diffplug.spotless' version '6.19.0'
+    id "com.github.ben-manes.versions" version "0.51.0"
 }
 apply plugin: "io.spring.dependency-management"
 
