@@ -48,9 +48,13 @@ jobs:
 workflows:
   version: 2
   build_and_deploy:
-    jobs:    
+    jobs:
       - Deploy_tag_version:
           filters:
+            # CircleCI: tag-only filters still run on branch/PR pushes unless all
+            # branches are ignored. This job should run only on release tags.
+            branches:
+              ignore: /.*/
             tags:
               only:
                 - /^v\d+\.\d+\.\d+$/ # Deploy only on version tags
