@@ -1,0 +1,88 @@
+# Supply chain baseline aligned with Mifos GSoC idea:
+# vulnerability gating, SBOM generation, Cosign (keyless) signing for artifacts.
+# https://slsa.dev/ | https://docs.sigstore.dev/
+
+name: Supply chain
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch:
+
+concurrency:
+  group: supply-chain-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Build JAR
+        run: ./gradlew jar --no-daemon
+
+      - name: Trivy filesystem scan (build output)
+        uses: aquasecurity/trivy-action@0.29.0
+        with:
+          scan-type: fs
+          scan-ref: build/libs
+          severity: CRITICAL,HIGH
+          exit-code: "1"
+          ignore-unfixed: true
+
+      - name: Install Syft
+        run: |
+          SYFT_VERSION=1.9.0
+          curl -sSfL "https://github.com/anchore/syft/releases/download/v${SYFT_VERSION}/syft_${SYFT_VERSION}_linux_amd64.tar.gz" \
+            | sudo tar -xz -C /usr/local/bin syft
+
+      - name: Generate SBOM (Syft)
+        run: syft scan "dir:build/libs" -o spdx-json=sbom.spdx.json
+
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-spdx-json
+          path: sbom.spdx.json
+          if-no-files-found: error
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.7.0
+
+      # Keyless signing needs write id-token; fork PRs from contributors often skip this.
+      - name: Sign SBOM with Cosign (keyless)
+        if: github.event_name == 'push'
+        env:
+          COSIGN_EXPERIMENTAL: 1
+        run: |
+          cosign sign-blob --yes \
+            --output-signature=sbom.spdx.json.sig \
+            --output-certificate=sbom.spdx.json.cert \
+            sbom.spdx.json
+
+      - name: Upload Cosign signature materials
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: sbom-cosign-bundle
+          path: |
+            sbom.spdx.json.sig
+            sbom.spdx.json.cert
+          if-no-files-found: warn
