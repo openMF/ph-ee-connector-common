@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FailedCaseDTO {
+
     private String serialNumber;
     private String failureReason;
 }

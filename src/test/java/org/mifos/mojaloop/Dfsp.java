@@ -2,8 +2,14 @@ package org.mifos.mojaloop;
 
 public class Dfsp {
 
-    private boolean enabled, addToExternalOracle, registerOnlyCallbackUrls;
-    private String id, partyIdType, partyIdentifier, fundsInPrepareAmount, domain;
+    private boolean enabled;
+    private boolean addToExternalOracle;
+    private boolean registerOnlyCallbackUrls;
+    private String id;
+    private String partyIdType;
+    private String partyIdentifier;
+    private String fundsInPrepareAmount;
+    private String domain;
 
     public Dfsp() {}
 

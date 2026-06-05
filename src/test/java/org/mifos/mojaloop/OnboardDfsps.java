@@ -335,7 +335,7 @@ public class OnboardDfsps {
             }
         } catch (Exception ex) {
             logger.error("Error!", ex);
-            throw new RuntimeException("Invalid response!");
+            throw new RuntimeException("Invalid response!", ex);
         }
     }
 }

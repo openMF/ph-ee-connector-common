@@ -1,12 +1,12 @@
 package org.mifos.connector.common.interceptor;
 
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.mifos.connector.common.interceptor.service.JsonWebSignatureService;
 import org.mifos.connector.common.util.Constant;
@@ -18,7 +18,7 @@ import org.springframework.web.filter.GenericFilterBean;
 import org.springframework.web.util.ContentCachingResponseWrapper;
 
 @Component
-@ConditionalOnExpression("${security.jws.enable} and ${security.jws.response.enable}")
+@ConditionalOnExpression("${security.jws.enable:false} and ${security.jws.response.enable:false}")
 @Slf4j
 public class JWSFilterStrategy extends GenericFilterBean {
 

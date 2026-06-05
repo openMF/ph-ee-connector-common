@@ -1,15 +1,15 @@
 package org.mifos.connector.common.channel.dto;
 
+import jakarta.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.mifos.connector.common.validation.ValidatorBuilder;
 import org.mifos.connector.common.exception.PaymentHubError;
 import org.mifos.connector.common.exception.PaymentHubException;
+import org.mifos.connector.common.validation.ValidatorBuilder;
 
 @Getter
 @Setter
@@ -115,7 +115,7 @@ public final class PhErrorDTO {
         }
 
         public PhErrorDTOBuilder addErrors(String errorCategory, String errorCode, String errorDescription,
-                                           List<ErrorParameter> errorParameters) {
+                List<ErrorParameter> errorParameters) {
             if (this.errors == null) {
                 this.errors = new ArrayList<>();
             }

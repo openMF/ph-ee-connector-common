@@ -1,5 +1,8 @@
 package org.mifos.connector.common.validation;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -7,14 +10,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.mifos.connector.common.channel.dto.ErrorParameter;
 import org.mifos.connector.common.channel.dto.Errors;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @ToString
 @AllArgsConstructor
 public class ValidatorBuilder {
+
     private String errorCategory;
     private String errorCode;
     private String errorDescription;
@@ -76,7 +76,6 @@ public class ValidatorBuilder {
         return this;
     }
 
-
     public ValidatorBuilder resource(final String resource) {
         this.resource = resource;
         return this;
@@ -103,7 +102,9 @@ public class ValidatorBuilder {
     }
 
     public Boolean isNullOrEmpty() {
-        if (this.value == null) return true;
+        if (this.value == null) {
+            return true;
+        }
 
         if (this.value instanceof String) {
             return ((String) this.value).isEmpty();
@@ -160,7 +161,8 @@ public class ValidatorBuilder {
         return this;
     }
 
-    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(final int expectedLength, final ValidationCodeType errorCode) {
+    public ValidatorBuilder validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(final int expectedLength,
+            final ValidationCodeType errorCode) {
         if (this.value == null && this.ignoreNullValue) {
             return this;
         }
@@ -200,7 +202,7 @@ public class ValidatorBuilder {
                     failWithCode(ValidationEnums.INVALID_NEGATIVE_FIELD);
                 }
             } catch (NumberFormatException e) {
-                throw new RuntimeException("An error has occurred" + e.getMessage());
+                throw new RuntimeException("An error has occurred" + e.getMessage(), e);
             }
         }
         return this;
@@ -218,7 +220,7 @@ public class ValidatorBuilder {
                     failWithCode(errorCode);
                 }
             } catch (NumberFormatException e) {
-                throw new RuntimeException("An error has occurred" + e.getMessage());
+                throw new RuntimeException("An error has occurred" + e.getMessage(), e);
             }
         }
         return this;
@@ -272,28 +274,28 @@ public class ValidatorBuilder {
     }
 
     public ValidatorBuilder validateFieldIgnoreNullAndMaxLengthWithFailureCode(String resource, String parameter, Object value,
-                                                                               int maxLength, ValidationCodeType maxLengthErrorCode) {
+            int maxLength, ValidationCodeType maxLengthErrorCode) {
 
-        return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull().validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength,
-                maxLengthErrorCode);
+        return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull()
+                .validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength, maxLengthErrorCode);
     }
 
     public ValidatorBuilder validateFieldIgnoreNullAndExactLengthWithFailureCode(String resource, String parameter, Object value,
-                                                                                 int exactLength, ValidationCodeType exactLengthErrorCode) {
+            int exactLength, ValidationCodeType exactLengthErrorCode) {
 
         return reset().resource(resource).parameter(parameter).value(value).ignoreIfNull()
                 .validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(exactLength, exactLengthErrorCode);
     }
 
     public ValidatorBuilder validateFieldIsNullAndMaxLengthWithFailureCode(String resource, String parameter, Object value,
-                                                                           ValidationCodeType nullErrorCode, int maxLength, ValidationCodeType maxLengthErrorCode) {
+            ValidationCodeType nullErrorCode, int maxLength, ValidationCodeType maxLengthErrorCode) {
 
         return reset().resource(resource).parameter(parameter).value(value).isNullWithFailureCode(nullErrorCode)
                 .validateFieldMaxLengthWithFailureCodeAndErrorParams(maxLength, maxLengthErrorCode);
     }
 
     public ValidatorBuilder validateFieldIsNullAndExactLengthWithFailureCode(String resource, String parameter, Object value,
-                                                                             ValidationCodeType nullErrorCode, int exactLength, ValidationCodeType exactLengthErrorCode) {
+            ValidationCodeType nullErrorCode, int exactLength, ValidationCodeType exactLengthErrorCode) {
 
         return reset().resource(resource).parameter(parameter).value(value).isNullWithFailureCode(nullErrorCode)
                 .validateFieldNotBlankAndLengthWithFailureCodeAndErrorParams(exactLength, exactLengthErrorCode);

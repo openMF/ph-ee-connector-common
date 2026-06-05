@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RedeemVoucherRequestDTO {
+
     private String requestId;
     private String agentId;
     private String voucherSerialNumber;

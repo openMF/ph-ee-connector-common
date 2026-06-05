@@ -2,14 +2,14 @@ version: 2.1
 executors:
   default:
     docker:
-      - image: openjdk:17
+      - image: openjdk:21
 jobs:
   Deploy_tag_version:
     docker:
-      - image: cimg/openjdk:17.0.0
+      - image: cimg/openjdk:21.0.0
     environment:
       JVM_OPTS: -Xmx512m
-      TERM: dumb  
+      TERM: dumb
       GITHUB_TOKEN: ${GITHUB_TOKEN}  # Add the GitHub token as an environment variable
     steps:
       - checkout
@@ -21,14 +21,14 @@ jobs:
             echo "Tag: $CIRCLE_TAG"
       - run:
           name: Check if tag exists
-          command: |                                                
+          command: |
             # TAG_EXIST=$(curl -u "$USERNAME:$PASSWORD" -sSf "https://jfrog.sandbox.fynarfin.io/artifactory/fyn-libs-snapshot/org/mifos/ph-ee-connector-common/"  | grep -o "$CIRCLE_TAG" | awk '{print tolower($0)}')
 
             echo "TAG_EXIST: $TAG_EXIST"
 
             if [ -z "$TAG_EXIST" ]; then
                 echo "Tag doesn't exist. Deploying artifact..."
-                
+
                 # Backup original files
                 cp settings.gradle settings.gradle.bak
                 cp build.gradle build.gradle.bak
@@ -44,11 +44,11 @@ jobs:
             else
                 echo "Tag already exists. Skipping deployment."
             fi
-             
+
 workflows:
   version: 2
   build_and_deploy:
-    jobs:    
+    jobs:
       - Deploy_tag_version:
           filters:
             tags:

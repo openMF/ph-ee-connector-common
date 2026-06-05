@@ -2,7 +2,6 @@ package org.mifos.connector.common.operations.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

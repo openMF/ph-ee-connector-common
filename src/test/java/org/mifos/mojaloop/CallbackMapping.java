@@ -2,7 +2,8 @@ package org.mifos.mojaloop;
 
 public class CallbackMapping {
 
-    private String type, value;
+    private String type;
+    private String value;
 
     public CallbackMapping() {}
 

@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RedeemVoucherResponseDTO {
+
     private String status;
     private String message;
     private String serialNumber;

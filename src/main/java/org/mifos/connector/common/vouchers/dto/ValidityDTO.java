@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ValidityDTO {
+
     private String serialNumber;
     private Boolean isValid;
 }

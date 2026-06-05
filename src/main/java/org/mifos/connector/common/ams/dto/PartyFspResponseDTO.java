@@ -7,6 +7,9 @@
  */
 package org.mifos.connector.common.ams.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PartyFspResponseDTO {
 
     private String accountId;

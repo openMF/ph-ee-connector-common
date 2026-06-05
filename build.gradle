@@ -7,17 +7,31 @@ plugins {
     id 'eclipse'
     id 'maven-publish'
     id 'checkstyle'
-    id "com.jfrog.artifactory" version "4.24.23"
-    id 'org.springframework.boot' version '2.6.2'
-    id 'com.diffplug.spotless' version '6.19.0'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'com.diffplug.spotless' version '7.0.2'
 }
 apply plugin: "io.spring.dependency-management"
 
 repositories {
-    // mavenLocal()
+    mavenLocal()
+    mavenCentral()
+    // Mifos Platform BOM is consumed from the local JFrog Artifactory sandbox
+    // (Docker Compose in proposal/local-jfrog/, UI at http://localhost:8082).
+    // When the mentor's official Mifos BOM is ready, swap this host for the
+    // production Mifos JFrog.
     maven {
-        url = uri('https://repo.maven.apache.org/maven2')
+        name = 'LocalJFrog'
+        url = uri('http://localhost:8081/artifactory/mifos-platform-snapshot')
+        // Local sandbox uses plain HTTP; Gradle blocks HTTP by default.
+        allowInsecureProtocol = true
+        credentials {
+            username = findProperty('localJfrog.user') ?: System.getenv('LOCAL_JFROG_USER')
+            password = findProperty('localJfrog.key') ?: System.getenv('LOCAL_JFROG_KEY')
+        }
     }
+    // Camunda / Zeebe artifacts are not on Maven Central.
+    maven { url = uri('https://artifacts.camunda.com/artifactory/zeebe-io/') }
+    maven { url = uri('https://artifacts.camunda.com/artifactory/zeebe-io-snapshots/') }
 }
 
 apply plugin:'com.diffplug.spotless'
@@ -25,7 +39,7 @@ spotless {
     format 'misc', {
         target '**/*.md', '**/*.properties', '**/.gitignore', '**/.openapi-generator-ignore', '**/*.yml', '**/*.xml', '**/**.json', '**/*.sql'
         targetExclude '**/build/**', '**/bin/**', '**/.settings/**', '**/.idea/**', '**/.gradle/**', '**/gradlew.bat', '**/licenses/**', '**/banner.txt', '.vscode/**'
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         endWithNewline()
         trimTrailingWhitespace()
     }
@@ -34,39 +48,45 @@ spotless {
         target '*.gradle', '**/*.gradle'
         targetExclude '**/build/**'
         greclipse()
-        indentWithSpaces(4)
+        leadingTabsToSpaces(4)
         endWithNewline()
         trimTrailingWhitespace()
     }
 
-    lineEndings 'UNIX'
+    lineEndings = com.diffplug.spotless.LineEnding.UNIX
 }
 
 dependencies {
+    // Mifos Platform BOM imports Spring Boot, Camel, AWS SDK BOMs and pins
+    // every other library version. Do NOT hardcode versions below.
+    // Use platform() (not enforcedPlatform): this is a published library, and
+    // enforced platforms leak forced versions to downstream consumers and break
+    // publication metadata generation.
+    implementation platform('org.mifos.platform:mifos-platform-bom:1.0.0-SNAPSHOT')
+
     implementation 'org.springframework.boot:spring-boot-autoconfigure'
     implementation 'org.springframework:spring-webmvc'
-    implementation 'javax.servlet:javax.servlet-api:3.1.0'
-    implementation 'com.auth0:java-jwt:3.10.2'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1'
-    implementation 'org.json:json:20190722'
-    implementation 'io.camunda:zeebe-client-java:8.1.1'
-    implementation 'org.apache.camel:camel-core:3.4.0'
-    implementation 'commons-codec:commons-codec:1.15'
-    implementation 'commons-io:commons-io:2.11.0'
-    implementation 'org.apache.commons:commons-lang3:3.14.0'
-    testImplementation 'org.springframework:spring-web:5.2.2.RELEASE'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.2.2.RELEASE'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
-    compileOnly 'org.hibernate.validator:hibernate-validator:6.0.20.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    implementation 'com.auth0:java-jwt'
+    implementation 'org.json:json'
+    implementation 'io.camunda:zeebe-client-java'
+    implementation 'org.apache.camel:camel-core'
+    implementation 'commons-codec:commons-codec'
+    implementation 'commons-io:commons-io'
+    implementation 'org.apache.commons:commons-lang3'
+    implementation 'io.netty:netty-all'
 
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-    checkstyle 'com.puppycrawl.tools:checkstyle:10.9.3'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api'
+    compileOnly 'jakarta.validation:jakarta.validation-api'
+    compileOnly 'org.hibernate.validator:hibernate-validator'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    checkstyle 'com.puppycrawl.tools:checkstyle:10.21.0'
     checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.44.1'
-    implementation 'com.diffplug.gradle.spotless:spotless:2.4.1'
-    implementation 'com.diffplug.spotless:spotless-plugin-gradle:6.17.0'
-    implementation 'org.springframework.boot:spring-boot-starter-webflux:2.4.1'
 }
 
 configure(this) {
@@ -153,30 +173,25 @@ configure(this) {
                 )
             }
         }
-        lineEndings 'UNIX'
+        lineEndings = com.diffplug.spotless.LineEnding.UNIX
     }
     // If we are running Gradle within Eclipse to enhance classes,
     // set the classes directory to point to Eclipse's default build directory
     if (project.hasProperty('env') && project.getProperty('env') == 'eclipse') {
-        sourceSets.main.java.outputDir = file("$projectDir/bin/main")
-    }
-    // Configuration for the Checkstyle plugin
-    // https://docs.gradle.org/current/userguide/checkstyle_plugin.html
-    dependencies {
-        checkstyle 'com.puppycrawl.tools:checkstyle:10.3.1'
-        checkstyle 'com.github.sevntu-checkstyle:sevntu-checks:1.42.0'
-    }
-
-    dependencies {
-        implementation("io.netty:netty-all:4.1.68.Final")
+        sourceSets.main.java.destinationDirectory = file("$projectDir/bin/main")
     }
 }
 
 group = 'org.mifos'
-version = '0.0.0'
-sourceCompatibility = JavaVersion.VERSION_17
+version = '2.0.0-SNAPSHOT'
 def artifactId = 'ph-ee-connector-common'
 def versionNumber = version
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
 
 publishing {
     publications {
@@ -184,32 +199,30 @@ publishing {
             from(components.java)
         }
     }
+    repositories {
+        // Publish target: the local JFrog Artifactory sandbox (same host used to
+        // resolve the Mifos Platform BOM). Swap for the official Mifos JFrog when
+        // the mentor's production Artifactory is ready.
+        maven {
+            name = 'LocalJFrog'
+            url = uri('http://localhost:8081/artifactory/mifos-platform-snapshot')
+            allowInsecureProtocol = true
+            credentials {
+                username = findProperty('localJfrog.user') ?: System.getenv('LOCAL_JFROG_USER')
+                password = findProperty('localJfrog.key') ?: System.getenv('LOCAL_JFROG_KEY')
+            }
+        }
+    }
 }
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-jar {
+// connector-common is a library, not an executable Spring Boot app.
+// The plain jar is what downstream connectors consume; bootJar produces a
+// repackaged fat jar that cannot be used as a Maven dependency.
+tasks.named('bootJar') { enabled = false }
+tasks.named('jar') {
     enabled = true
-}
-
-artifactory {
-    contextUrl = 'https://jfrog.sandbox.fynarfin.io/artifactory' // base artifactory url
-    publish {
-        repository {
-            repoKey = 'fyn-libs-snapshot'    //Artifactory repository key to publish to
-            // username = 'avik@fynarfin.io'    publisher user name
-            // password = '****'                publisher password
-            username = gradle.app_username
-            password = gradle.app_password
-            maven = true
-        }
-        defaults {
-            publications('mavenJava')
-        }
-    }
-}
-
-artifactoryPublish {
-    dependsOn jar
+    archiveClassifier = ''
 }
